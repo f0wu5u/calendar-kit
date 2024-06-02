@@ -1,1 +1,1 @@
-export const isValidDate = (date: Date) => !isNaN(date as never);
+export const isValidDate = (date: Date) => !isNaN(date.valueOf());

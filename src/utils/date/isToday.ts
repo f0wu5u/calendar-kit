@@ -1,11 +1,7 @@
 import { dateStringToUTCDate } from "./dateStringToUTCDate";
-import { isValidDate } from "./isValidDate";
 
 export const isToday = (dateString: string) => {
   const date = dateStringToUTCDate(dateString);
-  if (!isValidDate(date)) {
-    throw new Error("Invalid date");
-  }
   const today = new Date();
 
   return (
