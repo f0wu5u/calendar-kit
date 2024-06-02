@@ -1,4 +1,5 @@
 import { addMonths } from "../../date";
+import { getDateString } from "../helpers";
 
 describe("addMonths", function () {
   it("should throw error when invalid date string is provided", function () {
@@ -7,15 +8,11 @@ describe("addMonths", function () {
 
   it("should return a valid date", function () {
     const firstMarch2024 = addMonths("2024-01-01", 2);
-    expect(firstMarch2024.toISOString().split("T")[0]).toStrictEqual(
-      "2024-03-01",
-    );
+    expect(getDateString(firstMarch2024)).toStrictEqual("2024-03-01");
   });
 
   it("should enforce absolute months value when negative months provided", function () {
     const firstMarch2024 = addMonths("2024-01-01", -2);
-    expect(firstMarch2024.toISOString().split("T")[0]).toStrictEqual(
-      "2024-03-01",
-    );
+    expect(getDateString(firstMarch2024)).toStrictEqual("2024-03-01");
   });
 });
