@@ -23,8 +23,9 @@ export const getDayState: (params: StateInputParams) => DayState = ({
   const today = isInMonth && isToday(dateString);
   const isSelected = markedDates.includes(dateString);
   return {
-    state: today ? "today" : isActive ? "active" : "inactive",
+    state: isActive ? "active" : "inactive",
     isVisible,
     isSelected,
+    isToday: today,
   };
 };

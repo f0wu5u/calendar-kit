@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import { StyleSheet, View, ViewStyle } from "react-native";
 
-import { StateInputParams } from "../types";
+import { DayState, StateInputParams } from "../types";
 import { getDayState } from "../utils/getDayState";
 
 import { Day, DayProps } from "./Day";
@@ -15,7 +15,10 @@ export interface WeekProps
   markedDates?: string[];
   showExtraDays?: boolean;
   month: Date;
-  customStateCreator?: (stateInputParams: StateInputParams) => object;
+  customStateCreator?: (
+    stateInputParams: StateInputParams,
+    defaultState?: DayState,
+  ) => object;
   weekContainerStyle?: ViewStyle;
 }
 
@@ -44,7 +47,7 @@ export const Week: React.FC<WeekProps> = React.memo(
             maxDate,
           };
           const defaultState = getDayState(params);
-          const customState = customStateCreator?.(params);
+          const customState = customStateCreator?.(params, defaultState);
           return { ...defaultState, ...customState };
         }),
       [
