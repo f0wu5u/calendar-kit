@@ -16,5 +16,6 @@ export { isValidDate } from "./isValidDate";
 export { startOfMonth } from "./startOfMonth";
 export { startOfWeek } from "./startOfWeek";
 export { subMonths } from "./subMonths";
+export { toDateString } from "./toDateString";
 export { toUTCDate } from "./toUTCDate";
 export { toUTCDateString } from "./toUTCDateString";
