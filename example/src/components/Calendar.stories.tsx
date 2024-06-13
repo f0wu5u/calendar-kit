@@ -1,0 +1,86 @@
+import React, { useCallback, useState } from "react";
+import {
+  Calendar,
+  DayIndex,
+  toUTCDate,
+  toUTCDateString,
+} from "@code-fi/react-native-calendar-ui";
+import { addDays } from "date-fns";
+
+const today = toUTCDate(new Date());
+
+const todayDateString = toUTCDateString(today);
+
+const CalendarComponent = ({
+  basic,
+  showExtraDays,
+  minDate,
+  maxDate,
+  firstDayOfWeek = 0,
+}) => {
+  const [selectedDay, setSelectedDay] = useState<string>();
+
+  const onDayPress = useCallback((dateString) => {
+    setSelectedDay(dateString);
+  }, []);
+
+  return (
+    <Calendar
+      minDate={!basic ? minDate : undefined}
+      maxDate={!basic ? maxDate : undefined}
+      date={todayDateString}
+      showExtraDays={showExtraDays}
+      markedDates={[selectedDay]}
+      onDayPress={onDayPress}
+      firstDayOfWeek={firstDayOfWeek as DayIndex}
+    />
+  );
+};
+
+const meta = {
+  title: "Calendar/Single Day",
+  component: CalendarComponent,
+  parameters: {
+    controls: {
+      exclude: ["basic"],
+    },
+  },
+  argTypes: {
+    minDate: {
+      control: "select",
+      options: [
+        toUTCDateString(addDays(today, 2)),
+        toUTCDateString(addDays(today, 7)),
+      ],
+    },
+    maxDate: {
+      control: "select",
+      options: [
+        toUTCDateString(addDays(today, 14)),
+        toUTCDateString(addDays(today, 28)),
+      ],
+    },
+    firstDayOfWeek: { control: "radio", options: [0, 1, 2, 3, 4, 5, 6] },
+  },
+  args: {
+    showExtraDays: true,
+    basic: true,
+    minDate: todayDateString,
+  },
+};
+
+export default meta;
+
+export const Default = {
+  parameters: {
+    controls: {
+      exclude: ["minDate", "maxDate", "basic"],
+    },
+  },
+};
+
+export const WithMinAndMax = {
+  args: {
+    basic: false,
+  },
+};

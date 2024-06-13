@@ -1,30 +1,17 @@
 import React, { useMemo } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-import { useRenderCount } from "../hooks/useRenderCount";
 import { InnerDayProps } from "../types";
 
 interface DefaultDayComponentProps {
   isSelected?: boolean;
-  isEndDay?: boolean;
-  isStartDay?: boolean;
 }
 
 export const DefaultDayComponent: React.FC<
   InnerDayProps<DefaultDayComponentProps>
-> = ({ day, state, isStartDay, isEndDay, isSelected }) => {
-  const renderCount = useRenderCount(day.toISOString());
-
+> = ({ day, state, isToday, isSelected }) => {
   const dayStyle = useMemo(() => {
     if (state !== "inactive") {
-      if (isStartDay || isEndDay) {
-        return {
-          textStyle: textStyles.selected,
-          containerStyle: isStartDay
-            ? containerStyles.start
-            : containerStyles.end,
-        };
-      }
       if (isSelected) {
         return {
           textStyle: textStyles.selected,
@@ -32,8 +19,13 @@ export const DefaultDayComponent: React.FC<
         };
       }
     }
+    if (isToday) {
+      return {
+        textStyle: textStyles.today,
+      };
+    }
     return {};
-  }, [state, isStartDay, isEndDay, isSelected]);
+  }, [state, isSelected, isToday]);
 
   return (
     <>
@@ -47,7 +39,6 @@ export const DefaultDayComponent: React.FC<
         >
           {day.getUTCDate()}
         </Text>
-        <Text style={textStyles.debugRenderText}>R={renderCount}x</Text>
       </View>
     </>
   );
@@ -62,26 +53,16 @@ const containerStyles = StyleSheet.create({
   selected: {
     backgroundColor: "#b1b5ff",
   },
-  start: {
-    backgroundColor: "#2b2e7d",
-    borderTopLeftRadius: 4,
-    borderBottomLeftRadius: 4,
-  },
-  end: {
-    backgroundColor: "#2b2e7d",
-    borderTopRightRadius: 4,
-    borderBottomRightRadius: 4,
-  },
 });
 
 const textStyles = StyleSheet.create({
   defaultDayText: {
-    fontWeight: "500",
     textAlign: "center",
     fontSize: 16,
   },
   selected: {
     color: "#fff",
+    fontWeight: "normal",
   },
   active: {
     color: "#5a5a5a",
@@ -92,10 +73,5 @@ const textStyles = StyleSheet.create({
   today: {
     color: "#787de7",
     fontWeight: "bold",
-  },
-  debugRenderText: {
-    textAlign: "center",
-    fontSize: 10,
-    color: "#868686",
   },
 });
