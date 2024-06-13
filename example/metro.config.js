@@ -1,15 +1,17 @@
+/* eslint-disable no-undef */
+
 const path = require("path");
 const { getDefaultConfig } = require("expo/metro-config");
 const { generate } = require("@storybook/react-native/scripts/generate");
 
 generate({
-  configPath: path.resolve(global.__dirname, "./.storybook"),
+  configPath: path.resolve(__dirname, "./.storybook"),
   useJs: true,
 });
 
-const defaultConfig = getDefaultConfig(global.__dirname);
+const defaultConfig = getDefaultConfig(__dirname);
 
-const libSourcePath = path.resolve(global.__dirname, "..");
+const libSourcePath = path.resolve(__dirname, "..");
 
 defaultConfig.watchFolders = [...defaultConfig.watchFolders, libSourcePath];
 defaultConfig.resolver.alias = {
@@ -21,7 +23,7 @@ defaultConfig.resolver.alias = {
 };
 
 defaultConfig.resolver.nodeModulesPaths = [
-  path.resolve(global.__dirname, "node_modules"),
+  path.resolve(__dirname, "node_modules"),
   path.resolve(libSourcePath, "node_modules"),
 ];
 
