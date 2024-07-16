@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 
 import { DayState, InnerDayProps } from "../types";
-import { dateStringToUTCDate, toUTCDate } from "../utils/date";
+import { dateStringToDate } from "../utils/date";
 import { equals } from "../utils/equals";
 
 import { DefaultDayComponent } from "./DefaultDayComponent";
@@ -20,10 +20,7 @@ const DayComponent: React.FC<DayProps> = ({
   onPress,
   viewState,
 }) => {
-  const day = useMemo(
-    () => toUTCDate(dateStringToUTCDate(dateString)),
-    [dateString],
-  );
+  const day = useMemo(() => dateStringToDate(dateString), [dateString]);
 
   return viewState.isVisible ? (
     <Pressable
@@ -39,7 +36,7 @@ const DayComponent: React.FC<DayProps> = ({
 };
 
 const styles = StyleSheet.create({
-  dayContainer: { flex: 1, width: "100%" },
+  dayContainer: { flex: 1, marginHorizontal: -0.5, width: "100%" },
   dayText: { textAlign: "center" },
 });
 

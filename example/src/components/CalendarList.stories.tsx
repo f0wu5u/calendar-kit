@@ -7,8 +7,7 @@ import React, {
 } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import {
-  Calendar,
-  dateStringToDate,
+  CalendarList,
   DayIndex,
   InnerDayProps,
   toLocaleDateString,
@@ -21,12 +20,17 @@ const today = new Date();
 const todayDateString = toLocaleDateString(today);
 const dateRangeStart = toLocaleDateString(addDays(today, 7));
 const dateRangeEnd = toLocaleDateString(addDays(today, 14));
-
-const CalendarComponent = ({
-  maxDaysInRange = 7,
+const CalendarListComponent = ({
+  maxDaysInRange,
   showExtraDays,
   firstDayOfWeek,
   debugMode = false,
+  futureMonthsCount,
+  pastMonthsCount,
+  showDayNames,
+  showDayNamesOnTop,
+  minDate,
+  horizontal,
 }) => {
   const [selectedDay, setSelectedDay] = useState<string>();
   const choiceTurnRef = useRef<"start" | "end">("start");
@@ -76,11 +80,7 @@ const CalendarComponent = ({
   const markedDates = useMemo(() => {
     const { start, end } = dateRange;
     if (start && end) {
-      const a = eachDayOfInterval({
-        start: dateStringToDate(start),
-        end: dateStringToDate(end),
-      });
-      return a.map(toLocaleDateString);
+      return eachDayOfInterval({ start, end }).map(toLocaleDateString);
     }
     if (start && !end) {
       return [start];
@@ -97,45 +97,90 @@ const CalendarComponent = ({
     (props) => <CustomDay {...props} debugMode={debugMode} />,
     [debugMode],
   );
+
   return (
-    <Calendar
+    <CalendarList
       DayComponent={renderDayComponent}
       maxDate={maxDate}
-      date={todayDateString}
+      minDate={minDate}
+      currentDate={todayDateString}
+      estimatedCalendarSize={debugMode ? 470 : 400}
       showExtraDays={showExtraDays}
       markedDates={markedDates}
+      futureMonthsCount={futureMonthsCount}
+      pastMonthsCount={pastMonthsCount}
+      showDayNames={showDayNames}
+      showDayNamesOnTop={showDayNamesOnTop}
       onDayPress={onDayPress}
       firstDayOfWeek={firstDayOfWeek as DayIndex}
       customStateCreator={createDayState}
-      contentContainerStyle={{ paddingHorizontal: 2 }}
+      calendarContentContainerStyle={{
+        paddingHorizontal: 8,
+      }}
+      horizontal={horizontal}
     />
   );
 };
 
 const meta = {
-  title: "Calendar/Multi Selection",
-  component: CalendarComponent,
+  title: "CalendarList/Multi Selection",
+  component: CalendarListComponent,
   parameters: {
     controls: {
-      exclude: ["debugMode"],
+      exclude: ["debugMode", "large", "horizontal"],
     },
   },
   argTypes: {
     firstDayOfWeek: { control: "radio", options: [0, 1, 2, 3, 4, 5, 6] },
+    currentDate: {
+      control: "select",
+      options: [todayDateString, "2024-01-01", "2044-12-20"],
+    },
+    minDate: {
+      control: "select",
+      options: [todayDateString, "2024-01-01", "2044-12-20"],
+    },
   },
   args: {
-    maxDaysInRange: 7,
+    maxDaysInRange: 30,
+    futureMonthsCount: 12,
+    pastMonthsCount: 0,
     showExtraDays: true,
     debugMode: false,
+    showDayNames: true,
+    showDayNamesOnTop: false,
+    currentDate: todayDateString,
+    minDate: todayDateString,
+    large: false,
+    horizontal: false,
   },
 };
 
 export default meta;
 
 export const Default = {};
+export const Horizontal = {
+  args: {
+    horizontal: true,
+    debugMode: true,
+  },
+};
 export const DebugRenderCount = {
   args: {
     debugMode: true,
+  },
+};
+
+export const LargeCalendar = {
+  args: {
+    debugMode: true,
+    pastMonthsCount: 999,
+    futureMonthsCount: 1000,
+  },
+  parameters: {
+    controls: {
+      exclude: ["debugMode", "large", "pastMonthsCount", "futureMonthsCount"],
+    },
   },
 };
 
@@ -146,7 +191,7 @@ const isSameOrBeforeDate = (date: string, dateToCompare: string) => {
 const CustomDay: React.FC<InnerDayProps<any>> = (props) => {
   const { day, state, isStartDay, isEndDay, isToday, isSelected, debugMode } =
     props;
-  const renderCount = useRenderCount();
+  const renderCount = useRenderCount(day.toString());
   const dayStyle = useMemo(() => {
     if (state !== "inactive") {
       if (isStartDay || isEndDay) {

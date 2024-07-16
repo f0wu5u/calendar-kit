@@ -1,7 +1,7 @@
-import { dateStringToUTCDate } from "./dateStringToUTCDate";
+import { dateStringToDate } from "./dateStringToDate";
 
 export const isToday = (dateString: string) => {
-  const date = dateStringToUTCDate(dateString);
+  const date = dateStringToDate(dateString);
   const today = new Date();
 
   return (

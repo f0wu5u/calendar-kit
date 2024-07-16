@@ -2,14 +2,13 @@ import React, { useCallback, useState } from "react";
 import {
   Calendar,
   DayIndex,
-  toUTCDate,
-  toUTCDateString,
+  toLocaleDateString,
 } from "@code-fi/react-native-calendar-ui";
 import { addDays } from "date-fns";
 
-const today = toUTCDate(new Date());
+const today = new Date();
 
-const todayDateString = toUTCDateString(today);
+const todayDateString = toLocaleDateString(today);
 
 const CalendarComponent = ({
   basic,
@@ -49,15 +48,15 @@ const meta = {
     minDate: {
       control: "select",
       options: [
-        toUTCDateString(addDays(today, 2)),
-        toUTCDateString(addDays(today, 7)),
+        toLocaleDateString(addDays(today, 2)),
+        toLocaleDateString(addDays(today, 7)),
       ],
     },
     maxDate: {
       control: "select",
       options: [
-        toUTCDateString(addDays(today, 14)),
-        toUTCDateString(addDays(today, 28)),
+        toLocaleDateString(addDays(today, 14)),
+        toLocaleDateString(addDays(today, 28)),
       ],
     },
     firstDayOfWeek: { control: "radio", options: [0, 1, 2, 3, 4, 5, 6] },

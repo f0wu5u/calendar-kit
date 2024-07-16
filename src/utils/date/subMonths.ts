@@ -1,10 +1,10 @@
-import { dateStringToUTCDate } from "./dateStringToUTCDate";
+import { dateStringToDate } from "./dateStringToDate";
 import { getDaysInMonth } from "./daysInMonth";
 
 export const subMonths = (dateString: string, months: number) => {
-  const date = dateStringToUTCDate(dateString);
+  const date = dateStringToDate(dateString);
   const day = date.getUTCDate();
-  date.setMonth(date.getUTCMonth() - Math.abs(months));
+  date.setUTCMonth(date.getUTCMonth() - Math.abs(months));
   const daysInNewMonth = getDaysInMonth(
     date.getUTCFullYear(),
     date.getUTCMonth() + 1,

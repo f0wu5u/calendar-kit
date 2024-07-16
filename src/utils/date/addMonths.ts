@@ -1,8 +1,8 @@
-import { dateStringToUTCDate } from "./dateStringToUTCDate";
+import { dateStringToDate } from "./dateStringToDate";
 import { getDaysInMonth } from "./daysInMonth";
 
 export const addMonths = (dateString: string, months: number) => {
-  const date = dateStringToUTCDate(dateString);
+  const date = dateStringToDate(dateString);
 
   const day = date.getUTCDate();
   date.setUTCMonth(date.getMonth() + Math.abs(months));

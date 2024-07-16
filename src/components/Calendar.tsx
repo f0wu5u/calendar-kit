@@ -1,11 +1,12 @@
 import React, { useMemo } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, ViewStyle } from "react-native";
 
 import {
   createWeeksOfMonth,
-  dateStringToUTCDate,
+  dateStringToDate,
   formatMonthName,
 } from "../utils/date";
+import { width } from "../utils/screen";
 
 import { Week, WeekProps } from "./Week";
 import { WeekDay, WeekDayProps } from "./WeekDay";
@@ -17,6 +18,8 @@ export interface CalendarProps
   showDayNames?: boolean;
   MonthNameComponent?: React.ComponentType<{ month: Date }>;
   WeekDayNameComponent?: React.ComponentType<WeekDayProps>;
+  contentContainerStyle?: ViewStyle;
+  weeksContainerStyle?: ViewStyle;
 }
 
 export const Calendar: React.FC<CalendarProps> = React.memo(
@@ -27,11 +30,13 @@ export const Calendar: React.FC<CalendarProps> = React.memo(
     MonthNameComponent,
     showDayNames = true,
     WeekDayNameComponent,
+    contentContainerStyle,
+    weeksContainerStyle,
     ...weekProps
   }) => {
     const WeekDayComponent = WeekDayNameComponent ?? WeekDay;
 
-    const monthDate = useMemo(() => dateStringToUTCDate(date), [date]);
+    const monthDate = useMemo(() => dateStringToDate(date), [date]);
     const weeksOfMonth = useMemo(
       () => createWeeksOfMonth(monthDate, firstDayOfWeek),
       [monthDate, firstDayOfWeek],
@@ -51,7 +56,7 @@ export const Calendar: React.FC<CalendarProps> = React.memo(
     );
 
     return (
-      <>
+      <View style={[styles.calenderContainer, contentContainerStyle]}>
         {MonthNameComponent ? (
           <MonthNameComponent month={monthDate} />
         ) : (
@@ -67,8 +72,10 @@ export const Calendar: React.FC<CalendarProps> = React.memo(
             weekdaysShort={weekdaysShort}
           />
         ) : null}
-        <View style={styles.weeksContainer}>{weeks}</View>
-      </>
+        <View style={[styles.weeksContainer, weeksContainerStyle]}>
+          {weeks}
+        </View>
+      </View>
     );
   },
 );
@@ -76,6 +83,9 @@ export const Calendar: React.FC<CalendarProps> = React.memo(
 Calendar.displayName = "Calendar";
 
 const styles = StyleSheet.create({
+  calenderContainer: {
+    width,
+  },
   weeksContainer: {
     gap: 8,
   },

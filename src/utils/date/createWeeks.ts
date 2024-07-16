@@ -7,7 +7,7 @@ import { endOfWeek } from "./endOfWeek";
 import { isSameWeek } from "./isSameWeek";
 import { startOfMonth } from "./startOfMonth";
 import { startOfWeek } from "./startOfWeek";
-import { toDateString } from "./toDateString";
+import { toLocaleDateString } from "./toLocaleDateString";
 
 const createIntervalRange = (date: Date) => {
   return {
@@ -17,15 +17,14 @@ const createIntervalRange = (date: Date) => {
 };
 
 const fillWeek = (week: Date[], weekStartsOn: DayIndex) => {
-  const daysInWeek = week.length;
-  if (daysInWeek === 7) {
-    return week.map(toDateString);
+  if (week.length === 7) {
+    return week.map(toLocaleDateString);
   }
   const firstDayInWeek = week[0];
 
   const start = startOfWeek(firstDayInWeek, { weekStartsOn });
   const end = endOfWeek(firstDayInWeek, { weekStartsOn });
-  return eachDayOfInterval({ start, end }).map(toDateString);
+  return eachDayOfInterval({ start, end }).map(toLocaleDateString);
 };
 
 export const createWeeksOfMonth = (date: Date, weekStartsOn: DayIndex = 0) => {

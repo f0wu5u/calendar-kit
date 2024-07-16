@@ -1,7 +1,7 @@
 export { addMonths } from "./addMonths";
 export { createRange } from "./createRange";
 export { createWeeksOfMonth } from "./createWeeks";
-export { dateStringToUTCDate } from "./dateStringToUTCDate";
+export { dateStringToDate } from "./dateStringToDate";
 export { eachDayOfInterval } from "./eachDayOfInterval";
 export { eachMonthOfInterval } from "./eachMonthOfInterval";
 export { endOfMonth } from "./endOfMonth";
@@ -16,6 +16,4 @@ export { isValidDate } from "./isValidDate";
 export { startOfMonth } from "./startOfMonth";
 export { startOfWeek } from "./startOfWeek";
 export { subMonths } from "./subMonths";
-export { toDateString } from "./toDateString";
-export { toUTCDate } from "./toUTCDate";
-export { toUTCDateString } from "./toUTCDateString";
+export { toLocaleDateString } from "./toLocaleDateString";

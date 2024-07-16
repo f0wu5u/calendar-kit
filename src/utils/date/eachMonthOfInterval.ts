@@ -1,5 +1,5 @@
 import { isValidDate } from "./isValidDate";
-import { toUTCDateString } from "./toUTCDateString";
+import { toLocaleDateString } from "./toLocaleDateString";
 
 type Interval = { start: Date; end: Date };
 export const eachMonthOfInterval = ({ start, end }: Interval) => {
@@ -13,12 +13,15 @@ export const eachMonthOfInterval = ({ start, end }: Interval) => {
 
   const months = [];
   const currenDate = new Date(start);
-  currenDate.setUTCDate(1);
-  currenDate.setUTCHours(0, 0, 0, 0);
-  while (currenDate <= end) {
-    months.push(toUTCDateString(currenDate));
-    const utcMonth = currenDate.getUTCMonth();
-    currenDate.setUTCMonth(utcMonth + 1);
+  currenDate.setDate(1);
+  currenDate.setHours(0, 0, 0, 0);
+  const currentEndDate = new Date(end);
+  currentEndDate.setDate(1);
+  currentEndDate.setHours(0, 0, 0, 0);
+  while (currenDate <= currentEndDate) {
+    months.push(toLocaleDateString(currenDate));
+    const month = currenDate.getMonth();
+    currenDate.setMonth(month + 1);
   }
   return months;
 };
