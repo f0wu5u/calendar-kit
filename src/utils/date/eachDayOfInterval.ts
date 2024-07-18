@@ -12,13 +12,13 @@ export const eachDayOfInterval = ({ start, end }: Interval) => {
 
   const days = [];
   const currentDate = new Date(start);
-  currentDate.setUTCHours(0, 0, 0, 0);
+  currentDate.setHours(0, 0, 0, 0);
   const currentEndDate = new Date(end);
-  currentEndDate.setUTCHours(0, 0, 0, 0);
+  currentEndDate.setHours(23, 59, 59, 999);
   while (currentDate <= currentEndDate) {
     days.push(new Date(currentDate));
-    const utcDay = currentDate.getUTCDate();
-    currentDate.setUTCDate(utcDay + 1);
+    const date = currentDate.getDate();
+    currentDate.setDate(date + 1);
   }
   return days;
 };

@@ -1,3 +1,3 @@
 export const getDaysInMonth = (year: number, month: number) => {
-  return new Date(Date.UTC(year, month, 0)).getUTCDate();
+  return new Date(year, month, 0).getDate();
 };

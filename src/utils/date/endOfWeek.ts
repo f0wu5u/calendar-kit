@@ -7,7 +7,7 @@ export const endOfWeek = (
   { weekStartsOn = 0 }: { weekStartsOn: DayIndex },
 ) => {
   const start = startOfWeek(date, { weekStartsOn });
-  start.setUTCDate(start.getUTCDate() + 6);
-  start.setUTCHours(23, 59, 59, 999);
+  start.setDate(start.getDate() + 6);
+  start.setHours(23, 59, 59, 999);
   return start;
 };

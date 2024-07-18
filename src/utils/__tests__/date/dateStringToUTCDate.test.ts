@@ -8,7 +8,7 @@ describe("dateStringToUTCDate", function () {
     const utcDate = dateStringToDate("2024-05-01");
     expect(utcDate).toBeInstanceOf(Date);
     expect(utcDate.toUTCString()).toStrictEqual(
-      "Wed, 01 May 2024 00:00:00 GMT",
+      "Wed, 01 May 2024 12:00:00 GMT",
     );
   });
 });

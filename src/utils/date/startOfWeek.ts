@@ -5,8 +5,8 @@ export const startOfWeek = (
   { weekStartsOn = 0 }: { weekStartsOn: DayIndex },
 ) => {
   const currentDate = new Date(date);
-  const diff = (currentDate.getUTCDay() + 7 - weekStartsOn) % 7;
-  currentDate.setUTCDate(currentDate.getUTCDate() - diff);
-  currentDate.setUTCHours(0, 0, 0, 0);
+  const diff = (currentDate.getDay() + 7 - weekStartsOn) % 7;
+  currentDate.setDate(currentDate.getDate() - diff);
+  currentDate.setHours(0, 0, 0, 0);
   return currentDate;
 };
