@@ -3,19 +3,17 @@ import { StyleSheet, Text, View } from "react-native";
 import {
   Calendar,
   InnerDayProps,
-  toDateString,
-  toUTCDate,
-  toUTCDateString,
+  toLocaleDateString,
 } from "@code-fi/react-native-calendar-ui";
 import { addDays, eachDayOfInterval, isWeekend } from "date-fns";
 
-const today = toUTCDate(new Date());
+const today = new Date();
 
-const todayDateString = toUTCDateString(today);
+const todayDateString = toLocaleDateString(today);
 const orangeDays = eachDayOfInterval({
   start: addDays(today, 6),
   end: addDays(today, 10),
-}).map(toDateString);
+}).map(toLocaleDateString);
 
 const CalendarComponent = () => {
   const [selectedDay, setSelectedDay] = useState<string>();
@@ -27,7 +25,6 @@ const CalendarComponent = () => {
   const createDayState = useCallback(
     ({ markedDates, dateString }, defaultState) => {
       const isOrangeDay = orangeDays.includes(dateString);
-
       // disable all weekend days
       const isWeekendDate = isWeekend(dateString);
       return {
@@ -67,15 +64,16 @@ const CustomDay: React.FC<InnerDayProps<any>> = (props) => {
   const { day, state, isSelected, isOrangeDay, isToday } = props;
   const dayStyle = useMemo(() => {
     if (state !== "inactive") {
+      if (isToday) {
+        return {
+          textStyle: textStyles.today,
+          containerStyle: isSelected ? containerStyles.selected : undefined,
+        };
+      }
       if (isSelected) {
         return {
           textStyle: textStyles.selected,
           containerStyle: containerStyles.selected,
-        };
-      }
-      if (isToday) {
-        return {
-          textStyle: textStyles.today,
         };
       }
     }
@@ -91,7 +89,7 @@ const CustomDay: React.FC<InnerDayProps<any>> = (props) => {
           dayStyle.textStyle,
         ]}
       >
-        {day.getUTCDate()}
+        {day.getDate()}
       </Text>
       {isOrangeDay ? <View style={containerStyles.orange} /> : undefined}
     </View>

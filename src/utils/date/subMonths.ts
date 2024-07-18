@@ -1,15 +1,15 @@
-import { dateStringToUTCDate } from "./dateStringToUTCDate";
+import { dateStringToDate } from "./dateStringToDate";
 import { getDaysInMonth } from "./daysInMonth";
 
 export const subMonths = (dateString: string, months: number) => {
-  const date = dateStringToUTCDate(dateString);
-  const day = date.getUTCDate();
-  date.setMonth(date.getUTCMonth() - Math.abs(months));
+  const date = dateStringToDate(dateString);
+  const day = date.getDate();
+  date.setMonth(date.getMonth() - Math.abs(months));
   const daysInNewMonth = getDaysInMonth(
-    date.getUTCFullYear(),
-    date.getUTCMonth() + 1,
+    date.getFullYear(),
+    date.getMonth() + 1,
   );
   const newDay = Math.min(day, daysInNewMonth);
-  date.setUTCDate(newDay);
+  date.setDate(newDay);
   return date;
 };

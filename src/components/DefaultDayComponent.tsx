@@ -37,7 +37,7 @@ export const DefaultDayComponent: React.FC<
             dayStyle.textStyle,
           ]}
         >
-          {day.getUTCDate()}
+          {day.getDate()}
         </Text>
       </View>
     </>

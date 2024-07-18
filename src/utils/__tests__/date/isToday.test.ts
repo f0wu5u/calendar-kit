@@ -1,9 +1,8 @@
-import { isToday } from "../../date";
-import { getDateString } from "../helpers";
+import { isToday, toLocaleDateString } from "../../date";
 
 describe("isToday", function () {
   const june01 = "2024-06-01";
-  const todayDateString = getDateString(new Date());
+  const todayDateString = toLocaleDateString(new Date());
 
   it("should throw error when invalid date string is provided", function () {
     expect(() => isToday("2024-05-1")).toThrow("Invalid date");

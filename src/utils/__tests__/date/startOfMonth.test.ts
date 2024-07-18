@@ -12,8 +12,8 @@ describe("startOfMonth", function () {
     const june25 = new Date("2024-06-25");
     const june1 = startOfMonth(june25);
     expect(getDateString(june1)).toStrictEqual("2024-06-01");
-    expect(june1.getUTCDate()).toStrictEqual(1);
-    expect(june1.getUTCFullYear()).toStrictEqual(2024);
-    expect(june1.getUTCMonth()).toStrictEqual(5); //june month index;
+    expect(june1.getDate()).toStrictEqual(1);
+    expect(june1.getFullYear()).toStrictEqual(2024);
+    expect(june1.getMonth()).toStrictEqual(5); //june month index;
   });
 });

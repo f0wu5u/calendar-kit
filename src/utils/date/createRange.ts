@@ -1,7 +1,7 @@
 import { addMonths } from "./addMonths";
 import { eachMonthOfInterval } from "./eachMonthOfInterval";
 import { subMonths } from "./subMonths";
-import { toUTCDateString } from "./toUTCDateString";
+import { toLocaleDateString } from "./toLocaleDateString";
 
 type CreateRangeParam = {
   startMonth?: string;
@@ -13,7 +13,7 @@ export const createRange = ({
   pastMonthsCount = 0,
   futureMonthsCount = 12,
 }: CreateRangeParam) => {
-  const initialDate = startMonth ?? toUTCDateString(new Date());
+  const initialDate = startMonth ?? toLocaleDateString(new Date());
   const maxPastSelectableDate = subMonths(initialDate, pastMonthsCount);
   const maxFutureSelectableDate = addMonths(initialDate, futureMonthsCount);
   return eachMonthOfInterval({

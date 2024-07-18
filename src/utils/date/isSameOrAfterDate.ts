@@ -1,10 +1,10 @@
-import { dateStringToUTCDate } from "./dateStringToUTCDate";
+import { dateStringToDate } from "./dateStringToDate";
 
 export const isSameOrAfterDate = (
   dateString: string,
   dateToCompare: string,
 ) => {
-  const date = dateStringToUTCDate(dateString);
-  const secondDate = dateStringToUTCDate(dateToCompare);
+  const date = dateStringToDate(dateString);
+  const secondDate = dateStringToDate(dateToCompare);
   return date >= secondDate;
 };
