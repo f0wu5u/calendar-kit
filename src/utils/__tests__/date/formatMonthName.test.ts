@@ -11,7 +11,7 @@ describe("formatMonthName", function () {
     const today = new Date();
     const monthName = formatMonthName(today);
     expect(monthName).toStrictEqual(
-      `${monthNames[today.getUTCMonth()]} ${today.getUTCFullYear()}`,
+      `${monthNames[today.getMonth()]} ${today.getFullYear()}`,
     );
   });
 });

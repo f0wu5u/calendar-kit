@@ -9,11 +9,12 @@ import { StyleSheet, Text, View } from "react-native";
 import {
   CalendarList,
   DayIndex,
+  getDatesInRange,
   InnerDayProps,
   toLocaleDateString,
   useRenderCount,
 } from "@code-fi/react-native-calendar-ui";
-import { addDays, eachDayOfInterval, isBefore, isSameDay } from "date-fns";
+import { addDays, isBefore, isSameDay } from "date-fns";
 
 const today = new Date();
 
@@ -80,7 +81,7 @@ const CalendarListComponent = ({
   const markedDates = useMemo(() => {
     const { start, end } = dateRange;
     if (start && end) {
-      return eachDayOfInterval({ start, end }).map(toLocaleDateString);
+      return getDatesInRange(start, end);
     }
     if (start && !end) {
       return [start];
