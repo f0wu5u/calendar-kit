@@ -55,7 +55,7 @@ export const CalendarList = React.memo(
         futureMonthsCount = 12,
         horizontal,
         showDayNamesOnTop = false,
-        showDayNames,
+        showDayNames = true,
         WeekDayNameComponent,
         weekdaysShort,
         firstDayOfWeek,
