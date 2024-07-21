@@ -36,6 +36,7 @@ interface CalendarListProps
     width?: number;
     height?: number;
   };
+  showScrollIndicator?: boolean;
 }
 
 export interface CalendarListRef {
@@ -61,6 +62,7 @@ export const CalendarList = React.memo(
         firstDayOfWeek,
         calendarContentContainerStyle,
         calendarSize,
+        showScrollIndicator,
         ...calendarProps
       }: CalendarListProps,
       ref: ForwardedRef<CalendarListRef>,
@@ -169,6 +171,7 @@ export const CalendarList = React.memo(
             pagingEnabled={horizontal}
             initialScrollIndex={initialDateIndex}
             showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={showScrollIndicator}
           />
         </>
       );

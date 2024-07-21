@@ -6,7 +6,6 @@ import {
   dateStringToDate,
   formatMonthName,
 } from "../utils/date";
-import { width } from "../utils/screen";
 
 import { Week, WeekProps } from "./Week";
 import { WeekDay, WeekDayProps } from "./WeekDay";
@@ -84,7 +83,7 @@ Calendar.displayName = "Calendar";
 
 const styles = StyleSheet.create({
   calenderContainer: {
-    width,
+    width: "100%",
   },
   weeksContainer: {
     gap: 8,

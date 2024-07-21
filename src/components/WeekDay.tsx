@@ -22,8 +22,8 @@ export const WeekDay: React.FC<WeekDayProps> = memo(
 
     return (
       <View style={styles.daysContainer}>
-        {weekdays.map((day) => (
-          <View key={day} style={styles.day}>
+        {weekdays.map((day, index) => (
+          <View key={day + index} style={styles.day}>
             <Text style={styles.dayText}>{day}</Text>
           </View>
         ))}
@@ -49,9 +49,7 @@ const styles = StyleSheet.create({
     },
     gap: 2,
     zIndex: 2,
-    // shadowColor="backgroundNeutralC999"
     shadowOpacity: 0.05,
-    // backgroundColor="backgroundNeutralC000"
   },
   day: {
     height: "100%",
