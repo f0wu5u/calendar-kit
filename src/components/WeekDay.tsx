@@ -61,7 +61,6 @@ const styles = StyleSheet.create({
     textTransform: "capitalize",
     textAlign: "center",
     color: "#5a5a5a",
-    fontWeight: "500",
     fontSize: 18,
   },
 });

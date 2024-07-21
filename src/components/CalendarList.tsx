@@ -142,7 +142,10 @@ export const CalendarList = React.memo(
           minDate={minDate}
           markedDates={markedDates}
           date={item}
-          contentContainerStyle={calendarContentContainerStyle}
+          contentContainerStyle={{
+            ...calendarContentContainerStyle,
+            width: calendarWidth,
+          }}
         />
       );
 
