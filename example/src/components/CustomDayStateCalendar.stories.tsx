@@ -53,7 +53,7 @@ const CalendarComponent = () => {
 };
 
 const meta = {
-  title: "Calendar/Custom Day State",
+  title: "Components/Calendar/Custom Day State",
   component: CalendarComponent,
 };
 

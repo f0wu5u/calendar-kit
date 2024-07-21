@@ -37,7 +37,7 @@ const CalendarComponent = ({
 };
 
 const meta = {
-  title: "Calendar/Single Day",
+  title: "Components/Calendar/Single Day",
   component: CalendarComponent,
   parameters: {
     controls: {

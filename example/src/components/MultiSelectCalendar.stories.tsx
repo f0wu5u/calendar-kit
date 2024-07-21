@@ -109,7 +109,7 @@ const CalendarComponent = ({
 };
 
 const meta = {
-  title: "Calendar/Multi Selection",
+  title: "Components/Calendar/Multi Selection",
   component: CalendarComponent,
   parameters: {
     controls: {
