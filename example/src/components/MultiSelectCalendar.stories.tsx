@@ -1,20 +1,15 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import React, { useCallback, useMemo } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import {
   Calendar,
   DayIndex,
-  getDatesInRange,
   InnerDayProps,
   toLocaleDateString,
   useRenderCount,
 } from "@code-fi/react-native-calendar-ui";
-import { addDays, isBefore, isSameDay } from "date-fns";
+import { addDays } from "date-fns";
+
+import { useMultiSelectCalendar } from "../hooks/useMultiSelectCalendar";
 
 const today = new Date();
 
@@ -28,30 +23,11 @@ const CalendarComponent = ({
   firstDayOfWeek,
   debugMode = false,
 }) => {
-  const [selectedDay, setSelectedDay] = useState<string>();
-  const choiceTurnRef = useRef<"start" | "end">("start");
-  const [dateRange, setDateRange] = useState({
-    start: dateRangeStart,
-    end: dateRangeEnd,
-  });
-
-  //effect for creating date range for multi select dates
-  useEffect(() => {
-    if (selectedDay) {
-      const sameOrBeforeCheckInDate = isSameOrBeforeDate(
-        selectedDay,
-        dateRange.start,
-      );
-      if (choiceTurnRef.current === "start" || sameOrBeforeCheckInDate) {
-        setDateRange({ start: selectedDay, end: undefined });
-        choiceTurnRef.current = "end";
-      } else {
-        setDateRange((prevState) => ({ ...prevState, end: selectedDay }));
-        choiceTurnRef.current = "start";
-        setSelectedDay(undefined);
-      }
-    }
-  }, [selectedDay, dateRange.start]);
+  const { maxDate, markedDates, onDayPress } = useMultiSelectCalendar(
+    maxDaysInRange,
+    dateRangeStart,
+    dateRangeEnd,
+  );
 
   /** extending day state with custom props
    * useful when you need to render additional
@@ -68,26 +44,6 @@ const CalendarComponent = ({
       isSelected: markedDates.includes(dateString),
     };
   }, []);
-
-  const onDayPress = useCallback((dateString) => {
-    setSelectedDay(dateString);
-  }, []);
-
-  const markedDates = useMemo(() => {
-    const { start, end } = dateRange;
-    if (start && end) {
-      return getDatesInRange(start, end);
-    }
-    if (start && !end) {
-      return [start];
-    }
-    return [];
-  }, [dateRange]);
-
-  const maxDate = useMemo(() => {
-    if (choiceTurnRef.current === "start") return undefined;
-    return toLocaleDateString(addDays(dateRange.start, maxDaysInRange));
-  }, [dateRange.start, maxDaysInRange, choiceTurnRef.current]);
 
   const renderDayComponent = useCallback(
     (props) => <CustomDay {...props} debugMode={debugMode} />,
@@ -133,10 +89,6 @@ export const DebugRenderCount = {
   args: {
     debugMode: true,
   },
-};
-
-const isSameOrBeforeDate = (date: string, dateToCompare: string) => {
-  return isSameDay(date, dateToCompare) || isBefore(date, dateToCompare);
 };
 
 const CustomDay: React.FC<InnerDayProps<any>> = (props) => {
