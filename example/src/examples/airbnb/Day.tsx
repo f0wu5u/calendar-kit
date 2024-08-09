@@ -165,7 +165,7 @@ const containerStyles = StyleSheet.create({
     right: -11,
   },
   overflowEnd: {
-    left: -11,
+    left: -8.5,
   },
 });
 
