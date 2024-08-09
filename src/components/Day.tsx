@@ -36,7 +36,7 @@ const DayComponent: React.FC<DayProps> = ({
 };
 
 const styles = StyleSheet.create({
-  dayContainer: { flex: 1, marginHorizontal: -0.5, width: "100%" },
+  dayContainer: { flex: 1, marginHorizontal: -0.15, width: "100%" },
   dayText: { textAlign: "center" },
 });
 
