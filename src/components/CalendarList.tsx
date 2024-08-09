@@ -8,7 +8,7 @@ import React, {
   useRef,
 } from "react";
 import { I18nManager, View } from "react-native";
-import { FlashList } from "@shopify/flash-list";
+import { FlashList, ViewToken } from "@shopify/flash-list";
 
 import {
   createRange,
@@ -37,6 +37,7 @@ interface CalendarListProps
     height?: number;
   };
   showScrollIndicator?: boolean;
+  onScroll?: (visibleMonths: string[]) => void;
 }
 
 export interface CalendarListRef {
@@ -63,6 +64,7 @@ export const CalendarList = React.memo(
         calendarContentContainerStyle,
         calendarSize,
         showScrollIndicator,
+        onScroll,
         ...calendarProps
       }: CalendarListProps,
       ref: ForwardedRef<CalendarListRef>,
@@ -87,6 +89,16 @@ export const CalendarList = React.memo(
           futureMonthsCount,
         });
       }, [minDate, pastMonthsCount, futureMonthsCount]);
+
+      const onViewableItemsChanged = useCallback(
+        ({ viewableItems }: { viewableItems: ViewToken[] }) => {
+          const visibleMonths = viewableItems
+            .filter((month) => month.isViewable)
+            .map(({ item }) => item);
+          onScroll?.(visibleMonths);
+        },
+        [onScroll],
+      );
 
       useImperativeHandle(ref, () => ({
         scrollToDate(dateString: string, animated: boolean) {
@@ -175,6 +187,7 @@ export const CalendarList = React.memo(
             initialScrollIndex={initialDateIndex}
             showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={showScrollIndicator}
+            onViewableItemsChanged={onViewableItemsChanged}
           />
         </>
       );
