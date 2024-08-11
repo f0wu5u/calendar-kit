@@ -15,6 +15,7 @@ export interface CalendarProps
     WeekDayProps {
   date: string;
   showDayNames?: boolean;
+  showMonthName?: boolean;
   MonthNameComponent?: React.ComponentType<{ month: Date; locale?: string }>;
   contentContainerStyle?: ViewStyle;
   weeksContainerStyle?: ViewStyle;
@@ -31,6 +32,8 @@ export const Calendar: React.FC<CalendarProps> = React.memo(
     weeksContainerStyle,
     WeekDayNameComponent,
     locale,
+    showMonthName = true,
+    weekdaysFormat,
     ...weekProps
   }) => {
     const monthDate = useMemo(() => dateStringToDate(date), [date]);
@@ -38,6 +41,18 @@ export const Calendar: React.FC<CalendarProps> = React.memo(
       () => createWeeksOfMonth(monthDate, firstDayOfWeek),
       [monthDate, firstDayOfWeek],
     );
+    const renderMonthName = () => {
+      if (!showMonthName) return null;
+      return MonthNameComponent ? (
+        <MonthNameComponent month={monthDate} locale={locale} />
+      ) : (
+        <View style={styles.monthNameContainer}>
+          <Text style={styles.monthNameText}>
+            {formatMonthName(monthDate, locale)}
+          </Text>
+        </View>
+      );
+    };
 
     const weeks = useMemo(
       () =>
@@ -55,21 +70,14 @@ export const Calendar: React.FC<CalendarProps> = React.memo(
 
     return (
       <View style={[styles.calenderContainer, contentContainerStyle]}>
-        {MonthNameComponent ? (
-          <MonthNameComponent month={monthDate} locale={locale} />
-        ) : (
-          <View style={styles.monthNameContainer}>
-            <Text style={styles.monthNameText}>
-              {formatMonthName(monthDate, locale)}
-            </Text>
-          </View>
-        )}
+        {renderMonthName()}
         {showDayNames ? (
           <WeekDay
             firstDayOfWeek={firstDayOfWeek}
             weekdaysShort={weekdaysShort}
             WeekDayNameComponent={WeekDayNameComponent}
             locale={locale}
+            weekdaysFormat={weekdaysFormat}
           />
         ) : null}
         <View style={[styles.weeksContainer, weeksContainerStyle]}>

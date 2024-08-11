@@ -21,3 +21,7 @@ export type StateInputParams = {
   month: Date;
   showExtraDays?: boolean;
 };
+
+export interface CalendarListRef {
+  scrollToDate: (dateString: string, animated?: boolean) => void;
+}

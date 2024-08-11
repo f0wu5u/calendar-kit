@@ -10,6 +10,7 @@ import React, {
 import { I18nManager, View } from "react-native";
 import { FlashList, ViewToken } from "@shopify/flash-list";
 
+import { CalendarListRef } from "../types";
 import {
   createRange,
   dateStringToDate,
@@ -38,10 +39,6 @@ interface CalendarListProps
   };
   showScrollIndicator?: boolean;
   onScroll?: (visibleMonths: string[]) => void;
-}
-
-export interface CalendarListRef {
-  scrollToDate: (dateString: string, animated: boolean) => void;
 }
 export const CalendarList = React.memo(
   forwardRef(
@@ -101,7 +98,7 @@ export const CalendarList = React.memo(
       );
 
       useImperativeHandle(ref, () => ({
-        scrollToDate(dateString: string, animated: boolean) {
+        scrollToDate(dateString: string, animated: boolean = true) {
           const date = dateStringToDate(dateString);
           const monthOfDate = startOfMonth(date);
           const indexOfScrollToMonth = months.indexOf(
