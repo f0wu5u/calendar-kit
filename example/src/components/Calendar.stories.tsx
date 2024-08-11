@@ -16,6 +16,7 @@ const CalendarComponent = ({
   minDate,
   maxDate,
   firstDayOfWeek = 0,
+  locale,
 }) => {
   const [selectedDay, setSelectedDay] = useState<string>();
 
@@ -32,6 +33,7 @@ const CalendarComponent = ({
       markedDates={[selectedDay]}
       onDayPress={onDayPress}
       firstDayOfWeek={firstDayOfWeek as DayIndex}
+      locale={locale}
     />
   );
 };

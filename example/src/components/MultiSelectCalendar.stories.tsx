@@ -22,6 +22,7 @@ const CalendarComponent = ({
   showExtraDays,
   firstDayOfWeek,
   debugMode = false,
+  locale,
 }) => {
   const { maxDate, markedDates, onDayPress } = useMultiSelectCalendar(
     maxDaysInRange,
@@ -60,6 +61,7 @@ const CalendarComponent = ({
       firstDayOfWeek={firstDayOfWeek as DayIndex}
       customStateCreator={createDayState}
       contentContainerStyle={{ paddingHorizontal: 2 }}
+      locale={locale}
     />
   );
 };
@@ -79,6 +81,7 @@ const meta = {
     maxDaysInRange: 7,
     showExtraDays: true,
     debugMode: false,
+    locale: "en-US",
   },
 };
 
@@ -92,8 +95,16 @@ export const DebugRenderCount = {
 };
 
 const CustomDay: React.FC<InnerDayProps<any>> = (props) => {
-  const { day, state, isStartDay, isEndDay, isToday, isSelected, debugMode } =
-    props;
+  const {
+    day,
+    state,
+    isStartDay,
+    isEndDay,
+    isToday,
+    isSelected,
+    debugMode,
+    locale,
+  } = props;
   const renderCount = useRenderCount();
   const dayStyle = useMemo(() => {
     if (state !== "inactive") {
@@ -129,7 +140,7 @@ const CustomDay: React.FC<InnerDayProps<any>> = (props) => {
           dayStyle.textStyle,
         ]}
       >
-        {day.getDate()}
+        {day.toLocaleDateString(locale, { day: "numeric" })}
       </Text>
       {debugMode ? (
         <Text style={textStyles.debugRenderText}>R={renderCount}x</Text>

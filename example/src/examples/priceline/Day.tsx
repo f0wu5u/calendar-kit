@@ -20,7 +20,6 @@ export const Day: React.FC<InnerDayProps<DayProps>> = (props) => {
     isEndOfWeek,
     isStartOfWeek,
     isMultiSelect,
-    locale,
   } = props;
 
   const dayStyle = useMemo(() => {
@@ -103,7 +102,7 @@ export const Day: React.FC<InnerDayProps<DayProps>> = (props) => {
             dayStyle.textStyle,
           ]}
         >
-          {day.toLocaleDateString(locale, { day: "numeric" })}
+          {day.getDate()}
         </Text>
       </View>
       {isMultiSelect ? <View style={containerStyle.overflow} /> : null}
@@ -118,7 +117,7 @@ const containerStyles = StyleSheet.create({
     height: 44,
   },
   selected: {
-    backgroundColor: "#f0f0f0",
+    backgroundColor: "#dae9fc",
     overflow: "hidden",
   },
   start: {
@@ -147,7 +146,7 @@ const containerStyles = StyleSheet.create({
   },
   startEnd: {
     position: "absolute",
-    backgroundColor: "#1a1a1a",
+    backgroundColor: "#0072f0",
     borderRadius: 44,
     width: 44,
     height: 44,
@@ -158,7 +157,7 @@ const containerStyles = StyleSheet.create({
     position: "absolute",
     top: 0,
     bottom: 0,
-    backgroundColor: "#f0f0f0",
+    backgroundColor: "#dae9fc",
     width: 22,
     zIndex: -1,
   },
@@ -184,11 +183,9 @@ const textStyles = StyleSheet.create({
     color: "#5a5a5a",
   },
   startEnd: {
-    color: "#cacaca",
+    color: "#ffffff",
   },
   inactive: {
     color: "#cacaca",
-    textDecorationLine: "line-through",
-    textDecorationStyle: "solid",
   },
 });
