@@ -1,3 +1,5 @@
+import {locales} from "../src/constants";
+
 /** @type{import("@storybook/react").Preview} */
 const preview = {
   parameters: {
@@ -8,7 +10,15 @@ const preview = {
       },
     },
   },
-
+  argTypes:{
+    locale: {
+      control: "select",
+      options: locales,
+    },
+  },
+  args:{
+    locale: 'en-US'
+  },
   decorators: [],
 };
 

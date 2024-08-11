@@ -6,13 +6,15 @@ import {
 
 import { dateRangeStart, todayDateString } from "../../constants";
 import { useMultiSelectCalendar } from "../../hooks/useMultiSelectCalendar";
-import { isWeekend } from "../../utils";
 
 import { Day } from "./Day";
+import { MonthName } from "./MonthName";
+import { WeekDayName } from "./WeekDayName";
 
 const weekStartsOn = 1;
-const VioCalendarListComponent = ({ locale }) => {
-  const { markedDates, onDayPress, maxDate } = useMultiSelectCalendar(30);
+
+const BookingCalendarListComponent = ({ locale }) => {
+  const { markedDates, onDayPress } = useMultiSelectCalendar();
 
   /** extending day state with custom props
    * useful when you need to render additional
@@ -24,14 +26,12 @@ const VioCalendarListComponent = ({ locale }) => {
         return {};
       }
       const indexOfDay = markedDates.indexOf(dateString);
-      const dayIsWeekend = isWeekend(dateString);
       const isSelected = markedDates.includes(dateString);
 
       return {
         isStartDay: indexOfDay === 0,
         isEndDay: markedDates.length - 1 === indexOfDay && indexOfDay !== 0,
         isSelected,
-        isWeekEnd: dayIsWeekend,
         isMultiSelect: markedDates.length > 1,
       };
     },
@@ -42,14 +42,15 @@ const VioCalendarListComponent = ({ locale }) => {
 
   return (
     <CalendarList
+      MonthNameComponent={MonthName}
+      WeekDayNameComponent={WeekDayName}
       DayComponent={renderDayComponent}
       minDate={todayDateString}
-      maxDate={maxDate}
       currentDate={dateRangeStart}
       estimatedCalendarSize={300}
       showExtraDays={false}
       markedDates={markedDates}
-      futureMonthsCount={13}
+      futureMonthsCount={15}
       showDayNamesOnTop
       onDayPress={onDayPress}
       firstDayOfWeek={weekStartsOn}
@@ -59,7 +60,9 @@ const VioCalendarListComponent = ({ locale }) => {
       }}
       customStateCreator={createDayState}
       calendarContentContainerStyle={{
-        paddingHorizontal: 8,
+        paddingHorizontal: 32,
+        paddingTop: 12,
+        paddingBottom: 8,
       }}
       showScrollIndicator={false}
     />
@@ -67,8 +70,8 @@ const VioCalendarListComponent = ({ locale }) => {
 };
 
 const meta = {
-  title: "Examples/Vio.com",
-  component: VioCalendarListComponent,
+  title: "Examples/Booking.com",
+  component: BookingCalendarListComponent,
 };
 
 export default meta;

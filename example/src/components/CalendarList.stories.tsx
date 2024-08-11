@@ -27,6 +27,7 @@ const CalendarListComponent = ({
   showDayNamesOnTop,
   minDate,
   horizontal,
+  locale,
 }) => {
   const { markedDates, maxDate, onDayPress } = useMultiSelectCalendar(
     maxDaysInRange,
@@ -75,6 +76,7 @@ const CalendarListComponent = ({
         paddingHorizontal: 8,
       }}
       horizontal={horizontal}
+      locale={locale}
     />
   );
 };

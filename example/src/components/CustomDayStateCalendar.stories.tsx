@@ -15,7 +15,7 @@ const orangeDays = eachDayOfInterval({
   end: addDays(today, 10),
 }).map(toLocaleDateString);
 
-const CalendarComponent = () => {
+const CalendarComponent = ({ locale }) => {
   const [selectedDay, setSelectedDay] = useState<string>();
 
   /** extending day state with custom props
@@ -48,6 +48,7 @@ const CalendarComponent = () => {
       markedDates={[selectedDay]}
       onDayPress={onDayPress}
       customStateCreator={createDayState}
+      locale={locale}
     />
   );
 };
@@ -61,7 +62,7 @@ export default meta;
 
 export const Default = {};
 const CustomDay: React.FC<InnerDayProps<any>> = (props) => {
-  const { day, state, isSelected, isOrangeDay, isToday } = props;
+  const { day, state, isSelected, isOrangeDay, isToday, locale } = props;
   const dayStyle = useMemo(() => {
     if (state !== "inactive") {
       if (isToday) {
@@ -89,7 +90,7 @@ const CustomDay: React.FC<InnerDayProps<any>> = (props) => {
           dayStyle.textStyle,
         ]}
       >
-        {day.getDate()}
+        {day.toLocaleDateString(locale, { day: "2-digit" })}
       </Text>
       {isOrangeDay ? <View style={containerStyles.orange} /> : undefined}
     </View>

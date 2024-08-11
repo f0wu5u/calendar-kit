@@ -4,7 +4,6 @@ import { DayState, InnerDayProps } from "@code-fi/react-native-calendar-ui";
 
 import CheckInArrow from "./CheckInArrow";
 import CheckOutArrow from "./CheckOutArrow";
-import { DayPrice } from "./DayPrice";
 
 interface DayProps extends DayState {
   isSelected: boolean;
@@ -42,11 +41,14 @@ export const Day: React.FC<InnerDayProps<DayProps>> = (props) => {
         };
       }
     }
+    if (isToday) {
+      return {
+        textStyle: textStyles.selected,
+        containerStyle: isWeekEnd ? containerStyles.weekend : undefined,
+      };
+    }
     if (isWeekEnd) {
       return { containerStyle: containerStyles.weekend };
-    }
-    if (isToday) {
-      return { textStyle: textStyles.selected };
     }
     return {};
   }, [state, isWeekEnd, isToday, isStartDay, isEndDay, isSelected]);
@@ -89,7 +91,6 @@ export const Day: React.FC<InnerDayProps<DayProps>> = (props) => {
         >
           {day.getDate()}
         </Text>
-        {state !== "inactive" && <DayPrice focused={isEndDay || isStartDay} />}
       </View>
       {isStartDay && (
         <View style={{ marginLeft: -2 }}>

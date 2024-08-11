@@ -1,15 +1,13 @@
 import React, { useCallback } from "react";
 import { CalendarList } from "@code-fi/react-native-calendar-ui";
-import { endOfWeek, isSameDay, startOfWeek } from "date-fns";
 
 import { dateRangeStart, todayDateString } from "../../constants";
 import { useMultiSelectCalendar } from "../../hooks/useMultiSelectCalendar";
 
 import { Day } from "./Day";
-import { MonthName } from "./MonthName";
 
 const weekStartsOn = 1;
-const AirbnbCalendarListComponent = ({ locale }) => {
+const PricelineCalendarListComponent = () => {
   const { markedDates, onDayPress } = useMultiSelectCalendar();
 
   /** extending day state with custom props
@@ -21,16 +19,12 @@ const AirbnbCalendarListComponent = ({ locale }) => {
       return {};
     }
     const indexOfDay = markedDates.indexOf(dateString);
-    const firstDayOfWeek = startOfWeek(dateString, { weekStartsOn });
-    const lastDayOfWeek = endOfWeek(dateString, { weekStartsOn });
     const isSelected = markedDates.includes(dateString);
 
     return {
       isStartDay: indexOfDay === 0,
       isEndDay: markedDates.length - 1 === indexOfDay && indexOfDay !== 0,
       isSelected,
-      isStartOfWeek: isSameDay(dateString, firstDayOfWeek),
-      isEndOfWeek: isSameDay(dateString, lastDayOfWeek),
       isMultiSelect: markedDates.length > 1,
     };
   }, []);
@@ -39,6 +33,7 @@ const AirbnbCalendarListComponent = ({ locale }) => {
 
   return (
     <CalendarList
+      horizontal
       DayComponent={renderDayComponent}
       minDate={todayDateString}
       currentDate={dateRangeStart}
@@ -47,14 +42,12 @@ const AirbnbCalendarListComponent = ({ locale }) => {
       showExtraDays={false}
       markedDates={markedDates}
       futureMonthsCount={24}
-      showDayNamesOnTop
       onDayPress={onDayPress}
       firstDayOfWeek={weekStartsOn}
-      locale={locale}
       weeksContainerStyle={{
         gap: 4,
       }}
-      MonthNameComponent={MonthName}
+      MonthNameComponent={null}
       customStateCreator={createDayState}
       calendarContentContainerStyle={{
         paddingHorizontal: 8,
@@ -65,8 +58,8 @@ const AirbnbCalendarListComponent = ({ locale }) => {
 };
 
 const meta = {
-  title: "Examples/Airbnb",
-  component: AirbnbCalendarListComponent,
+  title: "Examples/Priceline",
+  component: PricelineCalendarListComponent,
 };
 
 export default meta;

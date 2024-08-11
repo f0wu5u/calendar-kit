@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text } from "react-native";
 
-import { formatMonthName } from "../../../../src/utils/date";
+import { formatMonthName } from "../../utils";
 
 export const MonthName = ({ month }: { month: Date }) => (
   <Text style={styles.monthNameText}>{formatMonthName(month)}</Text>
