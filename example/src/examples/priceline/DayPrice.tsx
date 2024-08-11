@@ -23,8 +23,6 @@ export const DayPrice = ({ focused }: { focused: boolean }) => {
     }
     if (price <= 100) {
       return styles.cheap;
-    } else if (price >= 150) {
-      return styles.expensive;
     }
   }, [price]);
   return (
@@ -57,8 +55,5 @@ const styles = StyleSheet.create({
   },
   cheap: {
     color: "#179d27",
-  },
-  expensive: {
-    color: "#fb3737",
   },
 });

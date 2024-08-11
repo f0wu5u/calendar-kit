@@ -1,7 +1,7 @@
 import { toLocaleDateString } from "@code-fi/react-native-calendar-ui";
 import { addDays, isBefore, isSameDay } from "date-fns";
 
-const today = new Date();
+export const today = new Date();
 
 export const todayDateString = toLocaleDateString(today);
 export const dateRangeStart = toLocaleDateString(addDays(today, 30));

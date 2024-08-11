@@ -2,6 +2,8 @@ import React, { useMemo } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { DayState, InnerDayProps } from "@code-fi/react-native-calendar-ui";
 
+import { DayPrice } from "./DayPrice";
+
 interface DayProps extends DayState {
   isSelected: boolean;
   isEndDay: boolean;
@@ -104,6 +106,7 @@ export const Day: React.FC<InnerDayProps<DayProps>> = (props) => {
         >
           {day.getDate()}
         </Text>
+        {state === "active" && <DayPrice focused={isEndDay || isStartDay} />}
       </View>
       {isMultiSelect ? <View style={containerStyle.overflow} /> : null}
     </View>
