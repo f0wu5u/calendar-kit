@@ -9,7 +9,7 @@ interface DefaultDayComponentProps {
 
 export const DefaultDayComponent: React.FC<
   InnerDayProps<DefaultDayComponentProps>
-> = ({ day, state, isToday, isSelected }) => {
+> = ({ day, locale = "en-US", state, isToday, isSelected }) => {
   const dayStyle = useMemo(() => {
     if (state !== "inactive") {
       if (isSelected) {
@@ -37,7 +37,7 @@ export const DefaultDayComponent: React.FC<
             dayStyle.textStyle,
           ]}
         >
-          {day.getDate()}
+          {day.toLocaleDateString(locale, { day: "numeric" })}
         </Text>
       </View>
     </>

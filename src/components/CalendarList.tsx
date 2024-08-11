@@ -161,14 +161,15 @@ export const CalendarList = React.memo(
         />
       );
 
-      const WeekDayComponent = WeekDayNameComponent ?? WeekDay;
-
       return (
         <>
           {showDayNamesOnTop && showDayNames && (
-            <WeekDayComponent
+            <WeekDay
               firstDayOfWeek={firstDayOfWeek}
               weekdaysShort={weekdaysShort}
+              WeekDayNameComponent={WeekDayNameComponent}
+              locale={calendarProps.locale}
+              weekdaysFormat={calendarProps.weekdaysFormat}
             />
           )}
           <FlashList

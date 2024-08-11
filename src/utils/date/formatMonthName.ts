@@ -1,5 +1,2 @@
-export const formatMonthName = (date: Date) =>
-  new Intl.DateTimeFormat("en-US", {
-    month: "long",
-    year: "numeric",
-  }).format(date);
+export const formatMonthName = (date: Date, locale = "en-US") =>
+  date.toLocaleDateString(locale, { month: "long", year: "numeric" });

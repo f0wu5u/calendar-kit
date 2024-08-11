@@ -15,8 +15,7 @@ export interface CalendarProps
     WeekDayProps {
   date: string;
   showDayNames?: boolean;
-  MonthNameComponent?: React.ComponentType<{ month: Date }>;
-  WeekDayNameComponent?: React.ComponentType<WeekDayProps>;
+  MonthNameComponent?: React.ComponentType<{ month: Date; locale?: string }>;
   contentContainerStyle?: ViewStyle;
   weeksContainerStyle?: ViewStyle;
 }
@@ -28,13 +27,12 @@ export const Calendar: React.FC<CalendarProps> = React.memo(
     weekdaysShort,
     MonthNameComponent,
     showDayNames = true,
-    WeekDayNameComponent,
     contentContainerStyle,
     weeksContainerStyle,
+    WeekDayNameComponent,
+    locale,
     ...weekProps
   }) => {
-    const WeekDayComponent = WeekDayNameComponent ?? WeekDay;
-
     const monthDate = useMemo(() => dateStringToDate(date), [date]);
     const weeksOfMonth = useMemo(
       () => createWeeksOfMonth(monthDate, firstDayOfWeek),
@@ -46,29 +44,32 @@ export const Calendar: React.FC<CalendarProps> = React.memo(
         weeksOfMonth.map((week, index) => (
           <Week
             {...weekProps}
+            locale={locale}
             key={`week-${index}`}
             weekDays={week}
             month={monthDate}
           />
         )),
-      [monthDate, weeksOfMonth, weekProps],
+      [weeksOfMonth, weekProps, locale, monthDate],
     );
 
     return (
       <View style={[styles.calenderContainer, contentContainerStyle]}>
         {MonthNameComponent ? (
-          <MonthNameComponent month={monthDate} />
+          <MonthNameComponent month={monthDate} locale={locale} />
         ) : (
           <View style={styles.monthNameContainer}>
             <Text style={styles.monthNameText}>
-              {formatMonthName(monthDate)}
+              {formatMonthName(monthDate, locale)}
             </Text>
           </View>
         )}
         {showDayNames ? (
-          <WeekDayComponent
+          <WeekDay
             firstDayOfWeek={firstDayOfWeek}
             weekdaysShort={weekdaysShort}
+            WeekDayNameComponent={WeekDayNameComponent}
+            locale={locale}
           />
         ) : null}
         <View style={[styles.weeksContainer, weeksContainerStyle]}>

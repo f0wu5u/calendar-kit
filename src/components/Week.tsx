@@ -26,6 +26,7 @@ export const Week: React.FC<WeekProps> = React.memo(
   ({
     weekDays,
     month,
+    locale,
     DayComponent,
     onDayPress,
     showExtraDays = true,
@@ -70,9 +71,10 @@ export const Week: React.FC<WeekProps> = React.memo(
             DayComponent={DayComponent}
             key={`day-${index}`}
             dateString={day}
+            locale={locale}
           />
         )),
-      [weekDays, DayComponent, onDayPress, daysState],
+      [weekDays, daysState, onDayPress, DayComponent, locale],
     );
 
     return (

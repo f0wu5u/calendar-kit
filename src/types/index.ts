@@ -9,6 +9,7 @@ export type DayState = {
 
 export type InnerDayProps<T> = T &
   DayState & {
+    locale?: string;
     day: Date;
   };
 

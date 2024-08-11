@@ -12,6 +12,7 @@ export interface DayProps {
   DayComponent?: React.ComponentType<InnerDayProps<Record<string, unknown>>>;
   onPress?: (dateString: string) => void;
   viewState: DayState;
+  locale?: string;
 }
 
 const DayComponent: React.FC<DayProps> = ({
@@ -19,6 +20,7 @@ const DayComponent: React.FC<DayProps> = ({
   DayComponent = DefaultDayComponent,
   onPress,
   viewState,
+  locale,
 }) => {
   const day = useMemo(() => dateStringToDate(dateString), [dateString]);
 
@@ -28,7 +30,7 @@ const DayComponent: React.FC<DayProps> = ({
       onPress={() => onPress?.(dateString)}
       style={styles.dayContainer}
     >
-      <DayComponent {...viewState} day={day} />
+      <DayComponent {...viewState} day={day} locale={locale} />
     </Pressable>
   ) : (
     <View style={styles.dayContainer} />
@@ -44,6 +46,7 @@ export const Day = React.memo(DayComponent, (prevProps, nextProps) => {
   return (
     equals(prevProps.DayComponent, nextProps.DayComponent) &&
     equals(prevProps.viewState, nextProps.viewState) &&
+    equals(prevProps.locale, nextProps.locale) &&
     equals(prevProps.dateString, nextProps.dateString)
   );
 });
