@@ -22,6 +22,7 @@ export const Day: React.FC<InnerDayProps<DayProps>> = (props) => {
     isEndOfWeek,
     isStartOfWeek,
     isMultiSelect,
+    locale,
   } = props;
 
   const dayStyle = useMemo(() => {
@@ -104,7 +105,7 @@ export const Day: React.FC<InnerDayProps<DayProps>> = (props) => {
             dayStyle.textStyle,
           ]}
         >
-          {day.getDate()}
+          {day.toLocaleDateString(locale, { day: "numeric" })}
         </Text>
         {state === "active" && <DayPrice focused={isEndDay || isStartDay} />}
       </View>
