@@ -146,7 +146,6 @@ const containerStyles = StyleSheet.create({
     borderBottomRightRadius: 8,
   },
   startEnd: {
-    position: "absolute",
     backgroundColor: "#1a1a1a",
     borderRadius: 44,
     width: 44,

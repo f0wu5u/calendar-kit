@@ -144,7 +144,7 @@ const PricelineCalendarListComponent = ({ locale }) => {
         showMonthName={false}
         customStateCreator={createDayState}
         calendarContentContainerStyle={{
-          paddingHorizontal: 8,
+          paddingHorizontal: 2,
         }}
         showScrollIndicator={false}
         onScroll={onScroll}

@@ -1,8 +1,9 @@
 import React, { useMemo } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import { DayState, InnerDayProps } from "@code-fi/react-native-calendar-ui";
 
-import { DayPrice } from "./DayPrice";
+import { containerStyles, textStyles } from "./styles";
+import { getContainerStyle, getDayStyle } from "./styleUtils";
 
 interface DayProps extends DayState {
   isSelected: boolean;
@@ -19,72 +20,22 @@ export const Day: React.FC<InnerDayProps<DayProps>> = (props) => {
     isStartDay,
     isEndDay,
     isSelected,
-    isEndOfWeek,
-    isStartOfWeek,
     isMultiSelect,
+    isToday,
     locale,
   } = props;
 
   const dayStyle = useMemo(() => {
     if (state !== "inactive") {
-      if (isStartDay || isEndDay) {
-        return {
-          textStyle: textStyles.startEnd,
-          containerStyle: containerStyles.startEnd,
-        };
-      }
-      if (isSelected) {
-        return {
-          textStyle: textStyles.selected,
-          containerStyle: containerStyles.selected,
-        };
-      }
+      return getDayStyle({ isStartDay, isEndDay, isToday, isSelected });
     }
     return {};
-  }, [state, isStartDay, isEndDay, isSelected]);
+  }, [state, isStartDay, isEndDay, isSelected, isToday]);
 
-  const containerStyle = useMemo(() => {
-    if (!isSelected) {
-      return {};
-    }
-    if (isStartDay) {
-      return {
-        wrapper: { ...containerStyles.selected, ...containerStyles.start },
-        overflow: {
-          ...containerStyles.overflow,
-          ...containerStyles.overflowStart,
-          ...(isEndOfWeek ? containerStyles.endOfWeek : undefined),
-        },
-      };
-    }
-    if (isEndDay) {
-      return {
-        wrapper: { ...containerStyles.selected, ...containerStyles.end },
-        overflow: {
-          ...containerStyles.overflow,
-          ...containerStyles.overflowEnd,
-          ...(isStartOfWeek ? containerStyles.startOfWeek : undefined),
-        },
-      };
-    }
-    if (isStartOfWeek) {
-      return {
-        wrapper: {
-          ...containerStyles.selected,
-          ...containerStyles.startOfWeek,
-        },
-      };
-    }
-    if (isEndOfWeek) {
-      return {
-        wrapper: {
-          ...containerStyles.selected,
-          ...containerStyles.endOfWeek,
-        },
-      };
-    }
-    return { wrapper: containerStyles.selected };
-  }, [isSelected, isStartDay, isEndDay, isStartOfWeek, isEndOfWeek]);
+  const containerStyle = useMemo(
+    () => getContainerStyle({ isSelected, isEndDay, isStartDay }),
+    [isSelected, isStartDay, isEndDay],
+  );
 
   return (
     <View
@@ -107,89 +58,8 @@ export const Day: React.FC<InnerDayProps<DayProps>> = (props) => {
         >
           {day.toLocaleDateString(locale, { day: "numeric" })}
         </Text>
-        {state === "active" && <DayPrice focused={isEndDay || isStartDay} />}
       </View>
       {isMultiSelect ? <View style={containerStyle.overflow} /> : null}
     </View>
   );
 };
-
-const containerStyles = StyleSheet.create({
-  defaultContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-    height: 44,
-  },
-  selected: {
-    backgroundColor: "#dae9fc",
-    overflow: "hidden",
-  },
-  start: {
-    borderTopLeftRadius: 44,
-    borderBottomLeftRadius: 44,
-    width: 44,
-    height: 44,
-    alignSelf: "center",
-    overflow: "visible",
-  },
-  end: {
-    borderTopRightRadius: 44,
-    borderBottomRightRadius: 44,
-    width: 44,
-    height: 44,
-    alignSelf: "center",
-    overflow: "visible",
-  },
-  startOfWeek: {
-    borderTopLeftRadius: 8,
-    borderBottomLeftRadius: 8,
-  },
-  endOfWeek: {
-    borderTopRightRadius: 8,
-    borderBottomRightRadius: 8,
-  },
-  startEnd: {
-    position: "absolute",
-    backgroundColor: "#0072f0",
-    borderRadius: 44,
-    width: 44,
-    height: 44,
-    alignContent: "center",
-    justifyContent: "center",
-  },
-  overflow: {
-    position: "absolute",
-    top: 0,
-    bottom: 0,
-    backgroundColor: "#dae9fc",
-    width: 22,
-    zIndex: -1,
-  },
-  overflowStart: {
-    right: -11,
-  },
-  overflowEnd: {
-    left: -8.5,
-  },
-});
-
-const textStyles = StyleSheet.create({
-  defaultDayText: {
-    textAlign: "center",
-    fontSize: 14,
-    fontWeight: "500",
-    alignSelf: "center",
-  },
-  selected: {
-    color: "#1a1a1a",
-  },
-  active: {
-    color: "#5a5a5a",
-  },
-  startEnd: {
-    color: "#ffffff",
-  },
-  inactive: {
-    color: "#cacaca",
-  },
-});
