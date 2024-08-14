@@ -1,16 +1,13 @@
-import { containerStyles, textStyles } from "./styles";
+import { defaultDayStyles } from "../../constants";
 
-interface ContainerState {
-  isSelected: boolean;
-  isEndDay: boolean;
-  isStartDay: boolean;
-}
+import { containerStyles, textStyles } from "./styles";
+import { DayProps } from "./types";
 
 export const getContainerStyle = ({
   isSelected,
   isStartDay,
   isEndDay,
-}: ContainerState) => {
+}: DayProps) => {
   if (!isSelected) {
     return {};
   }
@@ -39,26 +36,29 @@ export const getDayStyle = ({
   isEndDay,
   isToday,
   isSelected,
-}: ContainerState & { isToday: boolean }) => {
-  if (isStartDay || isEndDay) {
-    return {
-      textStyle: textStyles.startEnd,
-      containerStyle: containerStyles.startEnd,
-    };
+  state,
+}: DayProps) => {
+  if (state !== "inactive") {
+    if (isStartDay || isEndDay) {
+      return {
+        textStyle: textStyles.startEnd,
+        containerStyle: containerStyles.startEnd,
+      };
+    } else if (isSelected) {
+      return {
+        textStyle: textStyles.selected,
+        containerStyle: containerStyles.selected,
+      };
+    } else if (isToday) {
+      return {
+        ...defaultDayStyles,
+        containerStyle: {
+          ...containerStyles.startEnd,
+          ...containerStyles.today,
+        },
+      };
+    }
+    return defaultDayStyles;
   }
-  if (isSelected) {
-    return {
-      textStyle: textStyles.selected,
-      containerStyle: containerStyles.selected,
-    };
-  }
-  if (isToday) {
-    return {
-      containerStyle: {
-        ...containerStyles.startEnd,
-        ...containerStyles.today,
-      },
-    };
-  }
-  return {};
+  return defaultDayStyles;
 };
