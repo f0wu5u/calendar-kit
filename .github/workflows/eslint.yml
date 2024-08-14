@@ -36,9 +36,3 @@ jobs:
       - name: Run ESLint
         run: yarn lint
         continue-on-error: false
-
-      - name: Upload analysis results to GitHub
-        uses: github/codeql-action/upload-sarif@v3
-        with:
-          sarif_file: eslint-results.sarif
-          wait-for-processing: false
