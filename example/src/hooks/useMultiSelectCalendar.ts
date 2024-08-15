@@ -1,8 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import {
-  getDatesInRange,
-  toLocaleDateString,
-} from "@code-fi/react-native-calendar-ui";
+import { getDatesInRange, toLocaleDateString } from "react-native-calendar-ui";
 import { addDays } from "date-fns";
 
 import { dateRangeEnd, dateRangeStart, isSameOrBeforeDate } from "../constants";

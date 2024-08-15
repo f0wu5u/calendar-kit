@@ -15,11 +15,7 @@ const libSourcePath = path.resolve(__dirname, "..");
 
 defaultConfig.watchFolders = [...defaultConfig.watchFolders, libSourcePath];
 defaultConfig.resolver.alias = {
-  "@code-fi/react-native-calendar-ui": path.resolve(
-    libSourcePath,
-    "src",
-    "index.ts",
-  ),
+  "react-native-calendar-ui": path.resolve(libSourcePath, "src", "index.ts"),
 };
 
 defaultConfig.resolver.nodeModulesPaths = [

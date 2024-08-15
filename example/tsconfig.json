@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "paths": {
-      "@code-fi/react-native-calendar-ui": ["../src/index.ts"]
+      "react-native-calendar-ui": ["../src/index.ts"]
     }
   },
   "extends": "expo/tsconfig.base",

@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { CalendarList } from "@code-fi/react-native-calendar-ui";
+import { CalendarList } from "react-native-calendar-ui";
 import { endOfWeek, isSameDay, startOfWeek } from "date-fns";
 
 import { dateRangeStart, todayDateString } from "../../constants";
