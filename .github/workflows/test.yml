@@ -1,0 +1,31 @@
+name: Package Test
+
+on:
+  pull_request:
+   branches-ignore: [ "master" ]
+  schedule:
+    - cron: '28 13 * * 0'
+
+jobs:
+  eslint:
+    name: Prepare and run test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+      actions: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          yarn
+
+      - name: Type check ts
+        run: yarn typecheck
+        continue-on-error: false
+
+      - name: Run jest tests
+        run: yarn test
+        continue-on-error: false
