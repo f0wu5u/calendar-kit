@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { CalendarList, StateInputParams } from "react-native-calendar-ui";
+import { CalendarList, StateInputParams } from "react-native-one-calendar";
 
 import { dateRangeStart, todayDateString } from "../../constants";
 import { useMultiSelectCalendar } from "../../hooks/useMultiSelectCalendar";

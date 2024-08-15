@@ -4,7 +4,7 @@ import {
   Calendar,
   InnerDayProps,
   toLocaleDateString,
-} from "react-native-calendar-ui";
+} from "react-native-one-calendar";
 import { addDays, eachDayOfInterval, isWeekend } from "date-fns";
 
 const today = new Date();

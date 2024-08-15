@@ -6,7 +6,7 @@ import {
   InnerDayProps,
   toLocaleDateString,
   useRenderCount,
-} from "react-native-calendar-ui";
+} from "react-native-one-calendar";
 import { addDays } from "date-fns";
 
 import { useMultiSelectCalendar } from "../hooks/useMultiSelectCalendar";

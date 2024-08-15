@@ -1,4 +1,4 @@
-import { toLocaleDateString } from "react-native-calendar-ui";
+import { toLocaleDateString } from "react-native-one-calendar";
 import { addDays, isBefore, isSameDay } from "date-fns";
 
 export const today = new Date();
