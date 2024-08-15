@@ -1,2 +1,2 @@
 ## Introduction
-`react-native-calendar-kit`
+`calendar-kit`
