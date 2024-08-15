@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import { Text, View } from "react-native";
-import { InnerDayProps } from "@code-fi/react-native-calendar-ui";
+import { InnerDayProps } from "react-native-calendar-ui";
 
 import { containerStyles, textStyles } from "./styles";
 import { getContainerStyle, getDayStyle } from "./styleUtils";

@@ -5,7 +5,7 @@ import {
   CalendarListRef,
   dateStringToDate,
   toLocaleDateString,
-} from "@code-fi/react-native-calendar-ui";
+} from "react-native-calendar-ui";
 import { addDays, addMonths, subMonths } from "date-fns";
 
 import { dateRangeStart, today, todayDateString } from "../../constants";

@@ -1,4 +1,4 @@
-import { dateStringToDate } from "@code-fi/react-native-calendar-ui";
+import { dateStringToDate } from "react-native-calendar-ui";
 
 export const formatMonthName = (date: Date, locale: string = "en-US") =>
   date.toLocaleDateString(locale, { month: "long", year: "numeric" });
