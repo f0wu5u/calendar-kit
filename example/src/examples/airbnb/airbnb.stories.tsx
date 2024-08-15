@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { CalendarList } from "react-native-one-calendar";
+import { CalendarList, StateInputParams } from "react-native-calendar-kit";
 import { endOfWeek, isSameDay, startOfWeek } from "date-fns";
 
 import { dateRangeStart, todayDateString } from "../../constants";
@@ -16,24 +16,25 @@ const AirbnbCalendarListComponent = ({ locale }) => {
    * useful when you need to render additional
    *  state on day component
    */
-  const createDayState = useCallback(({ markedDates, dateString }) => {
-    if (markedDates.length === 0) {
-      return {};
-    }
-    const indexOfDay = markedDates.indexOf(dateString);
-    const firstDayOfWeek = startOfWeek(dateString, { weekStartsOn });
-    const lastDayOfWeek = endOfWeek(dateString, { weekStartsOn });
-    const isSelected = markedDates.includes(dateString);
+  const createDayState = useCallback(
+    ({ markedDates, dateString }: StateInputParams) => {
+      if (markedDates.length === 0) {
+        return {};
+      }
+      const indexOfDay = markedDates.indexOf(dateString);
+      const firstDayOfWeek = startOfWeek(dateString, { weekStartsOn });
+      const lastDayOfWeek = endOfWeek(dateString, { weekStartsOn });
 
-    return {
-      isStartDay: indexOfDay === 0,
-      isEndDay: markedDates.length - 1 === indexOfDay && indexOfDay !== 0,
-      isSelected,
-      isStartOfWeek: isSameDay(dateString, firstDayOfWeek),
-      isEndOfWeek: isSameDay(dateString, lastDayOfWeek),
-      isMultiSelect: markedDates.length > 1,
-    };
-  }, []);
+      return {
+        isStartDay: indexOfDay === 0,
+        isEndDay: markedDates.length - 1 === indexOfDay && indexOfDay !== 0,
+        isStartOfWeek: isSameDay(dateString, firstDayOfWeek),
+        isEndOfWeek: isSameDay(dateString, lastDayOfWeek),
+        isMultiSelect: markedDates.length > 1,
+      };
+    },
+    [],
+  );
 
   const renderDayComponent = useCallback((props) => <Day {...props} />, []);
 

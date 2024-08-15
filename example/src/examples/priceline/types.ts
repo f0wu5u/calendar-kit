@@ -1,4 +1,4 @@
-import { DayState } from "react-native-one-calendar";
+import { DayState } from "react-native-calendar-kit";
 
 export interface DayProps extends DayState {
   isSelected: boolean;

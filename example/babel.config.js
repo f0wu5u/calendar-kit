@@ -8,7 +8,7 @@ module.exports = function (api) {
         {
           root: ["./"],
           alias: {
-            "react-native-one-calendar": "../src/index.ts",
+            "react-native-calendar-kit": "../src/index.ts",
           },
         },
       ],

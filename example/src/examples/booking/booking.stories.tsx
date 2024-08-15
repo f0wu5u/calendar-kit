@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { CalendarList, StateInputParams } from "react-native-one-calendar";
+import { CalendarList, StateInputParams } from "react-native-calendar-kit";
 
 import { dateRangeStart, todayDateString } from "../../constants";
 import { useMultiSelectCalendar } from "../../hooks/useMultiSelectCalendar";
@@ -23,12 +23,9 @@ const BookingCalendarListComponent = ({ locale }) => {
         return {};
       }
       const indexOfDay = markedDates.indexOf(dateString);
-      const isSelected = markedDates.includes(dateString);
-
       return {
         isStartDay: indexOfDay === 0,
         isEndDay: markedDates.length - 1 === indexOfDay && indexOfDay !== 0,
-        isSelected,
         isMultiSelect: markedDates.length > 1,
       };
     },

@@ -1,7 +1,7 @@
 export default ({ config }) => ({
   ...config,
-  name: "React Native One Calendar",
-  slug: "react-native-one-calendar",
+  name: "React Native Calendar Kit",
+  slug: "react-native-calendar-kit",
   extra: {
     storybookEnabled: process.env.STORYBOOK_ENABLED,
   },

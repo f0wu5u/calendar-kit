@@ -3,7 +3,7 @@ import {
   Calendar,
   DayIndex,
   toLocaleDateString,
-} from "react-native-one-calendar";
+} from "react-native-calendar-kit";
 import { addDays } from "date-fns";
 
 const today = new Date();

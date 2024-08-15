@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { CalendarList, StateInputParams } from "react-native-one-calendar";
+import { CalendarList, StateInputParams } from "react-native-calendar-kit";
 
 import { dateRangeStart, todayDateString } from "../../constants";
 import { useMultiSelectCalendar } from "../../hooks/useMultiSelectCalendar";
@@ -17,17 +17,17 @@ const VioCalendarListComponent = ({ locale }) => {
    */
   const createDayState = useCallback(
     ({ markedDates, dateString }: StateInputParams) => {
-      if (markedDates.length === 0) {
+      const markedDatesCount = markedDates.length;
+      if (markedDatesCount === 0) {
         return {};
       }
-      const indexOfDay = markedDates.indexOf(dateString);
       const dayIsWeekend = isWeekend(dateString);
-      const isSelected = markedDates.includes(dateString);
 
       return {
-        isStartDay: indexOfDay === 0,
-        isEndDay: markedDates.length - 1 === indexOfDay && indexOfDay !== 0,
-        isSelected,
+        isStartDay: markedDates[0] === dateString,
+        isEndDay:
+          markedDatesCount > 1 &&
+          markedDates[markedDatesCount - 1] === dateString,
         isWeekEnd: dayIsWeekend,
         isMultiSelect: markedDates.length > 1,
       };

@@ -1,11 +1,11 @@
 {
-  "name": "react-native-one-calendar",
-  "version": "0.1.2",
+  "name": "react-native-calendar-kit",
+  "version": "0.1.0",
   "description": "A simple JS only calendar UI for react native",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
-  "repository": "https://github.com/arbta/react-native-one-calendar",
+  "repository": "https://github.com/arbta/react-native-calendar-kit",
   "author": "Frank Owusu-Agyemang <codewithfrank@gmail.com>",
   "license": "MIT",
   "private": false,
@@ -16,10 +16,12 @@
     "lint:fix": "yarn lint --fix",
     "test": "TZ=UTC jest"
   },
+  "dependencies": {
+    "@shopify/flash-list": "latest"
+  },
   "devDependencies": {
     "@babel/core": "^7.24.6",
     "@babel/preset-env": "^7.24.6",
-    "@shopify/flash-list": "^1.6.4",
     "@tsconfig/recommended": "^1.0.6",
     "@types/jest": "^29.5.12",
     "@types/react": "^18.3.3",

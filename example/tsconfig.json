@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "paths": {
-      "react-native-one-calendar": ["../src/index.ts"]
+      "react-native-calendar-kit": ["../src/index.ts"]
     }
   },
   "extends": "expo/tsconfig.base",

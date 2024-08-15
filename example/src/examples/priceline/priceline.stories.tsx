@@ -4,8 +4,10 @@ import {
   CalendarList,
   CalendarListRef,
   dateStringToDate,
+  DayState,
+  StateInputParams,
   toLocaleDateString,
-} from "react-native-one-calendar";
+} from "react-native-calendar-kit";
 import { addDays, addMonths, subMonths } from "date-fns";
 
 import { dateRangeStart, today, todayDateString } from "../../constants";
@@ -26,19 +28,17 @@ const PricelineCalendarListComponent = ({ locale }) => {
    *  state on day component
    */
   const createDayState = useCallback(
-    ({ markedDates, dateString }, { state }) => {
+    ({ markedDates, dateString }: StateInputParams, { state }: DayState) => {
       if (markedDates.length === 0) {
         return {};
       }
       const indexOfDay = markedDates.indexOf(dateString);
-      const isSelected = markedDates.includes(dateString);
       const isAfterMaxSelectableDate =
         dateStringToDate(dateString) > maxSelectableDate;
 
       return {
         isStartDay: indexOfDay === 0,
         isEndDay: markedDates.length - 1 === indexOfDay && indexOfDay !== 0,
-        isSelected,
         isMultiSelect: markedDates.length > 1,
         state: isAfterMaxSelectableDate ? "inactive" : state,
       };
