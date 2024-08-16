@@ -4,7 +4,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "build": "tsup",
+    "build": "tsup-node",
     "build:all": "yarn lint:fix; yarn typecheck; yarn build",
     "typecheck": "tsc --noEmit",
     "lint": "eslint -c .eslintrc.js ../src",
