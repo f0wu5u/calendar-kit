@@ -7,7 +7,7 @@ import {
   DayState,
   StateInputParams,
   toLocaleDateString,
-} from "react-native-calendar-kit";
+} from "@arbta/calendar-kit";
 import { addDays, addMonths, subMonths } from "date-fns";
 
 import { dateRangeStart, today, todayDateString } from "../../constants";

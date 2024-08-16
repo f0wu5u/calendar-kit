@@ -8,7 +8,7 @@ module.exports = function (api) {
         {
           root: ["./"],
           alias: {
-            "react-native-calendar-kit": "../src/index.ts",
+            "@arbta/calendar-kit": "../src/index.ts",
           },
         },
       ],

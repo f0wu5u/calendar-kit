@@ -1,2 +1,2 @@
 ## Introduction
-`calendar-kit`
+`@arbta/calendar-kit`
