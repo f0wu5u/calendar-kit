@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { CalendarList, StateInputParams } from "react-native-calendar-kit";
+import { CalendarList, StateInputParams } from "@arbta/calendar-kit";
 import { endOfWeek, isSameDay, startOfWeek } from "date-fns";
 
 import { dateRangeStart, todayDateString } from "../../constants";

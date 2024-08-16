@@ -1,0 +1,50 @@
+{
+  "name": "builder",
+  "version": "1.0.0",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build": "tsup",
+    "build:all": "yarn lint:fix; yarn typecheck; yarn build",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint -c .eslintrc.js ../src",
+    "lint:fix": "yarn lint --fix"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.24.6",
+    "@babel/preset-env": "^7.24.6",
+    "@tsconfig/recommended": "^1.0.6",
+    "@typescript-eslint/eslint-plugin": "^7.11.0",
+    "@typescript-eslint/parser": "^7.11.0",
+    "eslint": "^8.57.0",
+    "eslint-config-universe": "^13.0.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-prettier": "^5.1.3",
+    "eslint-plugin-react": "^7.34.2",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "eslint-plugin-simple-import-sort": "^12.1.0",
+    "prettier": "^3.3.0",
+    "tsup": "^8.2.4",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
+  },
+  "tsup": {
+    "entry": [
+      "../src/index.ts"
+    ],
+    "outDir": "../dist",
+    "sourcemap": true,
+    "dts": true,
+    "clean": true,
+    "format": [
+      "cjs",
+      "esm"
+    ],
+    "external": [
+      "react",
+      "react-native",
+      "react-native-web"
+    ],
+    "minify": true
+  }
+}

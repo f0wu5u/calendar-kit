@@ -24,13 +24,14 @@ jobs:
     permissions:
       contents: read
       security-events: write
+    working-directory: ./builder
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Install dependencies
         run: |
-          yarn
+         yarn
 
       - name: Run ESLint
         run: yarn lint
