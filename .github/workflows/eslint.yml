@@ -13,7 +13,7 @@ on:
   push:
     branches-ignore: [ "master" ]
   pull_request:
-   branches-ignore: [ "master" ]
+   branches: [ "master" ]
   schedule:
     - cron: '28 13 * * 0'
 
@@ -24,15 +24,14 @@ jobs:
     permissions:
       contents: read
       security-events: write
-    working-directory: ./builder
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
       - name: Install dependencies
         run: |
          yarn
 
       - name: Run ESLint
-        run: yarn lint
+        working-directory: ./builder
+        run: yarn; yarn lint
         continue-on-error: false
