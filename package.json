@@ -1,11 +1,11 @@
 {
   "name": "@arbta/calendar-kit",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A simple JS only calendar UI for react native",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
-  "repository": "https://github.com/arbta/@arbta/calendar-kit",
+  "repository": "https://github.com/arbta/calendar-kit",
   "author": "Frank Owusu-Agyemang <codewithfrank@gmail.com>",
   "license": "MIT",
   "private": false,
@@ -32,5 +32,13 @@
   "files": [
     "src/",
     "dist"
+  ],
+  "keywords": [
+    "react",
+    "react-native",
+    "shopify",
+    "flashlist",
+    "calendar",
+    "react-native-calendar"
   ]
 }
