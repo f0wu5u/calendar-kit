@@ -90,8 +90,8 @@ export const CalendarList = React.memo(
       const onViewableItemsChanged = useCallback(
         ({ viewableItems }: any) => {
           const visibleMonths = viewableItems
-            .filter((month) => month.isViewable)
-            .map(({ item }) => item);
+            .filter((month: any) => month.isViewable)
+            .map(({ item }: any) => item);
           onScroll?.(visibleMonths);
         },
         [onScroll],
@@ -118,11 +118,11 @@ export const CalendarList = React.memo(
       );
 
       const scrollToInitialDate = useCallback(() => {
-        if (initialDateRef.current) {
-          setTimeout(() => {
+        setTimeout(() => {
+          if (initialDateRef.current) {
             scrollToDate(initialDateRef.current, false);
-          }, 10);
-        }
+          }
+        }, 10);
       }, [scrollToDate]);
 
       useImperativeHandle(ref, () => ({
