@@ -43,7 +43,7 @@ const VioCalendarListComponent = ({ locale }) => {
       minDate={todayDateString}
       maxDate={maxDate}
       currentDate={dateRangeStart}
-      estimatedCalendarSize={300}
+      estimatedCalendarSize={320}
       showExtraDays={false}
       markedDates={markedDates}
       futureMonthsCount={13}

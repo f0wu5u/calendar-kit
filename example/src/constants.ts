@@ -4,8 +4,8 @@ import { addDays, isBefore, isSameDay } from "date-fns";
 export const today = new Date();
 
 export const todayDateString = toLocaleDateString(today);
-export const dateRangeStart = toLocaleDateString(addDays(today, 7));
-export const dateRangeEnd = toLocaleDateString(addDays(today, 14));
+export const dateRangeStart = toLocaleDateString(addDays(today, 120));
+export const dateRangeEnd = toLocaleDateString(addDays(today, 127));
 
 export const isSameOrBeforeDate = (date: string, dateToCompare: string) => {
   return isSameDay(date, dateToCompare) || isBefore(date, dateToCompare);
