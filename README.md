@@ -1,5 +1,6 @@
 # Introduction
 A **simple** and **customizable** React Native component for displaying and interacting with **Gregorian calendar** dates.
+![@arbta/calendar-kit](https://github.com/arbta/calendar-kit/blob/master/static/calendar-kit.jpg?raw=true)
 
 # Features
 - 💡 100% Typescript
