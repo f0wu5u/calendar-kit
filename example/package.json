@@ -25,7 +25,7 @@
     "typescript": "^5.3.0"
   },
   "scripts": {
-    "start": "cd ..; yarn install; cd example; expo start",
+    "start": "yarn install; cd ..; yarn install; cd example; expo start",
     "android": "yarn start --android",
     "ios": "yarn start --ios",
     "web": "yarn start --web",
