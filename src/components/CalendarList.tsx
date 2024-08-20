@@ -2,13 +2,12 @@ import React, {
   ForwardedRef,
   forwardRef,
   useCallback,
-  useEffect,
   useImperativeHandle,
   useMemo,
   useRef,
 } from "react";
-import { I18nManager, View } from "react-native";
-import { FlashList, ViewToken } from "@shopify/flash-list";
+import { FlatList, I18nManager, View } from "react-native";
+import { FlashList } from "@shopify/flash-list";
 
 import { CalendarListRef } from "../types";
 import {
@@ -40,6 +39,7 @@ interface CalendarListProps
   showScrollIndicator?: boolean;
   onScroll?: (visibleMonths: string[]) => void;
 }
+
 export const CalendarList = React.memo(
   forwardRef(
     (
@@ -88,7 +88,7 @@ export const CalendarList = React.memo(
       }, [minDate, pastMonthsCount, futureMonthsCount]);
 
       const onViewableItemsChanged = useCallback(
-        ({ viewableItems }: { viewableItems: ViewToken[] }) => {
+        ({ viewableItems }: any) => {
           const visibleMonths = viewableItems
             .filter((month) => month.isViewable)
             .map(({ item }) => item);
@@ -97,8 +97,8 @@ export const CalendarList = React.memo(
         [onScroll],
       );
 
-      useImperativeHandle(ref, () => ({
-        scrollToDate(dateString: string, animated: boolean = true) {
+      const scrollToDate = useCallback(
+        (dateString: string, animated: boolean = true) => {
           const date = dateStringToDate(dateString);
           const monthOfDate = startOfMonth(date);
           const indexOfScrollToMonth = months.indexOf(
@@ -114,33 +114,22 @@ export const CalendarList = React.memo(
             });
           }
         },
+        [calendarWidth, estimatedCalendarSize, horizontal, months],
+      );
+
+      const scrollToInitialDate = useCallback(() => {
+        if (initialDateRef.current) {
+          setTimeout(() => {
+            scrollToDate(initialDateRef.current, false);
+          }, 10);
+        }
+      }, [scrollToDate]);
+
+      useImperativeHandle(ref, () => ({
+        scrollToDate,
       }));
 
-      useEffect(() => {
-        if (horizontal && I18nManager.isRTL) {
-          throw new Error(
-            "Calendar will not work in horizontal and RTL mode because of FlashList issue https://github.com/Shopify/flash-list/issues/544",
-          );
-        }
-      }, [horizontal]);
-
       const keyExtractor = useCallback((item: string) => item, []);
-      const initialDateIndex = useMemo(() => {
-        if (!initialDateRef.current) {
-          return 0;
-        }
-        const initialDateMonth = startOfMonth(
-          dateStringToDate(initialDateRef.current),
-        );
-        const indexOfInitialMonth = months.indexOf(
-          toLocaleDateString(initialDateMonth),
-        );
-
-        if (indexOfInitialMonth < 0) {
-          return 0;
-        }
-        return indexOfInitialMonth;
-      }, [months]);
 
       const renderCalendar = ({ item }: { item: string }) => (
         <Calendar
@@ -169,24 +158,52 @@ export const CalendarList = React.memo(
               weekdaysFormat={calendarProps.weekdaysFormat}
             />
           )}
-          <FlashList
-            ref={listRef}
-            horizontal={horizontal}
-            ItemSeparatorComponent={renderSeparator}
-            renderItem={renderCalendar}
-            keyExtractor={keyExtractor}
-            data={months}
-            estimatedItemSize={
-              horizontal ? calendarWidth : estimatedCalendarSize
-            }
-            estimatedListSize={{ width: calendarWidth, height: calendarHeight }}
-            extraData={calendarProps}
-            pagingEnabled={horizontal}
-            initialScrollIndex={initialDateIndex}
-            showsHorizontalScrollIndicator={false}
-            showsVerticalScrollIndicator={showScrollIndicator}
-            onViewableItemsChanged={onViewableItemsChanged}
-          />
+          {/**
+           * Calendar will not work in horizontal and RTL mode
+           * because of FlashList issue https://github.com/Shopify/flash-list/issues/544",
+           **/}
+
+          {horizontal && I18nManager.isRTL ? (
+            <FlatList
+              onLayout={scrollToInitialDate}
+              data={months}
+              renderItem={renderCalendar}
+              ref={listRef}
+              ItemSeparatorComponent={renderSeparator}
+              keyExtractor={keyExtractor}
+              extraData={calendarProps}
+              horizontal
+              pagingEnabled
+              showsHorizontalScrollIndicator={false}
+              onViewableItemsChanged={onViewableItemsChanged}
+              initialNumToRender={0}
+              initialScrollIndex={0}
+              maxToRenderPerBatch={1}
+            />
+          ) : (
+            <FlashList
+              onLayout={scrollToInitialDate}
+              ref={listRef}
+              horizontal={horizontal}
+              ItemSeparatorComponent={renderSeparator}
+              renderItem={renderCalendar}
+              keyExtractor={keyExtractor}
+              data={months}
+              estimatedItemSize={
+                horizontal ? calendarWidth : estimatedCalendarSize
+              }
+              estimatedListSize={{
+                width: calendarWidth,
+                height: calendarHeight,
+              }}
+              extraData={calendarProps}
+              pagingEnabled={horizontal}
+              showsHorizontalScrollIndicator={false}
+              showsVerticalScrollIndicator={showScrollIndicator}
+              onViewableItemsChanged={onViewableItemsChanged}
+              initialScrollIndex={0}
+            />
+          )}
         </>
       );
     },
