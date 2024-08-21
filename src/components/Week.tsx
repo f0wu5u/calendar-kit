@@ -69,7 +69,7 @@ export const Week: React.FC<WeekProps> = React.memo(
             viewState={daysState[index]}
             onPress={onDayPress}
             DayComponent={DayComponent}
-            key={`day-${index}`}
+            key={day}
             dateString={day}
             locale={locale}
           />
