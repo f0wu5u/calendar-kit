@@ -41,7 +41,10 @@ const BookingCalendarListComponent = ({ locale }) => {
       DayComponent={renderDayComponent}
       minDate={todayDateString}
       currentDate={dateRangeStart}
-      estimatedCalendarSize={340}
+      estimatedCalendarSize={{
+          fiveWeekCalendarSize: 302,
+          monthTitleSize: 30,
+      }}
       showExtraDays={false}
       markedDates={markedDates}
       futureMonthsCount={15}
@@ -52,12 +55,13 @@ const BookingCalendarListComponent = ({ locale }) => {
       weeksContainerStyle={{
         gap: 8,
       }}
-      calendarVerticalGap={8}
+      calendarVerticalGap={16}
       customStateCreator={createDayState}
       calendarContentContainerStyle={{
         paddingHorizontal: 32,
-        paddingTop: 12,
-        paddingBottom: 8,
+      }}
+      calendarListContentContainerStyle={{
+          paddingVertical: 12,
       }}
       showScrollIndicator={false}
     />

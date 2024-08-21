@@ -130,7 +130,7 @@ export const CalendarList = React.memo(
         showDayNames,
       ]);
 
-      const overrideLayout = useCallback(
+      const overrideLayout = !horizontal ?  useCallback(
         (layout: any, item: string) => {
           const weeksInMonth = getWeeksInMonth(item, firstDayOfWeek);
           const size = fiveWeekCalendarSize + calendarVerticalGap;
@@ -147,7 +147,7 @@ export const CalendarList = React.memo(
           calendarVerticalGap,
           fiveWeekCalendarSize,
         ],
-      );
+      ) : undefined;
 
       useImperativeHandle(ref, () => ({
         scrollToDate(dateString: string, animated: boolean = true) {
@@ -206,8 +206,11 @@ export const CalendarList = React.memo(
               pagingEnabled
               showsHorizontalScrollIndicator={false}
               onViewableItemsChanged={onViewableItemsChanged}
-              initialNumToRender={0}
               initialScrollIndex={initialMonthIndex}
+              getItemLayout={(_, index)=>(
+                  {length: calendarWidth, offset: calendarWidth * index, index}
+              )}
+              initialNumToRender={1}
               maxToRenderPerBatch={1}
               contentContainerStyle={calendarListContentContainerStyle}
             />
