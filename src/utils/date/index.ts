@@ -8,6 +8,7 @@ export { endOfMonth } from "./endOfMonth";
 export { endOfWeek } from "./endOfWeek";
 export { formatMonthName } from "./formatMonthName";
 export { getDatesInRange } from "./getDatesInRange";
+export { getWeeksInMonth } from "./getWeeksInMonth";
 export { isSameMonth } from "./isSameMonth";
 export { isSameOrAfterDate } from "./isSameOrAfterDate";
 export { isSameOrBeforeDate } from "./isSameOrBeforeDate";

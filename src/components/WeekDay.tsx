@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { DayIndex } from "../types";
 import { getLocaleWeekDayNames } from "../utils/date/getLocaleWeekDayNames";
 
-const CONTAINER_HEIGHT = 38;
+const CONTAINER_HEIGHT = 40;
 const DAY_WIDTH = 44;
 export interface WeekDayProps {
   firstDayOfWeek?: DayIndex;

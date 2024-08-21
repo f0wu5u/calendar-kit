@@ -60,12 +60,12 @@ export const Calendar: React.FC<CalendarProps> = React.memo(
           <Week
             {...weekProps}
             locale={locale}
-            key={`week-${index}`}
+            key={`${date}-week-${index}`}
             weekDays={week}
             month={monthDate}
           />
         )),
-      [weeksOfMonth, weekProps, locale, monthDate],
+      [weeksOfMonth, weekProps, locale, monthDate, date],
     );
 
     return (
@@ -99,6 +99,7 @@ const styles = StyleSheet.create({
   },
   monthNameContainer: {
     paddingBottom: 8,
+    height: 30,
   },
   monthNameText: {
     fontSize: 18,

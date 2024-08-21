@@ -137,7 +137,9 @@ const PricelineCalendarListComponent = ({ locale }) => {
         currentDate={dateRangeStart}
         weekdaysFormat="narrow"
         locale={locale}
-        estimatedCalendarSize={300}
+        estimatedCalendarSize={{
+            fiveWeekCalendarSize: 300
+        }}
         showExtraDays={false}
         markedDates={markedDates}
         futureMonthsCount={11}
