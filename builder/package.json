@@ -8,7 +8,8 @@
     "build:all": "yarn lint:fix; yarn typecheck; yarn build",
     "typecheck": "tsc --noEmit",
     "lint": "eslint -c .eslintrc.js ../src",
-    "lint:fix": "yarn lint --fix"
+    "lint:fix": "yarn lint --fix",
+    "prepare:release": "cd ..; npm version patch; yarn build"
   },
   "devDependencies": {
     "@babel/core": "^7.24.6",
