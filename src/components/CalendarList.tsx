@@ -38,6 +38,7 @@ interface CalendarListProps
   };
   showScrollIndicator?: boolean;
   onScroll?: (visibleMonths: string[]) => void;
+  decelerationRate?: "normal" | "fast" | number;
 }
 
 export const CalendarList = React.memo(
@@ -68,6 +69,7 @@ export const CalendarList = React.memo(
         onScroll,
         showMonthName = true,
         calendarListContentContainerStyle,
+        decelerationRate = "fast",
         ...calendarProps
       }: CalendarListProps,
       ref: ForwardedRef<CalendarListRef>,
@@ -221,6 +223,7 @@ export const CalendarList = React.memo(
               initialNumToRender={1}
               maxToRenderPerBatch={1}
               contentContainerStyle={calendarListContentContainerStyle}
+              decelerationRate={decelerationRate}
             />
           ) : (
             <FlashList
@@ -243,6 +246,7 @@ export const CalendarList = React.memo(
               initialScrollIndex={initialMonthIndex}
               overrideItemLayout={overrideLayout}
               contentContainerStyle={calendarListContentContainerStyle}
+              decelerationRate={decelerationRate}
             />
           )}
         </>
