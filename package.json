@@ -1,6 +1,6 @@
 {
   "name": "@arbta/calendar-kit",
-  "version": "0.0.9",
+  "version": "0.0.10-beta.0",
   "description": "A simple JS only calendar UI for react native",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -10,10 +10,9 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "test": "TZ=UTC jest",
+    "test": "jest",
     "build": "cd builder; yarn build:all;",
-     "typecheck": "tsc --noEmit",
-     "test": "jest"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@shopify/flash-list": "latest"
