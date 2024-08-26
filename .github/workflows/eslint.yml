@@ -10,8 +10,6 @@
 name: ESLint
 
 on:
-  push:
-    branches-ignore: [ "master" ]
   pull_request:
    branches: [ "master" ]
   schedule:
