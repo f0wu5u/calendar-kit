@@ -169,7 +169,7 @@ export const CalendarList = React.memo(
       const renderCalendar = ({ item }: { item: string }) => (
         <Calendar
           {...calendarProps}
-          showMonthName={showDayNames}
+          showMonthName={showMonthName}
           showDayNames={showDayNames && !showDayNamesOnTop}
           firstDayOfWeek={firstDayOfWeek}
           weekdaysShort={weekdaysShort}
