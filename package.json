@@ -12,8 +12,7 @@
   "scripts": {
     "test": "TZ=UTC jest",
     "build": "cd builder; yarn build:all;",
-     "typecheck": "tsc --noEmit",
-     "test": "jest"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@shopify/flash-list": "latest"
