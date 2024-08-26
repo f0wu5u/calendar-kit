@@ -71,7 +71,9 @@ const CalendarListComponent = () => {
   return (
     <CalendarList
       currentDate={todayDateString}
-      estimatedCalendarSize={400}
+      estimatedCalendarSize={{
+          fiveWeekCalendarSize: 400
+      }}
       markedDates={[selectedDay]}
       futureMonthsCount={12}
       pastMonthsCount={0}
