@@ -45,7 +45,6 @@ jobs:
         continue-on-error: false
 
       - name: Update version 📝
-        id: update_version
         run: |
           echo "Bumping version..."
           if [ "${{ github.event.inputs.beta }}" = "true" ]; then
@@ -58,6 +57,8 @@ jobs:
         continue-on-error: false
 
       - name: Release to NPM 🚀🚀
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           if [ "${{ github.event.inputs.beta }}" = "false" ]; then
             echo "Deleting previous betas..."
@@ -65,8 +66,6 @@ jobs:
           fi
           echo "Releasing v$NEW_VERSION to ${{ github.event.inputs.beta && 'beta' || 'latest' }} 🚀"
           npm publish --access public --tag "${{ github.event.inputs.beta && 'beta' || 'latest' }}"
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         continue-on-error: false
 
       - name: Push changes
