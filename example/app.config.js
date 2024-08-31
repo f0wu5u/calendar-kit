@@ -4,5 +4,6 @@ export default ({ config }) => ({
   slug: "@arbta/calendar-kit",
   extra: {
     storybookEnabled: process.env.STORYBOOK_ENABLED,
+    supportsRTL: true
   },
 });
