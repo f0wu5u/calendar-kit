@@ -5,7 +5,10 @@
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
-  "repository": "https://github.com/arbta/calendar-kit",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arbta/calendar-kit.git"
+  },
   "author": "Frank Owusu-Agyemang <codewithfrank@gmail.com>",
   "license": "MIT",
   "private": false,
