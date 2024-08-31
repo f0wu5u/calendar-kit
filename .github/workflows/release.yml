@@ -32,10 +32,10 @@ jobs:
         with:
           ref: master
 
+      - uses: fregante/setup-git-user@v2
+
       - name: Set up Node.js
         uses: actions/setup-node@v3
-        with:
-          node-version: '16'
 
       - name: Install dependencies
         run: yarn
@@ -54,7 +54,7 @@ jobs:
             yarn version --new-version ${{ github.event.inputs.version }} ${{ github.event.inputs.versionType }} -m "Bump version to %s"
           fi
           NEW_VERSION=$(node -p "require('./package.json').version")
-          echo "::set-output name=new_version::$NEW_VERSION"
+          echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
         continue-on-error: false
 
       - name: Release to NPM 🚀🚀
@@ -63,7 +63,7 @@ jobs:
             echo "Deleting previous betas..."
             npm dist-tag rm ${{ vars.NPM_PACKAGE_NAME }} beta
           fi
-          echo "Releasing v${{ steps.update_version.outputs.new_version }} to "${{ github.event.inputs.beta && 'beta' || 'latest' }} 🚀"
+          echo "Releasing v$NEW_VERSION to ${{ github.event.inputs.beta && 'beta' || 'latest' }} 🚀"
           npm publish --access public --tag "${{ github.event.inputs.beta && 'beta' || 'latest' }}"
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -75,5 +75,5 @@ jobs:
             git pull origin master
             git push origin master
           fi
-          git push origin tag "v${{ steps.update_version.outputs.new_version }}"
+          git push origin tag "v$NEW_VERSION"
           echo "Releasing successful 🚀"
