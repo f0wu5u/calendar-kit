@@ -1,0 +1,79 @@
+name: Release Package
+
+on:
+  workflow_dispatch:
+    inputs:
+      versionType:
+        description: 'Specify the version type: patch, minor, or major'
+        required: true
+        default: 'patch'
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+      version:
+        description: 'Custom version number'
+        required: false
+        default: ''
+        type: string
+      beta:
+        description: 'Release as beta'
+        required: false
+        default: false
+        type: boolean
+
+jobs:
+  update-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout master branch
+        uses: actions/checkout@v3
+        with:
+          ref: master
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install dependencies
+        run: yarn
+
+      - name: Run builder
+        run: yarn build
+        continue-on-error: false
+
+      - name: Update version 📝
+        id: update_version
+        run: |
+          echo "Bumping version..."
+          if [ "${{ github.event.inputs.beta }}" = "true" ]; then
+            yarn version --preid beta --new-version ${{ github.event.inputs.version }} pre${{ github.event.inputs.versionType }} -m "Bump version to %s"
+          else
+            yarn version --new-version ${{ github.event.inputs.version }} ${{ github.event.inputs.versionType }} -m "Bump version to %s"
+          fi
+          NEW_VERSION=$(node -p "require('./package.json').version")
+          echo "::set-output name=new_version::$NEW_VERSION"
+        continue-on-error: false
+
+      - name: Release to NPM 🚀🚀
+        run: |
+          if [ "${{ github.event.inputs.beta }}" = "false" ]; then
+            echo "Deleting previous betas..."
+            npm dist-tag rm ${{ vars.NPM_PACKAGE_NAME }} beta
+          fi
+          echo "Releasing v${{ steps.update_version.outputs.new_version }} to "${{ github.event.inputs.beta && 'beta' || 'latest' }} 🚀"
+          npm publish --access public --tag "${{ github.event.inputs.beta && 'beta' || 'latest' }}"
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        continue-on-error: false
+
+      - name: Push changes
+        run: |
+          if [ "${{ github.event.inputs.beta }}" = "false" ]; then
+            git pull origin master
+            git push origin master
+          fi
+          git push origin tag "v${{ steps.update_version.outputs.new_version }}"
+          echo "Releasing successful 🚀"

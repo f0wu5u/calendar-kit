@@ -10,8 +10,8 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "test": "jest",
-    "build": "cd builder; yarn build:all;",
+    "test": "TZ=UTC jest",
+    "build": "yarn test; cd builder; yarn build:all;",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
