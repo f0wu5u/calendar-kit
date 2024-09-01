@@ -49,9 +49,9 @@ jobs:
       - name: Install dependencies
         run: yarn
 
-#      - name: Run builder
-#        run: yarn build
-#        continue-on-error: false
+      - name: Run builder
+        run: yarn build
+        continue-on-error: false
 
       - name: Update version 📝
         run: |
