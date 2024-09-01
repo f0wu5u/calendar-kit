@@ -61,13 +61,11 @@ jobs:
           echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
         continue-on-error: false
 
-      - name: Authenticate with npm
-        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
-
       - name: Release to NPM 🚀🚀
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
           if [ "${{ github.event.inputs.beta }}" = "false" ]; then
             echo "Deleting previous betas..."
             npm dist-tag rm ${{ vars.NPM_PACKAGE_NAME }} beta
