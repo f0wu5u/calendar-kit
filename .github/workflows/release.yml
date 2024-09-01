@@ -37,7 +37,10 @@ jobs:
         with:
           ref: master
 
-      - uses: fregante/setup-git-user@v2
+      - name: Git Setup
+        run: |
+          git config --global user.email "${{ secrets.GIT_OWNER_EMAIL }}"
+          git config --global user.name "${{ secrets.GIT_OWNER_NAME }}"
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
@@ -61,17 +64,25 @@ jobs:
           echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
         continue-on-error: false
 
-      - name: Release to NPM 🚀🚀
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Setup NPM ENV
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+        continue-on-error: false
+
+      - name: Clean up NPM
         run: |
-          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
           if [ "${{ github.event.inputs.beta }}" = "false" ]; then
             echo "Deleting previous betas..."
             npm dist-tag rm ${{ vars.NPM_PACKAGE_NAME }} beta
+            true
+            echo "Deleting previous publications of $NEW_VERSION..."
+            npm unpublish @arbta/calendar-kit@$NEW_VERSION --force
           fi
-          echo "Releasing v$NEW_VERSION to ${{ github.event.inputs.beta && 'beta' || 'latest' }} 🚀"
-          npm publish --access public --tag "${{ github.event.inputs.beta && 'beta' || 'latest' }}"
+        continue-on-error: true
+
+      - name: Release to NPM 🚀🚀
+        run: |
+          echo "Releasing v$NEW_VERSION to ${{ github.event.inputs.beta == 'true' && 'beta' || 'latest' }} 🚀"
+          npm publish --access public --tag "${{ github.event.inputs.beta == 'true' && 'beta' || 'latest' }}"
         continue-on-error: false
 
       - name: Push changes
@@ -80,5 +91,5 @@ jobs:
             git pull origin master
             git push origin master
           fi
-          git push origin tag "v$NEW_VERSION"
+          git push origin tag "v$NEW_VERSION" -f
           echo "Releasing successful 🚀"
