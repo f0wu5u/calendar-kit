@@ -1,5 +1,10 @@
 name: Release Package
 
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
 on:
   workflow_dispatch:
     inputs:
@@ -45,7 +50,6 @@ jobs:
         continue-on-error: false
 
       - name: Update version 📝
-        id: update_version
         run: |
           echo "Bumping version..."
           if [ "${{ github.event.inputs.beta }}" = "true" ]; then
@@ -58,15 +62,16 @@ jobs:
         continue-on-error: false
 
       - name: Release to NPM 🚀🚀
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
           if [ "${{ github.event.inputs.beta }}" = "false" ]; then
             echo "Deleting previous betas..."
             npm dist-tag rm ${{ vars.NPM_PACKAGE_NAME }} beta
           fi
           echo "Releasing v$NEW_VERSION to ${{ github.event.inputs.beta && 'beta' || 'latest' }} 🚀"
           npm publish --access public --tag "${{ github.event.inputs.beta && 'beta' || 'latest' }}"
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         continue-on-error: false
 
       - name: Push changes
