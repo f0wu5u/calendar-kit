@@ -87,7 +87,7 @@ jobs:
 
       - name: Push changes
         env:
-          GITHUB_TOKEN: ${{ secrets.GIT_USER_TOKEN }}
+          GH_TOKEN: ${{ secrets.GIT_USER_TOKEN }}
         run: |
           if [ "${{ github.event.inputs.beta }}" = "false" ]; then
             git pull origin master
