@@ -23,6 +23,13 @@ or
 yarn add @arbta/calendar-kit
 ```
 
+> ⚠️ If you plan using `CalendarList` then you need to install `@shopify/flash-list`
+```bash
+yarn add @shopify/flash-list
+
+# pod installation for iOS before building app
+cd ios; pod install
+```
 
 # Usage
 Here’s a basic example of how to use the `@arbta/calendar-kit` package:
