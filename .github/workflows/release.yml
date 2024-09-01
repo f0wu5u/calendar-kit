@@ -61,6 +61,9 @@ jobs:
           echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
         continue-on-error: false
 
+      - name: Authenticate with npm
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+
       - name: Release to NPM 🚀🚀
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
