@@ -63,7 +63,7 @@ const CalendarListComponent = ({
       minDate={minDate}
       currentDate={todayDateString}
       estimatedCalendarSize={{
-        fiveWeekCalendarSize: debugMode ? 470 : 400
+        fiveWeekCalendarSize: debugMode ? 349 : 289
       }}
       showExtraDays={showExtraDays}
       markedDates={markedDates}
