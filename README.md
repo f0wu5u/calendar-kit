@@ -23,7 +23,7 @@ A **simple** and **customizable** React Native component for displaying and inte
 
 | Localized                                                                                                 | Performance                                                                                                | Schedule                                                                                                |
 |-----------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------|
-| <img width="380" src="https://github.com/arbta/calendar-kit/blob/master/static/localized-calendar.gif" /> | <img width="380" src="https://github.com/arbta/calendar-kit/blob/master/static/performance-calendar.gif"/> | <img width="380" src="https://github.com/arbta/calendar-kit/blob/master/static/schedule-calendar.gif"/> |
+| <img width="380" src="https://github.com/arbta/calendar-kit/blob/master/static/localize-calendar.gif" /> | <img width="380" src="https://github.com/arbta/calendar-kit/blob/master/static/performance-calendar.gif"/> | <img width="380" src="https://github.com/arbta/calendar-kit/blob/master/static/schedule-calendar.gif"/> |
 
 
 # Installation
