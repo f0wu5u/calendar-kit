@@ -5,7 +5,6 @@ import { DayIndex } from "../types";
 import { getLocaleWeekDayNames } from "../utils/date/getLocaleWeekDayNames";
 
 const CONTAINER_HEIGHT = 40;
-const DAY_WIDTH = 44;
 export interface WeekDayProps {
   firstDayOfWeek?: DayIndex;
   weekdaysShort?: string[];
@@ -57,7 +56,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     height: CONTAINER_HEIGHT,
-    paddingHorizontal: 8,
     gap: 2,
     zIndex: 2,
   },
@@ -65,7 +63,7 @@ const styles = StyleSheet.create({
     height: "100%",
     justifyContent: "center",
     alignItems: "center",
-    width: DAY_WIDTH,
+    flex: 1,
   },
   dayText: {
     textAlign: "center",
