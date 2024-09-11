@@ -1,6 +1,6 @@
 {
   "name": "@arbta/calendar-kit",
-  "version": "0.0.12",
+  "version": "1.0.2",
   "description": "A simple JS only calendar UI for react native",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
