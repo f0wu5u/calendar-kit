@@ -52,5 +52,5 @@ The image below has three sections;
 - **Red Section**: This is the `monthTitle` section, this is where `MonthNameComponent` is rendered when `showMonthName=true`. `estimatedCalendarSize.monthTitleSize` is equal to the height of this component if `showMonthName=true` otherwise `0`
 - **Blue Section**: This is the `weekDayNames` section, this is where `WeekDayNameComponent` is rendered when `showDayNames=true` && `showDayNamesOnTop=false`. `estimatedCalendarSize.weekDayNamesSize` is equal to the height of this component if `showDayNames=true` && `showDayNamesOnTop=false` otherwise `0`
 - **Green Section**: This is entire calendar height, and it is made of the height of `monthTitle` `weekDayNames` and `weeks`. Since a calendar may have `5` or `6` weeks, we use the height of a calendar with `5` weeks for `estimatedCalendarSize.fiveWeekCalendarSize`
-<img src="https://github.com/arbta/calendar-kit/blob/master/static/calendar-structure.png?raw=true" alt="@arbta/calendar-kit" width="400"/>
+<img src="https://github.com/arbta/calendar-kit/blob/master/static/calendar-structure.png?raw=true" alt="@f0wu5u/calendar-kit" width="400"/>
 

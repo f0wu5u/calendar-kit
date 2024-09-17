@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { CalendarList, StateInputParams } from "@arbta/calendar-kit";
+import { CalendarList, StateInputParams } from "@f0wu5u/calendar-kit";
 
 import { dateRangeStart, todayDateString } from "../../constants";
 import { useMultiSelectCalendar } from "../../hooks/useMultiSelectCalendar";

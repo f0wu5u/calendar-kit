@@ -1,4 +1,4 @@
-import { toLocaleDateString } from "@arbta/calendar-kit";
+import { toLocaleDateString } from "@f0wu5u/calendar-kit";
 import { addDays, isBefore, isSameDay } from "date-fns";
 
 export const today = new Date();

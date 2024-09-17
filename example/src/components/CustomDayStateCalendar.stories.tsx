@@ -4,7 +4,7 @@ import {
   Calendar,
   InnerDayProps,
   toLocaleDateString,
-} from "@arbta/calendar-kit";
+} from "@f0wu5u/calendar-kit";
 import { addDays, eachDayOfInterval, isWeekend } from "date-fns";
 
 const today = new Date();

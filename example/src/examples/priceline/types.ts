@@ -1,4 +1,4 @@
-import { DayState } from "@arbta/calendar-kit";
+import { DayState } from "@f0wu5u/calendar-kit";
 
 export interface DayProps extends DayState {
   isSelected: boolean;
