@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { Calendar, DayIndex, toLocaleDateString } from "@arbta/calendar-kit";
+import { Calendar, DayIndex, toLocaleDateString } from "@fowusu/calendar-kit";
 import { addDays } from "date-fns";
 
 const today = new Date();

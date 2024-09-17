@@ -8,7 +8,7 @@ module.exports = function (api) {
         {
           root: ["./"],
           alias: {
-            "@arbta/calendar-kit": "../src/index.ts",
+            "@fowusu/calendar-kit": "../src/index.ts",
           },
         },
       ],

@@ -1,4 +1,4 @@
-import { dateStringToDate } from "@arbta/calendar-kit";
+import { dateStringToDate } from "@fowusu/calendar-kit";
 
 export const formatMonthName = (date: Date, locale: string = "en-US") =>
   date.toLocaleDateString(locale, { month: "long", year: "numeric" });

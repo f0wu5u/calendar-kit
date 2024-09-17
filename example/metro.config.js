@@ -15,7 +15,7 @@ const libSourcePath = path.resolve(__dirname, "..");
 
 defaultConfig.watchFolders = [...defaultConfig.watchFolders, libSourcePath];
 defaultConfig.resolver.alias = {
-  "@arbta/calendar-kit": path.resolve(libSourcePath, "src", "index.ts"),
+  "@fowusu/calendar-kit": path.resolve(libSourcePath, "src", "index.ts"),
 };
 
 defaultConfig.resolver.nodeModulesPaths = [

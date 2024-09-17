@@ -6,7 +6,7 @@ import {
   InnerDayProps,
   toLocaleDateString,
   useRenderCount,
-} from "@arbta/calendar-kit";
+} from "@fowusu/calendar-kit";
 import { addDays } from "date-fns";
 
 import { useMultiSelectCalendar } from "../hooks/useMultiSelectCalendar";

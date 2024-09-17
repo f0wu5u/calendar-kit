@@ -1,5 +1,5 @@
 {
-  "name": "@f0wu5u/calendar-kit",
+  "name": "@fowusu/calendar-kit",
   "version": "1.0.0",
   "description": "A simple JS only calendar UI for react native",
   "main": "dist/index.js",

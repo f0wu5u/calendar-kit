@@ -1,6 +1,6 @@
 # Introduction
 A **simple** and **customizable** React Native component for displaying and interacting with **Gregorian calendar** dates.
-![@arbta/calendar-kit](https://github.com/f0wu5u/calendar-kit/blob/master/static/calendar-kit.png?raw=true)
+![@fowusu/calendar-kit](https://github.com/f0wu5u/calendar-kit/blob/master/static/calendar-kit.png?raw=true)
 
 # Features
 - 💡 100% Typescript
@@ -30,12 +30,12 @@ A **simple** and **customizable** React Native component for displaying and inte
 To install the package, use npm or yarn:
 
 ```bash
-npm install @arbta/calendar-kit
+npm install @f0wu5u/calendar-kit
 ```
 or
 
 ```bash
-yarn add @arbta/calendar-kit
+yarn add @f0wu5u/calendar-kit
 ```
 
 > ⚠️ If you plan using `CalendarList` then you need to install `@shopify/flash-list`
@@ -47,12 +47,12 @@ cd ios; pod install
 ```
 
 # Usage
-Here’s a basic example of how to use the `@arbta/calendar-kit` package:
+Here’s a basic example of how to use the `@f0wu5u/calendar-kit` package:
 
 ## Calendar
 ```typescript jsx
 import React, { useCallback, useState } from "react";
-import { Calendar, toLocaleDateString } from "@arbta/calendar-kit";
+import { Calendar, toLocaleDateString } from "@f0wu5u/calendar-kit";
 
 const today = new Date();
 
@@ -78,7 +78,7 @@ const CalendarComponent = () => {
 ## CalendarList
 ```typescript jsx
 import React, { useCallback, useState } from "react";
-import {CalendarList, toLocaleDateString} from "@arbta/calendar-kit";
+import {CalendarList, toLocaleDateString} from "@f0wu5u/calendar-kit";
 
 const today = new Date();
 const todayDateString = toLocaleDateString(today);
