@@ -1,6 +1,6 @@
 # Introduction
 A **simple** and **customizable** React Native component for displaying and interacting with **Gregorian calendar** dates.
-![@arbta/calendar-kit](https://github.com/arbta/calendar-kit/blob/master/static/calendar-kit.jpg?raw=true)
+![@arbta/calendar-kit](https://github.com/f0wu5u/calendar-kit/blob/master/static/calendar-kit.jpg?raw=true)
 
 # Features
 - 💡 100% Typescript
@@ -15,15 +15,15 @@ A **simple** and **customizable** React Native component for displaying and inte
 
 | Vio.com                                                                                             | Airbnb                                                                                                |
 |-----------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------|
-| <img width="380" src="https://github.com/arbta/calendar-kit/blob/master/static/vio-calendar.gif" /> | <img width="380" src="https://github.com/arbta/calendar-kit/blob/master/static/airbnb-calendar.gif"/> |
+| <img width="380" src="https://github.com/f0wu5u/calendar-kit/blob/master/static/vio-calendar.gif" /> | <img width="380" src="https://github.com/f0wu5u/calendar-kit/blob/master/static/airbnb-calendar.gif"/> |
 
 | Priceline                                                                                                 | Booking.com                                                                                            |
 |-----------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------|
-| <img width="380" src="https://github.com/arbta/calendar-kit/blob/master/static/priceline-calendar.gif" /> | <img width="380" src="https://github.com/arbta/calendar-kit/blob/master/static/booking-calendar.gif"/> |
+| <img width="380" src="https://github.com/f0wu5u/calendar-kit/blob/master/static/priceline-calendar.gif" /> | <img width="380" src="https://github.com/f0wu5u/calendar-kit/blob/master/static/booking-calendar.gif"/> |
 
 | Localized                                                                                                 | Performance                                                                                                | Schedule                                                                                                |
 |-----------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------|
-| <img width="380" src="https://github.com/arbta/calendar-kit/blob/master/static/localize-calendar.gif" /> | <img width="380" src="https://github.com/arbta/calendar-kit/blob/master/static/performance-calendar.gif"/> | <img width="380" src="https://github.com/arbta/calendar-kit/blob/master/static/schedule-calendar.gif"/> |
+| <img width="380" src="https://github.com/f0wu5u/calendar-kit/blob/master/static/localize-calendar.gif" /> | <img width="380" src="https://github.com/f0wu5u/calendar-kit/blob/master/static/performance-calendar.gif"/> | <img width="380" src="https://github.com/f0wu5u/calendar-kit/blob/master/static/schedule-calendar.gif"/> |
 
 
 # Installation
