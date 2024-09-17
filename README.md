@@ -30,12 +30,12 @@ A **simple** and **customizable** React Native component for displaying and inte
 To install the package, use npm or yarn:
 
 ```bash
-npm install @f0wu5u/calendar-kit
+npm install @fowusu/calendar-kit
 ```
 or
 
 ```bash
-yarn add @f0wu5u/calendar-kit
+yarn add @fowusu/calendar-kit
 ```
 
 > ⚠️ If you plan using `CalendarList` then you need to install `@shopify/flash-list`
