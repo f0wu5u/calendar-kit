@@ -7,7 +7,7 @@
   "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/arbta/calendar-kit.git"
+    "url": "git+https://github.com/f0wu5u/calendar-kit.git"
   },
   "author": "Frank Owusu-Agyemang <codewithfrank@gmail.com>",
   "license": "MIT",
