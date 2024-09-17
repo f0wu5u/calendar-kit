@@ -1,10 +1,10 @@
-# Contributing to @arbta/calendar-kit
+# Contributing to @f0wu5u/calendar-kit
 
 Thank you for considering contributing to this project!
 We welcome all contributions, whether you're fixing bugs, adding features, improving documentation, or suggesting ideas.
 ### Table of Contents
 <!-- TOC -->
-* [Contributing to @arbta/calendar-kit](#contributing-to-arbtacalendar-kit)
+* [Contributing to @f0wu5u/calendar-kit](#contributing-to-f0wu5ucalendar-kit)
   * [Getting Started](#getting-started)
   * [How to Contribute](#how-to-contribute)
     * [Reporting Issues](#reporting-issues)
