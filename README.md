@@ -47,12 +47,12 @@ cd ios; pod install
 ```
 
 # Usage
-Here’s a basic example of how to use the `@f0wu5u/calendar-kit` package:
+Here’s a basic example of how to use the `@fowusu/calendar-kit` package:
 
 ## Calendar
 ```typescript jsx
 import React, { useCallback, useState } from "react";
-import { Calendar, toLocaleDateString } from "@f0wu5u/calendar-kit";
+import { Calendar, toLocaleDateString } from "@fowusu/calendar-kit";
 
 const today = new Date();
 
@@ -78,7 +78,7 @@ const CalendarComponent = () => {
 ## CalendarList
 ```typescript jsx
 import React, { useCallback, useState } from "react";
-import {CalendarList, toLocaleDateString} from "@f0wu5u/calendar-kit";
+import {CalendarList, toLocaleDateString} from "@fowusu/calendar-kit";
 
 const today = new Date();
 const todayDateString = toLocaleDateString(today);
