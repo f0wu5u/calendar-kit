@@ -7,18 +7,17 @@ import {
   formatMonthName,
 } from "../utils/date";
 
-import { Week, WeekProps } from "./Week";
 import { WeekDay, WeekDayProps } from "./WeekDay";
+import { Weeks, WeeksProps } from "./Weeks";
 
 export interface CalendarProps
-  extends Omit<WeekProps, "month" | "weekDays">,
+  extends Omit<WeeksProps, "weeks" | "date" | "month">,
     WeekDayProps {
   date: string;
   showDayNames?: boolean;
   showMonthName?: boolean;
   MonthNameComponent?: React.ComponentType<{ month: Date; locale?: string }>;
   contentContainerStyle?: ViewStyle;
-  weeksContainerStyle?: ViewStyle;
 }
 
 export const Calendar: React.FC<CalendarProps> = React.memo(
@@ -54,20 +53,6 @@ export const Calendar: React.FC<CalendarProps> = React.memo(
       );
     };
 
-    const weeks = useMemo(
-      () =>
-        weeksOfMonth.map((week, index) => (
-          <Week
-            {...weekProps}
-            locale={locale}
-            key={`${date}-week-${index}`}
-            weekDays={week}
-            month={monthDate}
-          />
-        )),
-      [weeksOfMonth, weekProps, locale, monthDate, date],
-    );
-
     return (
       <View style={[styles.calenderContainer, contentContainerStyle]}>
         {renderMonthName()}
@@ -80,9 +65,12 @@ export const Calendar: React.FC<CalendarProps> = React.memo(
             weekdaysFormat={weekdaysFormat}
           />
         ) : null}
-        <View style={[styles.weeksContainer, weeksContainerStyle]}>
-          {weeks}
-        </View>
+        <Weeks
+          {...weekProps}
+          month={monthDate}
+          weeks={weeksOfMonth}
+          date={date}
+        />
       </View>
     );
   },
@@ -93,9 +81,6 @@ Calendar.displayName = "Calendar";
 const styles = StyleSheet.create({
   calenderContainer: {
     width: "100%",
-  },
-  weeksContainer: {
-    gap: 8,
   },
   monthNameContainer: {
     paddingBottom: 8,

@@ -14,6 +14,7 @@ import { createRange, getWeeksInMonth } from "../utils/date";
 import { height, width } from "../utils/screen";
 
 import { Calendar, CalendarProps } from "./Calendar";
+import { ListWeeklyScrollContainer } from "./ListWeeklyScrollContainer";
 import { WeekDay } from "./WeekDay";
 
 interface CalendarListProps
@@ -70,6 +71,7 @@ export const CalendarList = React.memo(
         showMonthName = true,
         calendarListContentContainerStyle,
         decelerationRate = "fast",
+        scrollByWeek,
         ...calendarProps
       }: CalendarListProps,
       ref: ForwardedRef<CalendarListRef>,
@@ -183,6 +185,7 @@ export const CalendarList = React.memo(
             ...calendarContentContainerStyle,
             width: calendarWidth,
           }}
+          scrollByWeek={false}
         />
       );
 
@@ -197,58 +200,70 @@ export const CalendarList = React.memo(
               weekdaysFormat={calendarProps.weekdaysFormat}
             />
           )}
-          {/**
-           * Calendar will not work in horizontal and RTL mode
-           * because of FlashList issue https://github.com/Shopify/flash-list/issues/544",
-           **/}
+          {/*/!***/}
+          {/* * Calendar will not work in horizontal and RTL mode*/}
+          {/* * because of FlashList issue https://github.com/Shopify/flash-list/issues/544",*/}
+          {/* **!/*/}
 
-          {horizontal && I18nManager.isRTL ? (
-            <FlatList
-              data={months}
-              renderItem={renderCalendar}
-              ref={listRef}
-              ItemSeparatorComponent={renderSeparator}
-              keyExtractor={keyExtractor}
-              extraData={calendarProps}
-              horizontal
-              pagingEnabled
-              showsHorizontalScrollIndicator={false}
-              onViewableItemsChanged={onViewableItemsChanged}
-              initialScrollIndex={initialMonthIndex}
-              getItemLayout={(_, index) => ({
-                length: calendarWidth,
-                offset: calendarWidth * index,
-                index,
-              })}
-              initialNumToRender={1}
-              maxToRenderPerBatch={1}
-              contentContainerStyle={calendarListContentContainerStyle}
-              decelerationRate={decelerationRate}
-            />
-          ) : (
-            <FlashList
-              ref={listRef}
-              horizontal={horizontal}
-              ItemSeparatorComponent={renderSeparator}
-              renderItem={renderCalendar}
-              keyExtractor={keyExtractor}
-              data={months}
-              estimatedItemSize={horizontal ? calendarWidth : calendarItemSize}
-              estimatedListSize={{
-                width: calendarWidth,
-                height: calendarHeight,
-              }}
-              extraData={calendarProps}
-              pagingEnabled={horizontal}
-              showsHorizontalScrollIndicator={false}
-              showsVerticalScrollIndicator={showScrollIndicator}
-              onViewableItemsChanged={onViewableItemsChanged}
-              initialScrollIndex={initialMonthIndex}
-              overrideItemLayout={overrideLayout}
-              contentContainerStyle={calendarListContentContainerStyle}
-              decelerationRate={decelerationRate}
-            />
-          )}
+          {/*{horizontal && I18nManager.isRTL ? (*/}
+          {/*  <FlatList*/}
+          {/*    data={months}*/}
+          {/*    renderItem={renderCalendar}*/}
+          {/*    ref={listRef}*/}
+          {/*    ItemSeparatorComponent={renderSeparator}*/}
+          {/*    keyExtractor={keyExtractor}*/}
+          {/*    extraData={calendarProps}*/}
+          {/*    horizontal*/}
+          {/*    pagingEnabled*/}
+          {/*    showsHorizontalScrollIndicator={false}*/}
+          {/*    onViewableItemsChanged={onViewableItemsChanged}*/}
+          {/*    initialScrollIndex={initialMonthIndex}*/}
+          {/*    getItemLayout={(_, index) => ({*/}
+          {/*      length: calendarWidth,*/}
+          {/*      offset: calendarWidth * index,*/}
+          {/*      index,*/}
+          {/*    })}*/}
+          {/*    initialNumToRender={1}*/}
+          {/*    maxToRenderPerBatch={1}*/}
+          {/*    contentContainerStyle={calendarListContentContainerStyle}*/}
+          {/*    decelerationRate={decelerationRate}*/}
+          {/*  />*/}
+          {/*) : (*/}
+          {/*  <FlashList*/}
+          {/*    ref={listRef}*/}
+          {/*    horizontal={horizontal}*/}
+          {/*    ItemSeparatorComponent={renderSeparator}*/}
+          {/*    renderItem={renderCalendar}*/}
+          {/*    keyExtractor={keyExtractor}*/}
+          {/*    data={months}*/}
+          {/*    estimatedItemSize={horizontal ? calendarWidth : calendarItemSize}*/}
+          {/*    estimatedListSize={{*/}
+          {/*      width: calendarWidth,*/}
+          {/*      height: calendarHeight,*/}
+          {/*    }}*/}
+          {/*    extraData={calendarProps}*/}
+          {/*    pagingEnabled={horizontal}*/}
+          {/*    showsHorizontalScrollIndicator={false}*/}
+          {/*    showsVerticalScrollIndicator={showScrollIndicator}*/}
+          {/*    onViewableItemsChanged={onViewableItemsChanged}*/}
+          {/*    initialScrollIndex={initialMonthIndex}*/}
+          {/*    overrideItemLayout={overrideLayout}*/}
+          {/*    contentContainerStyle={calendarListContentContainerStyle}*/}
+          {/*    decelerationRate={decelerationRate}*/}
+          {/*  />*/}
+          {/*)}*/}
+          <ListWeeklyScrollContainer
+            {...calendarProps}
+            WeekDayNameComponent={WeekDayNameComponent}
+            markedDates={markedDates}
+            showMonthName={showMonthName}
+            showDayNames={showDayNames && !showDayNamesOnTop}
+            showExtraDays={false}
+            months={months}
+            minDate={minDate}
+            weekdaysShort={weekdaysShort}
+            firstDayOfWeek={firstDayOfWeek}
+          />
         </>
       );
     },

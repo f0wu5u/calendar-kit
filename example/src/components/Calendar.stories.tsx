@@ -13,6 +13,7 @@ const CalendarComponent = ({
   maxDate,
   firstDayOfWeek = 0,
   locale,
+  scrollByWeek
 }) => {
   const [selectedDay, setSelectedDay] = useState<string>();
 
@@ -21,16 +22,17 @@ const CalendarComponent = ({
   }, []);
 
   return (
-    <Calendar
-      minDate={!basic ? minDate : undefined}
-      maxDate={!basic ? maxDate : undefined}
-      date={todayDateString}
-      showExtraDays={showExtraDays}
-      markedDates={[selectedDay]}
-      onDayPress={onDayPress}
-      firstDayOfWeek={firstDayOfWeek as DayIndex}
-      locale={locale}
-    />
+      <Calendar
+          scrollByWeek={scrollByWeek}
+          minDate={!basic ? minDate : undefined}
+          maxDate={!basic ? maxDate : undefined}
+          date={todayDateString}
+          showExtraDays={showExtraDays}
+          markedDates={[selectedDay]}
+          onDayPress={onDayPress}
+          firstDayOfWeek={firstDayOfWeek as DayIndex}
+          locale={locale}
+      />
   );
 };
 
@@ -62,6 +64,7 @@ const meta = {
   args: {
     showExtraDays: true,
     basic: true,
+    scrollByWeek: false,
     minDate: todayDateString,
   },
 };

@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { Pressable, StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet, View, ViewStyle } from "react-native";
 
 import { DayState, InnerDayProps } from "../types";
 import { dateStringToDate } from "../utils/date";
@@ -13,6 +13,7 @@ export interface DayProps {
   onPress?: (dateString: string) => void;
   viewState: DayState;
   locale?: string;
+  dayContainerStyle?: ViewStyle;
 }
 
 const DayComponent: React.FC<DayProps> = ({
@@ -21,6 +22,7 @@ const DayComponent: React.FC<DayProps> = ({
   onPress,
   viewState,
   locale,
+  dayContainerStyle,
 }) => {
   const day = useMemo(() => dateStringToDate(dateString), [dateString]);
 
@@ -28,17 +30,15 @@ const DayComponent: React.FC<DayProps> = ({
     <Pressable
       disabled={viewState.state === "inactive"}
       onPress={() => onPress?.(dateString)}
-      style={styles.dayContainer}
+      style={[styles.dayContainer, dayContainerStyle]}
     >
       <DayComponent {...viewState} day={day} locale={locale} />
     </Pressable>
-  ) : (
-    <View style={styles.dayContainer} />
-  );
+  ) : null;
 };
 
 const styles = StyleSheet.create({
-  dayContainer: { flex: 1, marginHorizontal: -0.15, width: "100%" },
+  dayContainer: { width: "14.28%" },
   dayText: { textAlign: "center" },
 });
 
