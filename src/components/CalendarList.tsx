@@ -39,6 +39,8 @@ interface CalendarListProps
   showScrollIndicator?: boolean;
   onScroll?: (visibleMonths: string[]) => void;
   decelerationRate?: "normal" | "fast" | number;
+  onListEndReached?: () => void;
+  onEndReachedThreshold?: number;
 }
 
 export const CalendarList = React.memo(
@@ -70,6 +72,8 @@ export const CalendarList = React.memo(
         showMonthName = true,
         calendarListContentContainerStyle,
         decelerationRate = "fast",
+        onEndReachedThreshold,
+        onListEndReached,
         ...calendarProps
       }: CalendarListProps,
       ref: ForwardedRef<CalendarListRef>,
@@ -247,6 +251,8 @@ export const CalendarList = React.memo(
               overrideItemLayout={overrideLayout}
               contentContainerStyle={calendarListContentContainerStyle}
               decelerationRate={decelerationRate}
+              onEndReached={onListEndReached}
+              onEndReachedThreshold={onEndReachedThreshold}
             />
           )}
         </>
