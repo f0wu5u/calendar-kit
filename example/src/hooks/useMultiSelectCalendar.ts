@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { getDatesInRange, toLocaleDateString } from "@arbta/calendar-kit";
+import { getDatesInRange, toLocaleDateString } from "@fowusu/calendar-kit";
 import { addDays } from "date-fns";
 
 import { dateRangeEnd, dateRangeStart, isSameOrBeforeDate } from "../constants";

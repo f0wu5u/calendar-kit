@@ -7,7 +7,7 @@ import {
   DayState,
   StateInputParams,
   toLocaleDateString,
-} from "@arbta/calendar-kit";
+} from "@fowusu/calendar-kit";
 import { addDays, addMonths, subMonths } from "date-fns";
 
 import { dateRangeStart, today, todayDateString } from "../../constants";

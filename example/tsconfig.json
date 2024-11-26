@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "paths": {
-      "@arbta/calendar-kit": ["../src/index.ts"]
+      "@fowusu/calendar-kit": ["../src/index.ts"]
     }
   },
   "extends": "expo/tsconfig.base",

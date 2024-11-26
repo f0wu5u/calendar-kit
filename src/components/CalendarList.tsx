@@ -40,6 +40,8 @@ interface CalendarListProps
   showScrollIndicator?: boolean;
   onScroll?: (visibleMonths: string[]) => void;
   decelerationRate?: "normal" | "fast" | number;
+  onListEndReached?: () => void;
+  onEndReachedThreshold?: number;
 }
 
 export const CalendarList = React.memo(
@@ -71,6 +73,8 @@ export const CalendarList = React.memo(
         showMonthName = true,
         calendarListContentContainerStyle,
         decelerationRate = "fast",
+        onEndReachedThreshold,
+        onListEndReached,
         scrollByWeek,
         ...calendarProps
       }: CalendarListProps,
@@ -250,20 +254,22 @@ export const CalendarList = React.memo(
           {/*    overrideItemLayout={overrideLayout}*/}
           {/*    contentContainerStyle={calendarListContentContainerStyle}*/}
           {/*    decelerationRate={decelerationRate}*/}
+          {/*    onEndReached={onListEndReached}*/}
+          {/*    onEndReachedThreshold={onEndReachedThreshold}*/}
           {/*  />*/}
           {/*)}*/}
-          <ListWeeklyScrollContainer
-            {...calendarProps}
-            WeekDayNameComponent={WeekDayNameComponent}
-            markedDates={markedDates}
-            showMonthName={showMonthName}
-            showDayNames={showDayNames && !showDayNamesOnTop}
-            showExtraDays={false}
-            months={months}
-            minDate={minDate}
-            weekdaysShort={weekdaysShort}
-            firstDayOfWeek={firstDayOfWeek}
-          />
+            <ListWeeklyScrollContainer
+                {...calendarProps}
+                WeekDayNameComponent={WeekDayNameComponent}
+                markedDates={markedDates}
+                showMonthName={showMonthName}
+                showDayNames={showDayNames && !showDayNamesOnTop}
+                showExtraDays={false}
+                months={months}
+                minDate={minDate}
+                weekdaysShort={weekdaysShort}
+                firstDayOfWeek={firstDayOfWeek}
+            />
         </>
       );
     },

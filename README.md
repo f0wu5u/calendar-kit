@@ -1,6 +1,6 @@
 # Introduction
 A **simple** and **customizable** React Native component for displaying and interacting with **Gregorian calendar** dates.
-![@arbta/calendar-kit](https://github.com/arbta/calendar-kit/blob/master/static/calendar-kit.jpg?raw=true)
+![@fowusu/calendar-kit](https://github.com/f0wu5u/calendar-kit/blob/master/static/calendar-kit.png?raw=true)
 
 # Features
 - 💡 100% Typescript
@@ -15,27 +15,27 @@ A **simple** and **customizable** React Native component for displaying and inte
 
 | Vio.com                                                                                             | Airbnb                                                                                                |
 |-----------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------|
-| <img width="380" src="https://github.com/arbta/calendar-kit/blob/master/static/vio-calendar.gif" /> | <img width="380" src="https://github.com/arbta/calendar-kit/blob/master/static/airbnb-calendar.gif"/> |
+| <img width="380" src="https://github.com/f0wu5u/calendar-kit/blob/master/static/vio-calendar.gif" /> | <img width="380" src="https://github.com/f0wu5u/calendar-kit/blob/master/static/airbnb-calendar.gif"/> |
 
 | Priceline                                                                                                 | Booking.com                                                                                            |
 |-----------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------|
-| <img width="380" src="https://github.com/arbta/calendar-kit/blob/master/static/priceline-calendar.gif" /> | <img width="380" src="https://github.com/arbta/calendar-kit/blob/master/static/booking-calendar.gif"/> |
+| <img width="380" src="https://github.com/f0wu5u/calendar-kit/blob/master/static/priceline-calendar.gif" /> | <img width="380" src="https://github.com/f0wu5u/calendar-kit/blob/master/static/booking-calendar.gif"/> |
 
 | Localized                                                                                                 | Performance                                                                                                | Schedule                                                                                                |
 |-----------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------|
-| <img width="380" src="https://github.com/arbta/calendar-kit/blob/master/static/localize-calendar.gif" /> | <img width="380" src="https://github.com/arbta/calendar-kit/blob/master/static/performance-calendar.gif"/> | <img width="380" src="https://github.com/arbta/calendar-kit/blob/master/static/schedule-calendar.gif"/> |
+| <img width="380" src="https://github.com/f0wu5u/calendar-kit/blob/master/static/localize-calendar.gif" /> | <img width="380" src="https://github.com/f0wu5u/calendar-kit/blob/master/static/performance-calendar.gif"/> | <img width="380" src="https://github.com/f0wu5u/calendar-kit/blob/master/static/schedule-calendar.gif"/> |
 
 
 # Installation
 To install the package, use npm or yarn:
 
 ```bash
-npm install @arbta/calendar-kit
+npm install @fowusu/calendar-kit
 ```
 or
 
 ```bash
-yarn add @arbta/calendar-kit
+yarn add @fowusu/calendar-kit
 ```
 
 > ⚠️ If you plan using `CalendarList` then you need to install `@shopify/flash-list`
@@ -47,12 +47,12 @@ cd ios; pod install
 ```
 
 # Usage
-Here’s a basic example of how to use the `@arbta/calendar-kit` package:
+Here’s a basic example of how to use the `@fowusu/calendar-kit` package:
 
 ## Calendar
 ```typescript jsx
 import React, { useCallback, useState } from "react";
-import { Calendar, toLocaleDateString } from "@arbta/calendar-kit";
+import { Calendar, toLocaleDateString } from "@fowusu/calendar-kit";
 
 const today = new Date();
 
@@ -78,7 +78,7 @@ const CalendarComponent = () => {
 ## CalendarList
 ```typescript jsx
 import React, { useCallback, useState } from "react";
-import {CalendarList, toLocaleDateString} from "@arbta/calendar-kit";
+import {CalendarList, toLocaleDateString} from "@fowusu/calendar-kit";
 
 const today = new Date();
 const todayDateString = toLocaleDateString(today);

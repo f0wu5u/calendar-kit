@@ -76,7 +76,7 @@ jobs:
             npm dist-tag rm ${{ vars.NPM_PACKAGE_NAME }} beta
             true
             echo "Deleting previous publications of $NEW_VERSION..."
-            npm unpublish @arbta/calendar-kit@$NEW_VERSION --force
+            npm unpublish ${{ vars.NPM_PACKAGE_NAME }}@$NEW_VERSION --force
           fi
         continue-on-error: true
 

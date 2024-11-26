@@ -1,10 +1,10 @@
-# Contributing to @arbta/calendar-kit
+# Contributing to @fowusu/calendar-kit
 
 Thank you for considering contributing to this project!
 We welcome all contributions, whether you're fixing bugs, adding features, improving documentation, or suggesting ideas.
 ### Table of Contents
 <!-- TOC -->
-* [Contributing to @arbta/calendar-kit](#contributing-to-arbtacalendar-kit)
+* [Contributing to @fowusu/calendar-kit](#contributing-to-f0wu5ucalendar-kit)
   * [Getting Started](#getting-started)
   * [How to Contribute](#how-to-contribute)
     * [Reporting Issues](#reporting-issues)
@@ -41,7 +41,7 @@ We welcome all contributions, whether you're fixing bugs, adding features, impro
 ## How to Contribute
 
 ### Reporting Issues
-If you find a bug or have a feature request, please [Open an issue](https://github.com/arbta/calendar-kit/issues) with as much detail as possible. Include:
+If you find a bug or have a feature request, please [Open an issue](https://github.com/f0wu5u/calendar-kit/issues) with as much detail as possible. Include:
 - A clear and descriptive title.
 - Steps to reproduce the issue (if applicable).
 - Expected vs. actual behavior.
@@ -76,7 +76,7 @@ Submit your documentation changes as a pull request.
 
 We welcome ideas for new features! To suggest an enhancement:
 
-1. [Open an issue](https://github.com/arbta/calendar-kit/issues) with your suggestion.
+1. [Open an issue](https://github.com/f0wu5u/calendar-kit/issues) with your suggestion.
 2. Describe the feature, why it would be useful, and how it could be implemented. 
 3. Discuss the idea with maintainers and other contributors.
 

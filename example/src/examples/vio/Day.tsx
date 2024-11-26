@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import {I18nManager, Text, View} from "react-native";
-import { InnerDayProps } from "@arbta/calendar-kit";
+import { InnerDayProps } from "@fowusu/calendar-kit";
 
 import CheckInArrow from "./CheckInArrow";
 import CheckOutArrow from "./CheckOutArrow";

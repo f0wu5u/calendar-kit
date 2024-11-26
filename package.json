@@ -1,13 +1,13 @@
 {
-  "name": "@arbta/calendar-kit",
-  "version": "0.0.12",
+  "name": "@fowusu/calendar-kit",
+  "version": "1.0.2",
   "description": "A simple JS only calendar UI for react native",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/arbta/calendar-kit.git"
+    "url": "git+https://github.com/f0wu5u/calendar-kit.git"
   },
   "author": "Frank Owusu-Agyemang <codewithfrank@gmail.com>",
   "license": "MIT",
