@@ -6,7 +6,7 @@ import React, {
   useMemo,
   useRef,
 } from "react";
-import { FlatList, I18nManager, View, ViewStyle } from "react-native";
+import { FlatList, I18nManager, Platform, View, ViewStyle } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 
 import { CalendarListRef } from "../types";
@@ -93,6 +93,11 @@ export const CalendarList = React.memo(
       );
       const calendarWidth = calendarSize?.width ?? width;
       const calendarHeight = calendarSize?.height ?? height;
+      const isWeb = Platform.select({ web: true, default: false });
+      const webFallbackContainerStyle: any = {
+        scrollSnapAlign: horizontal ? "center" : "start",
+        width: isWeb && calendarWidth === width ? "100vw" : calendarWidth,
+      };
 
       const months = useMemo(() => {
         return createRange({
@@ -119,7 +124,10 @@ export const CalendarList = React.memo(
             .filter((month) => month.isViewable)
             //@ts-expect-error item is any
             .map(({ item }) => item);
-          onScroll?.(visibleMonths);
+          // fix issues with fast scroll on web
+          if (visibleMonths && visibleMonths.length > 0) {
+            onScroll?.(visibleMonths);
+          }
         },
         [onScroll],
       );
@@ -187,7 +195,7 @@ export const CalendarList = React.memo(
           WeekDayNameComponent={WeekDayNameComponent}
           contentContainerStyle={{
             ...calendarContentContainerStyle,
-            width: calendarWidth,
+            ...webFallbackContainerStyle,
           }}
           scrollByWeek={false}
         />

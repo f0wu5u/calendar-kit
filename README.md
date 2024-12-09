@@ -9,7 +9,7 @@ A **simple** and **customizable** React Native component for displaying and inte
 - 🎨 Fully customizable
 - 🈲 Supports localization
 - 🚀 DX, UX and Performance in one lightweight bundle
-- 👨🏽‍💻 Works in every RN project
+- 👨🏽‍💻 Works in every RN project including react native web
 
 # Examples
 
