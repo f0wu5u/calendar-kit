@@ -4,4 +4,11 @@ Get started by running;
 yarn start
 ```
 
+or
+
+```bash
+yarn web
+```
+for react native web
+
 ### enjoy \o/
