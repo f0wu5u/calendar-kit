@@ -6,7 +6,7 @@ import React, {
   useMemo,
   useRef,
 } from "react";
-import {FlatList, I18nManager, Platform, View, ViewStyle} from "react-native";
+import { FlatList, I18nManager, Platform, View, ViewStyle } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 
 import { CalendarListRef } from "../types";
@@ -78,14 +78,6 @@ export const CalendarList = React.memo(
       }: CalendarListProps,
       ref: ForwardedRef<CalendarListRef>,
     ) => {
-        // if (isWeb && horizontal){
-        //     return (
-        //         <View style={{padding: 8}}>
-        //             <Text style={{color: '#cdb57a', textAlign: 'center'}}>Horizontal CalendarList is not optimised for web</Text>
-        //         </View>
-        //     )
-        // }
-
       const listRef = useRef<any>();
       const initialDateRef = useRef(currentDate);
       const renderSeparator = useCallback(
@@ -99,11 +91,11 @@ export const CalendarList = React.memo(
       );
       const calendarWidth = calendarSize?.width ?? width;
       const calendarHeight = calendarSize?.height ?? height;
-      const isWeb = Platform.select({web: true, default: false})
-        const webFallbackContainerStyle: any = {
-            scrollSnapAlign: horizontal ? 'center' : 'start',
-            width: isWeb && calendarWidth === width ? '100vw' : calendarWidth,
-        }
+      const isWeb = Platform.select({ web: true, default: false });
+      const webFallbackContainerStyle: any = {
+        scrollSnapAlign: horizontal ? "center" : "start",
+        width: isWeb && calendarWidth === width ? "100vw" : calendarWidth,
+      };
 
       const months = useMemo(() => {
         return createRange({
@@ -131,8 +123,8 @@ export const CalendarList = React.memo(
             //@ts-expect-error item is any
             .map(({ item }) => item);
           // fix issues with fast scroll on web
-          if (visibleMonths && visibleMonths.length > 0){
-              onScroll?.(visibleMonths);
+          if (visibleMonths && visibleMonths.length > 0) {
+            onScroll?.(visibleMonths);
           }
         },
         [onScroll],
@@ -188,7 +180,6 @@ export const CalendarList = React.memo(
 
       const keyExtractor = useCallback((item: string) => item, []);
 
-
       const renderCalendar = ({ item }: { item: string }) => (
         <Calendar
           {...calendarProps}
@@ -202,7 +193,7 @@ export const CalendarList = React.memo(
           WeekDayNameComponent={WeekDayNameComponent}
           contentContainerStyle={{
             ...calendarContentContainerStyle,
-              ...webFallbackContainerStyle
+            ...webFallbackContainerStyle,
           }}
         />
       );
@@ -234,7 +225,7 @@ export const CalendarList = React.memo(
               horizontal
               pagingEnabled
               showsHorizontalScrollIndicator={false}
-              // onViewableItemsChanged={onViewableItemsChanged}
+              onViewableItemsChanged={onViewableItemsChanged}
               initialScrollIndex={initialMonthIndex}
               getItemLayout={(_, index) => ({
                 length: calendarWidth,

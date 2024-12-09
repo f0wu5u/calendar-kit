@@ -1,5 +1,11 @@
 import React, { useMemo } from "react";
-import {DimensionValue, StyleSheet, Text, View, ViewStyle} from "react-native";
+import {
+  DimensionValue,
+  StyleSheet,
+  Text,
+  View,
+  ViewStyle,
+} from "react-native";
 
 import {
   createWeeksOfMonth,
@@ -17,7 +23,10 @@ export interface CalendarProps
   showDayNames?: boolean;
   showMonthName?: boolean;
   MonthNameComponent?: React.ComponentType<{ month: Date; locale?: string }>;
-  contentContainerStyle?: ViewStyle & {scrollSnapAlign?: "center"|'start', width?: DimensionValue | string};
+  contentContainerStyle?: ViewStyle & {
+    scrollSnapAlign?: "center" | "start";
+    width?: DimensionValue | string;
+  };
   weeksContainerStyle?: ViewStyle;
 }
 
