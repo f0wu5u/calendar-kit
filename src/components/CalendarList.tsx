@@ -2,102 +2,50 @@ import React, {
   ForwardedRef,
   forwardRef,
   useCallback,
+  useEffect,
   useImperativeHandle,
   useMemo,
   useRef,
+  useState,
 } from "react";
-import { FlatList, I18nManager, Platform, View, ViewStyle } from "react-native";
-import { FlashList } from "@shopify/flash-list";
+import { StyleSheet, Text, View } from "react-native";
 
 import { CalendarListRef } from "../types";
-import { createRange, getWeeksInMonth } from "../utils/date";
-import { height, width } from "../utils/screen";
+import { createRange, dateStringToDate, formatMonthName } from "../utils/date";
 
-import { Calendar, CalendarProps } from "./Calendar";
+import { FullCalendarListView } from "./FullCalendarListView";
 import { ListWeeklyScrollContainer } from "./ListWeeklyScrollContainer";
+import {
+  CalendarListProps,
+  CalendarListViewProps,
+  FullCalendarListViewProps,
+} from "./types";
 import { WeekDay } from "./WeekDay";
-
-interface CalendarListProps
-  extends Omit<CalendarProps, "date" | "contentContainerStyle"> {
-  estimatedCalendarSize: {
-    fiveWeekCalendarSize: number;
-    monthTitleSize?: number;
-    weekDayNamesSize?: number;
-  };
-  calendarVerticalGap?: number;
-  CalendarSeparator?: React.ComponentType;
-  currentDate?: string;
-  pastMonthsCount?: number;
-  futureMonthsCount?: number;
-  horizontal?: boolean;
-  showDayNamesOnTop?: boolean;
-  calendarListContentContainerStyle?: ViewStyle;
-  calendarContentContainerStyle?: CalendarProps["contentContainerStyle"];
-  calendarSize?: {
-    width?: number;
-    height?: number;
-  };
-  showScrollIndicator?: boolean;
-  onScroll?: (visibleMonths: string[]) => void;
-  decelerationRate?: "normal" | "fast" | number;
-  onListEndReached?: () => void;
-  onEndReachedThreshold?: number;
-}
 
 export const CalendarList = React.memo(
   forwardRef(
     (
       {
-        estimatedCalendarSize: {
-          fiveWeekCalendarSize,
-          monthTitleSize = 30,
-          weekDayNamesSize = 40,
-        },
-        CalendarSeparator,
-        calendarVerticalGap = 32,
-        minDate,
         currentDate,
-        markedDates,
-        pastMonthsCount = 0,
-        futureMonthsCount = 12,
-        horizontal,
-        showDayNamesOnTop = false,
-        showDayNames = true,
-        WeekDayNameComponent,
-        weekdaysShort,
-        firstDayOfWeek,
-        calendarContentContainerStyle,
-        calendarSize,
-        showScrollIndicator,
-        onScroll,
+        minDate,
+        pastMonthsCount,
+        futureMonthsCount,
+        viewAs = "month",
         showMonthName = true,
-        calendarListContentContainerStyle,
-        decelerationRate = "fast",
-        onEndReachedThreshold,
-        onListEndReached,
-        scrollByWeek,
+        showDayNames = true,
+        MonthNameComponent,
+        onScroll,
+        markedDates,
         ...calendarProps
-      }: CalendarListProps,
+      }: CalendarListProps &
+        FullCalendarListViewProps &
+        CalendarListViewProps & {
+          viewAs?: "week" | "month";
+        },
       ref: ForwardedRef<CalendarListRef>,
     ) => {
       const listRef = useRef<any>();
-      const initialDateRef = useRef(currentDate);
-      const renderSeparator = useCallback(
-        () =>
-          CalendarSeparator ? (
-            <CalendarSeparator />
-          ) : (
-            <View style={{ height: calendarVerticalGap }} />
-          ),
-        [CalendarSeparator, calendarVerticalGap],
-      );
-      const calendarWidth = calendarSize?.width ?? width;
-      const calendarHeight = calendarSize?.height ?? height;
-      const isWeb = Platform.select({ web: true, default: false });
-      const webFallbackContainerStyle: any = {
-        scrollSnapAlign: horizontal ? "center" : "start",
-        width: isWeb && calendarWidth === width ? "100vw" : calendarWidth,
-      };
+      const isWeeklyView = viewAs === "week";
 
       const months = useMemo(() => {
         return createRange({
@@ -107,69 +55,64 @@ export const CalendarList = React.memo(
         });
       }, [minDate, pastMonthsCount, futureMonthsCount]);
 
-      const initialMonthIndex = useMemo(() => {
-        if (initialDateRef.current) {
-          const indexOfInitialMonth = months.indexOf(
-            `${initialDateRef.current.slice(0, 8)}01`,
+      const [activeMonth, setActiveMonth] = useState<string | undefined>(
+        currentDate,
+      );
+
+      const renderMonthName = () => {
+        if (showMonthName && activeMonth && isWeeklyView) {
+          const month = dateStringToDate(activeMonth);
+          return MonthNameComponent ? (
+            <MonthNameComponent month={month} locale={calendarProps.locale} />
+          ) : (
+            <View style={styles.monthNameContainer}>
+              <Text style={styles.monthNameText}>
+                {formatMonthName(month, calendarProps.locale)}
+              </Text>
+            </View>
           );
-          return indexOfInitialMonth >= 0 ? indexOfInitialMonth : 0;
         }
-        return 0;
-      }, [months]);
+        return null;
+      };
 
-      const onViewableItemsChanged = useCallback(
-        ({ viewableItems }: any) => {
-          const visibleMonths = viewableItems
-            //@ts-expect-error month is any
-            .filter((month) => month.isViewable)
-            //@ts-expect-error item is any
-            .map(({ item }) => item);
-          // fix issues with fast scroll on web
-          if (visibleMonths && visibleMonths.length > 0) {
-            onScroll?.(visibleMonths);
-          }
-        },
-        [onScroll],
-      );
+      const renderDayNames = () =>
+        (showDayNames && calendarProps.showDayNamesOnTop) || isWeeklyView ? (
+          <WeekDay
+            firstDayOfWeek={calendarProps.firstDayOfWeek}
+            weekdaysShort={calendarProps.weekdaysShort}
+            WeekDayNameComponent={calendarProps.WeekDayNameComponent}
+            locale={calendarProps.locale}
+            weekdaysFormat={calendarProps.weekdaysFormat}
+          />
+        ) : null;
 
-      const calendarItemSize = useMemo(() => {
-        const _monthTitleSize = showMonthName ? monthTitleSize : 0;
-        const _weekDayNamesSize =
-          showDayNames && !showDayNamesOnTop ? weekDayNamesSize : 0;
-        return fiveWeekCalendarSize - _weekDayNamesSize - _monthTitleSize;
-      }, [
-        showMonthName,
-        fiveWeekCalendarSize,
-        monthTitleSize,
-        weekDayNamesSize,
-        showDayNamesOnTop,
-        showDayNames,
-      ]);
-
-      const overrideLayout = useCallback(
-        (layout: any, item: string) => {
-          if (horizontal) {
-            layout.size = calendarWidth;
-            return;
-          }
-          const weeksInMonth = getWeeksInMonth(item, firstDayOfWeek);
-          const size = fiveWeekCalendarSize + calendarVerticalGap;
-          if (weeksInMonth > 5) {
-            const heightPerWeek = calendarItemSize / 5;
-            layout.size = size + Math.ceil(1 + heightPerWeek);
+      const handleOnScroll = useCallback(
+        (visibleDates: any) => {
+          let month: string;
+          onScroll?.(visibleDates);
+          if (isWeeklyView) {
+            const { week } = visibleDates[0];
+            month = week[week.length - 1];
           } else {
-            layout.size = size;
+            const visibleDateCount = visibleDates.length;
+            if (visibleDateCount > 2) {
+              month = visibleDates[visibleDateCount - 2];
+            } else {
+              month = visibleDates[0];
+            }
+          }
+          if (showMonthName && month) {
+            setActiveMonth(month);
           }
         },
-        [
-          horizontal,
-          calendarWidth,
-          firstDayOfWeek,
-          calendarItemSize,
-          calendarVerticalGap,
-          fiveWeekCalendarSize,
-        ],
+        [onScroll, isWeeklyView, showMonthName],
       );
+
+      useEffect(() => {
+        if (markedDates) {
+          setActiveMonth(markedDates.at(0));
+        }
+      }, [markedDates]);
 
       useImperativeHandle(ref, () => ({
         scrollToDate(dateString: string, animated: boolean = true) {
@@ -180,104 +123,36 @@ export const CalendarList = React.memo(
         },
       }));
 
-      const keyExtractor = useCallback((item: string) => item, []);
-
-      const renderCalendar = ({ item }: { item: string }) => (
-        <Calendar
-          {...calendarProps}
-          showMonthName={showMonthName}
-          showDayNames={showDayNames && !showDayNamesOnTop}
-          firstDayOfWeek={firstDayOfWeek}
-          weekdaysShort={weekdaysShort}
-          minDate={minDate}
-          markedDates={markedDates}
-          date={item}
-          WeekDayNameComponent={WeekDayNameComponent}
-          contentContainerStyle={{
-            ...calendarContentContainerStyle,
-            ...webFallbackContainerStyle,
-          }}
-          scrollByWeek={false}
-        />
-      );
-
       return (
         <>
-          {showDayNamesOnTop && showDayNames && (
-            <WeekDay
-              firstDayOfWeek={firstDayOfWeek}
-              weekdaysShort={weekdaysShort}
-              WeekDayNameComponent={WeekDayNameComponent}
-              locale={calendarProps.locale}
-              weekdaysFormat={calendarProps.weekdaysFormat}
+          {renderMonthName()}
+          {renderDayNames()}
+          {isWeeklyView ? (
+            <ListWeeklyScrollContainer
+              {...calendarProps}
+              showDayNames={showDayNames}
+              markedDates={markedDates}
+              ref={listRef}
+              showExtraDays
+              months={months}
+              minDate={minDate}
+              currentDate={activeMonth}
+              onScroll={handleOnScroll}
+            />
+          ) : (
+            <FullCalendarListView
+              {...calendarProps}
+              showDayNames={showDayNames}
+              markedDates={markedDates}
+              showMonthName={showMonthName}
+              MonthNameComponent={MonthNameComponent}
+              ref={listRef}
+              months={months}
+              minDate={minDate}
+              currentDate={activeMonth}
+              onScroll={handleOnScroll}
             />
           )}
-          {/*/!***/}
-          {/* * Calendar will not work in horizontal and RTL mode*/}
-          {/* * because of FlashList issue https://github.com/Shopify/flash-list/issues/544",*/}
-          {/* **!/*/}
-
-          {/*{horizontal && I18nManager.isRTL ? (*/}
-          {/*  <FlatList*/}
-          {/*    data={months}*/}
-          {/*    renderItem={renderCalendar}*/}
-          {/*    ref={listRef}*/}
-          {/*    ItemSeparatorComponent={renderSeparator}*/}
-          {/*    keyExtractor={keyExtractor}*/}
-          {/*    extraData={calendarProps}*/}
-          {/*    horizontal*/}
-          {/*    pagingEnabled*/}
-          {/*    showsHorizontalScrollIndicator={false}*/}
-          {/*    onViewableItemsChanged={onViewableItemsChanged}*/}
-          {/*    initialScrollIndex={initialMonthIndex}*/}
-          {/*    getItemLayout={(_, index) => ({*/}
-          {/*      length: calendarWidth,*/}
-          {/*      offset: calendarWidth * index,*/}
-          {/*      index,*/}
-          {/*    })}*/}
-          {/*    initialNumToRender={1}*/}
-          {/*    maxToRenderPerBatch={1}*/}
-          {/*    contentContainerStyle={calendarListContentContainerStyle}*/}
-          {/*    decelerationRate={decelerationRate}*/}
-          {/*  />*/}
-          {/*) : (*/}
-          {/*  <FlashList*/}
-          {/*    ref={listRef}*/}
-          {/*    horizontal={horizontal}*/}
-          {/*    ItemSeparatorComponent={renderSeparator}*/}
-          {/*    renderItem={renderCalendar}*/}
-          {/*    keyExtractor={keyExtractor}*/}
-          {/*    data={months}*/}
-          {/*    estimatedItemSize={horizontal ? calendarWidth : calendarItemSize}*/}
-          {/*    estimatedListSize={{*/}
-          {/*      width: calendarWidth,*/}
-          {/*      height: calendarHeight,*/}
-          {/*    }}*/}
-          {/*    extraData={calendarProps}*/}
-          {/*    pagingEnabled={horizontal}*/}
-          {/*    showsHorizontalScrollIndicator={false}*/}
-          {/*    showsVerticalScrollIndicator={showScrollIndicator}*/}
-          {/*    onViewableItemsChanged={onViewableItemsChanged}*/}
-          {/*    initialScrollIndex={initialMonthIndex}*/}
-          {/*    overrideItemLayout={overrideLayout}*/}
-          {/*    contentContainerStyle={calendarListContentContainerStyle}*/}
-          {/*    decelerationRate={decelerationRate}*/}
-          {/*    onEndReached={onListEndReached}*/}
-          {/*    onEndReachedThreshold={onEndReachedThreshold}*/}
-          {/*  />*/}
-          {/*)}*/}
-            <ListWeeklyScrollContainer
-                {...calendarProps}
-                WeekDayNameComponent={WeekDayNameComponent}
-                markedDates={markedDates}
-                showMonthName={showMonthName}
-                showDayNames={showDayNames && !showDayNamesOnTop}
-                showExtraDays={false}
-                months={months}
-                minDate={minDate}
-                weekdaysShort={weekdaysShort}
-                firstDayOfWeek={firstDayOfWeek}
-            />
         </>
       );
     },
@@ -285,3 +160,15 @@ export const CalendarList = React.memo(
 );
 
 CalendarList.displayName = "CalendarList";
+
+const styles = StyleSheet.create({
+  monthNameContainer: {
+    paddingBottom: 8,
+    height: 30,
+  },
+  monthNameText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+});

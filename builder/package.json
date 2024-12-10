@@ -7,7 +7,7 @@
     "build": "tsup-node",
     "build:all": "yarn; yarn lint:fix; yarn typecheck; yarn build",
     "typecheck": "tsc --noEmit",
-    "lint": "eslint -c .eslintrc.js ../src",
+    "lint": "eslint -c .eslintrc.js ../src ../example",
     "lint:fix": "yarn lint --fix"
   },
   "devDependencies": {

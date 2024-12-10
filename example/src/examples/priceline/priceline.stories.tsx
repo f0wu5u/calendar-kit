@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useRef, useState } from "react";
-import {I18nManager, Text, TouchableOpacity, View} from "react-native";
+import { I18nManager, Text, TouchableOpacity, View } from "react-native";
 import {
   CalendarList,
   CalendarListRef,
@@ -20,8 +20,8 @@ const maxSelectableDate = addDays(today, 330);
 
 const weekStartsOn = 1;
 
-const isRTLMode = I18nManager.isRTL
-const rtlStyle = isRTLMode ? {transform:[{rotate: '180deg'}]} : undefined
+const isRTLMode = I18nManager.isRTL;
+const rtlStyle = isRTLMode ? { transform: [{ rotate: "180deg" }] } : undefined;
 
 const PricelineCalendarListComponent = ({ locale }) => {
   const { markedDates, onDayPress, maxDate } = useMultiSelectCalendar(28);
@@ -107,7 +107,7 @@ const PricelineCalendarListComponent = ({ locale }) => {
                 fontWeight: 500,
                 color: "#555555",
                 padding: 6,
-                  ...rtlStyle,
+                ...rtlStyle,
               }}
             >
               {"<"}
@@ -120,7 +120,7 @@ const PricelineCalendarListComponent = ({ locale }) => {
                 fontWeight: 500,
                 color: "#555555",
                 padding: 6,
-                  ...rtlStyle
+                ...rtlStyle,
               }}
             >
               {">"}
@@ -138,7 +138,7 @@ const PricelineCalendarListComponent = ({ locale }) => {
         weekdaysFormat="narrow"
         locale={locale}
         estimatedCalendarSize={{
-            fiveWeekCalendarSize: 300
+          fiveWeekCalendarSize: 300,
         }}
         showExtraDays={false}
         markedDates={markedDates}

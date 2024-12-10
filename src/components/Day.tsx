@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { Pressable, StyleSheet, View, ViewStyle } from "react-native";
 
 import { DayState, InnerDayProps } from "../types";
@@ -24,17 +24,21 @@ const DayComponent: React.FC<DayProps> = ({
   locale,
   dayContainerStyle,
 }) => {
-  const day = useMemo(() => dateStringToDate(dateString), [dateString]);
-
   return viewState.isVisible ? (
     <Pressable
       disabled={viewState.state === "inactive"}
       onPress={() => onPress?.(dateString)}
       style={[styles.dayContainer, dayContainerStyle]}
     >
-      <DayComponent {...viewState} day={day} locale={locale} />
+      <DayComponent
+        {...viewState}
+        day={dateStringToDate(dateString)}
+        locale={locale}
+      />
     </Pressable>
-  ) : null;
+  ) : (
+    <View style={styles.dayContainer} />
+  );
 };
 
 const styles = StyleSheet.create({

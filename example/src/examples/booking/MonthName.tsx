@@ -1,5 +1,5 @@
 import React from "react";
-import {StyleSheet, Text, View} from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
 import { formatMonthName } from "../../utils";
 
@@ -16,7 +16,7 @@ export const MonthName = ({
 );
 
 const styles = StyleSheet.create({
-  container:{
+  container: {
     height: 30,
     paddingHorizontal: 8,
   },

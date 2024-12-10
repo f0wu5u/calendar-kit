@@ -8,25 +8,28 @@ import {
 } from "react-native";
 
 import {
-  createWeeksOfMonth,
   dateStringToDate,
   formatMonthName,
+  startOfMonth,
+  startOfMonthForDateString,
 } from "../utils/date";
 
+import { FullCalendarView } from "./FullCalendarView";
+import { ListWeeklyScrollContainer } from "./ListWeeklyScrollContainer";
+import { FullCalendarViewProps } from "./types";
 import { WeekDay, WeekDayProps } from "./WeekDay";
-import { Weeks, WeeksProps } from "./Weeks";
 
 export interface CalendarProps
-  extends Omit<WeeksProps, "weeks" | "date" | "month">,
+  extends Omit<FullCalendarViewProps, "month">,
     WeekDayProps {
   date: string;
   showDayNames?: boolean;
-  showMonthName?: boolean;
-  MonthNameComponent?: React.ComponentType<{ month: Date; locale?: string }>;
+  viewAs?: "week" | "month";
   contentContainerStyle?: ViewStyle & {
     scrollSnapAlign?: "center" | "start";
     width?: DimensionValue | string;
   };
+  weeksContainerStyle?: ViewStyle;
 }
 
 export const Calendar: React.FC<CalendarProps> = React.memo(
@@ -42,13 +45,14 @@ export const Calendar: React.FC<CalendarProps> = React.memo(
     locale,
     showMonthName = true,
     weekdaysFormat,
+    viewAs = "month",
     ...weekProps
   }) => {
-    const monthDate = useMemo(() => dateStringToDate(date), [date]);
-    const weeksOfMonth = useMemo(
-      () => createWeeksOfMonth(monthDate, firstDayOfWeek),
-      [monthDate, firstDayOfWeek],
+    const monthDate = useMemo(
+      () => startOfMonth(dateStringToDate(date)),
+      [date],
     );
+
     const renderMonthName = () => {
       if (!showMonthName) return null;
       return MonthNameComponent ? (
@@ -74,12 +78,23 @@ export const Calendar: React.FC<CalendarProps> = React.memo(
             weekdaysFormat={weekdaysFormat}
           />
         ) : null}
-        <Weeks
-          {...weekProps}
-          month={monthDate}
-          weeks={weeksOfMonth}
-          date={date}
-        />
+        {viewAs === "week" ? (
+          <ListWeeklyScrollContainer
+            {...weekProps}
+            firstDayOfWeek={firstDayOfWeek}
+            locale={locale}
+            currentDate={weekProps.markedDates?.at(0) ?? date}
+            months={[startOfMonthForDateString(date)]}
+          />
+        ) : (
+          <FullCalendarView
+            {...weekProps}
+            firstDayOfWeek={firstDayOfWeek}
+            locale={locale}
+            date={date}
+            month={monthDate}
+          />
+        )}
       </View>
     );
   },
@@ -90,6 +105,9 @@ Calendar.displayName = "Calendar";
 const styles = StyleSheet.create({
   calenderContainer: {
     width: "100%",
+  },
+  weeksContainer: {
+    gap: 8,
   },
   monthNameContainer: {
     paddingBottom: 8,

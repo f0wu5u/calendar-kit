@@ -1,121 +1,186 @@
-import React, { useMemo, useState } from "react";
+import React, {
+  forwardRef,
+  useCallback,
+  useImperativeHandle,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import {
   FlatList,
+  I18nManager,
   LayoutChangeEvent,
-  StyleSheet,
-  Text,
-  View,
+  Platform,
 } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 
 import { DayIndex } from "../types";
 import {
-  createWeeksOfMonth,
+  createWeeksInRange,
   dateStringToDate,
-  formatMonthName,
+  endOfMonth,
+  startOfMonth,
 } from "../utils/date";
 import { width } from "../utils/screen";
 
-import { CalendarProps } from "./Calendar";
-import { Week } from "./Week";
-import { WeeklyScrollContainer } from "./WeeklyScrollContainer";
+import { CalendarListViewProps } from "./types";
+import { Week, WeekProps } from "./Week";
 
-interface ListWeeklyScrollContainerProps extends Omit<CalendarProps, "date"> {
+export interface ListWeeklyScrollContainerProps
+  extends CalendarListViewProps,
+    Omit<WeekProps, "weekDays" | "month" | "isLastWeekOfList"> {
+  currentDate?: string;
   months: string[];
+  showDayNames?: boolean;
+  firstDayOfWeek?: DayIndex;
+  MonthNameComponent?: React.ComponentType<{ month: Date; locale?: string }>;
 }
-export const ListWeeklyScrollContainer: React.FC<
-  ListWeeklyScrollContainerProps
-> = ({
-  months,
-  firstDayOfWeek = 0,
-  showMonthName,
-  MonthNameComponent,
-  locale,
-  weekContainerStyle,
-  ...calendarProps
-}) => {
-  const [scrollLayoutWidth, setScrollLayoutWidth] = useState(width);
+const isWeb = Platform.select({ web: true, default: false });
 
-  const data = useMemo(() => {
-    const weeksOfMonths = months.map((month) => {
-      const monthDate = dateStringToDate(month);
-      const weeks = createWeeksOfMonth(monthDate, firstDayOfWeek, true);
-      console.log(JSON.stringify(weeks));
-      return {
-        month: monthDate,
-        weeks,
-      };
-    });
+export const ListWeeklyScrollContainer = forwardRef(
+  (
+    {
+      months,
+      firstDayOfWeek = 0,
+      MonthNameComponent,
+      locale,
+      weekContainerStyle,
+      currentDate,
+      onScroll,
+      calendarSize,
+      showScrollIndicator = false,
+      decelerationRate,
+      onListEndReached,
+      onEndReachedThreshold,
+      showDayNames,
+      calendarListContentContainerStyle,
+      ...weekProps
+    }: ListWeeklyScrollContainerProps,
+    ref: any,
+  ) => {
+    const [scrollLayoutWidth, setScrollLayoutWidth] = useState(width);
+    const listRef = useRef<any>(null);
+    const calendarWidth = calendarSize?.width ?? width;
 
-    return weeksOfMonths.flat();
-  }, [months, firstDayOfWeek]);
+    const data = useMemo(() => {
+      const lastMonth = endOfMonth(dateStringToDate(months[months.length - 1]));
+      const startMonth = dateStringToDate(months[0]);
+      return createWeeksInRange(startMonth, lastMonth, firstDayOfWeek).map(
+        (week) => ({
+          month: startOfMonth(dateStringToDate(week[0])),
+          week,
+        }),
+      );
+    }, [months, firstDayOfWeek]);
 
-  const renderMonthName = () => {
-    if (!showMonthName) return null;
-    return MonthNameComponent ? (
-      <MonthNameComponent month={new Date()} locale={locale} />
-    ) : (
-      <View style={styles.monthNameContainer}>
-        <Text style={styles.monthNameText}>
-          {formatMonthName(new Date(), locale)}
-        </Text>
-      </View>
-    );
-  };
+    const initialDateRef = useRef(currentDate);
+    const initialMonthIndex = useMemo(() => {
+      if (initialDateRef.current && currentDate) {
+        const indexOfInitialMonth = data.findIndex(({ week }) =>
+          week.includes(currentDate),
+        );
+        return indexOfInitialMonth >= 0 ? indexOfInitialMonth : 0;
+      }
+      return 0;
+    }, [currentDate, data]);
 
-  const renderItem = ({ item: { month, weeks } }: any) => {
-    return (
-      <View style={{ flexDirection: "row" }}>
-        {weeks.map((week: string[], index: number) => (
-          <Week
-            {...calendarProps}
-            month={month}
-            key={`${month}-week-${index}`}
-            weekDays={week}
-            showExtraDays
-            weekContainerStyle={{
-              ...weekContainerStyle,
-              width: scrollLayoutWidth
+    const webFallbackWeekContainerStyle: any = {
+      scrollSnapAlign: "center",
+      width: isWeb ? "100vw" : scrollLayoutWidth,
+    };
+
+    const renderItem = ({ item: { month, week }, index }: any) => {
+      return (
+        <Week
+          {...weekProps}
+          month={month}
+          key={`${month}-week-${index}`}
+          weekDays={week}
+          isLastWeekOfList={index === data.length - 1}
+          weekContainerStyle={{
+            ...weekContainerStyle,
+            ...webFallbackWeekContainerStyle,
           }}
-          />
-        ))}
-      </View>
+        />
+      );
+    };
+
+    const onScrollLayout = ({ nativeEvent: { layout } }: LayoutChangeEvent) => {
+      setScrollLayoutWidth(layout.width);
+    };
+
+    useImperativeHandle(ref, () => ({
+      scrollToItem(dateString: string, animated: boolean = true) {
+        const item = data.find(({ week }) => week.includes(dateString));
+        if (item) {
+          listRef.current?.scrollToItem({
+            animated,
+            item,
+          });
+        }
+      },
+    }));
+
+    const onViewableItemsChanged = useCallback(
+      ({ viewableItems }: any) => {
+        const visibleWeeks = viewableItems
+          //@ts-expect-error month is any
+          .filter((week) => week.isViewable)
+          //@ts-expect-error item is any
+          .map(({ item }) => item);
+        // fix issues with fast scroll on web
+        if (visibleWeeks && visibleWeeks.length > 0) {
+          onScroll?.(visibleWeeks);
+        }
+      },
+      [onScroll],
     );
-  };
-
-  const onScrollLayout = ({ nativeEvent: { layout } }: LayoutChangeEvent) => {
-    setScrollLayoutWidth(layout.width);
-  };
-
-  return (
-    <View style={[styles.calenderContainer]}>
-      {renderMonthName()}
+    return I18nManager.isRTL ? (
+      <FlatList
+        ref={listRef}
+        data={data}
+        renderItem={renderItem}
+        horizontal
+        pagingEnabled
+        showsHorizontalScrollIndicator={false}
+        onViewableItemsChanged={onViewableItemsChanged}
+        initialScrollIndex={initialMonthIndex}
+        getItemLayout={(_, index) => ({
+          length: calendarWidth,
+          offset: calendarWidth * index,
+          index,
+        })}
+        initialNumToRender={1}
+        maxToRenderPerBatch={1}
+        contentContainerStyle={calendarListContentContainerStyle}
+        decelerationRate={decelerationRate}
+        extraData={weekProps}
+      />
+    ) : (
       <FlashList
+        ref={listRef}
+        onViewableItemsChanged={onViewableItemsChanged}
         onLayout={onScrollLayout}
         horizontal
         data={data}
         renderItem={renderItem}
         pagingEnabled
         snapToInterval={scrollLayoutWidth}
+        estimatedItemSize={scrollLayoutWidth}
+        estimatedListSize={{
+          width: calendarWidth,
+          height: calendarSize?.height ?? 150,
+        }}
+        initialScrollIndex={initialMonthIndex}
+        onEndReachedThreshold={onEndReachedThreshold}
+        onEndReached={onListEndReached}
+        showsHorizontalScrollIndicator={showScrollIndicator}
+        decelerationRate={decelerationRate}
+        extraData={weekProps}
+        contentContainerStyle={calendarListContentContainerStyle}
       />
-    </View>
-  );
-};
+    );
+  },
+);
 
-const styles = StyleSheet.create({
-  scroll: {
-    width: "100%",
-  },
-  calenderContainer: {
-    width: "100%",
-  },
-  monthNameContainer: {
-    paddingBottom: 8,
-    height: 30,
-  },
-  monthNameText: {
-    fontSize: 18,
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-});
+ListWeeklyScrollContainer.displayName = "ListWeeklyScrollContainer";
