@@ -45,7 +45,8 @@ const AirbnbCalendarListComponent = ({ locale }) => {
       currentDate={dateRangeStart}
       weekdaysFormat="narrow"
       estimatedCalendarSize={{
-          fiveWeekCalendarSize: 267
+        fiveWeekCalendarSize: 283,
+        monthTitleSize: 22,
       }}
       showExtraDays={false}
       markedDates={markedDates}
@@ -63,7 +64,7 @@ const AirbnbCalendarListComponent = ({ locale }) => {
         paddingHorizontal: 8,
       }}
       calendarListContentContainerStyle={{
-          paddingVertical: 16
+        paddingVertical: 16,
       }}
       showScrollIndicator={false}
     />

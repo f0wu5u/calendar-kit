@@ -1,6 +1,6 @@
 export { addMonths } from "./addMonths";
 export { createRange } from "./createRange";
-export { createWeeksOfMonth } from "./createWeeks";
+export { createWeeksInRange, createWeeksOfMonth } from "./createWeeks";
 export { dateStringToDate } from "./dateStringToDate";
 export { eachDayOfInterval } from "./eachDayOfInterval";
 export { eachMonthOfInterval } from "./eachMonthOfInterval";
@@ -15,7 +15,7 @@ export { isSameOrBeforeDate } from "./isSameOrBeforeDate";
 export { isSameWeek } from "./isSameWeek";
 export { isToday } from "./isToday";
 export { isValidDate } from "./isValidDate";
-export { startOfMonth } from "./startOfMonth";
+export { startOfMonth, startOfMonthForDateString } from "./startOfMonth";
 export { startOfWeek } from "./startOfWeek";
 export { subMonths } from "./subMonths";
 export { toLocaleDateString } from "./toLocaleDateString";

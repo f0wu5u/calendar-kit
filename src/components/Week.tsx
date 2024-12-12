@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { StyleSheet, View, ViewStyle } from "react-native";
+import { DimensionValue, StyleSheet, View, ViewStyle } from "react-native";
 
 import { DayState, StateInputParams } from "../types";
 import { getDayState } from "../utils/getDayState";
@@ -15,11 +15,15 @@ export interface WeekProps
   markedDates?: string[];
   showExtraDays?: boolean;
   month: Date;
+  isLastWeekOfList?: boolean;
   customStateCreator?: (
     stateInputParams: StateInputParams,
     defaultState?: DayState,
   ) => object;
-  weekContainerStyle?: ViewStyle;
+  weekContainerStyle?: ViewStyle & {
+    scrollSnapAlign?: "center" | "start";
+    width?: DimensionValue | string;
+  };
 }
 
 export const Week: React.FC<WeekProps> = React.memo(
@@ -35,6 +39,7 @@ export const Week: React.FC<WeekProps> = React.memo(
     customStateCreator,
     markedDates = [],
     weekContainerStyle,
+    isLastWeekOfList,
   }) => {
     const daysState = useMemo(
       () =>
@@ -46,6 +51,7 @@ export const Week: React.FC<WeekProps> = React.memo(
             showExtraDays,
             minDate,
             maxDate,
+            isLastWeekOfList,
           };
           const defaultState = getDayState(params);
           const customState = customStateCreator?.(params, defaultState);
@@ -59,6 +65,7 @@ export const Week: React.FC<WeekProps> = React.memo(
         minDate,
         maxDate,
         customStateCreator,
+        isLastWeekOfList,
       ],
     );
 

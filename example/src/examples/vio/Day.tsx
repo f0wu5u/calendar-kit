@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import {I18nManager, Text, View} from "react-native";
+import { I18nManager, Text, View } from "react-native";
 import { InnerDayProps } from "@fowusu/calendar-kit";
 
 import CheckInArrow from "./CheckInArrow";
@@ -8,9 +8,9 @@ import { containerStyles, textStyles } from "./styles";
 import { getContainerStyle, getDayStyle } from "./styleUtils";
 import { DayProps } from "./types";
 
-const isRTLMode = I18nManager.isRTL
+const isRTLMode = I18nManager.isRTL;
 
-const rtlStyle = isRTLMode ? {transform:[{rotate: '180deg'}]} : undefined
+const rtlStyle = isRTLMode ? { transform: [{ rotate: "180deg" }] } : undefined;
 
 export const Day: React.FC<InnerDayProps<DayProps>> = (props) => {
   const { day, state, isStartDay, isEndDay } = props;
@@ -30,7 +30,7 @@ export const Day: React.FC<InnerDayProps<DayProps>> = (props) => {
       ]}
     >
       {isEndDay && (
-        <View style={[{ marginRight: -2}, rtlStyle]}>
+        <View style={[{ marginRight: -2 }, rtlStyle]}>
           <CheckOutArrow />
         </View>
       )}
@@ -46,7 +46,7 @@ export const Day: React.FC<InnerDayProps<DayProps>> = (props) => {
         </Text>
       </View>
       {isStartDay && (
-        <View style={[{ marginLeft: -2 },rtlStyle]}>
+        <View style={[{ marginLeft: -2 }, rtlStyle]}>
           <CheckInArrow />
         </View>
       )}

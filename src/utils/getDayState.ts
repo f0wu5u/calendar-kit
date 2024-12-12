@@ -14,11 +14,13 @@ export const getDayState: (params: StateInputParams) => DayState = ({
   minDate,
   maxDate,
   markedDates,
+  isLastWeekOfList,
 }) => {
   const isInMonth = isSameMonth(dateString, month);
   const isWithinMin = minDate ? isSameOrAfterDate(dateString, minDate) : true;
   const isWithinMax = maxDate ? isSameOrBeforeDate(dateString, maxDate) : true;
-  const isActive = isInMonth && isWithinMax && isWithinMin;
+  const isActive =
+    (!isLastWeekOfList || isInMonth) && isWithinMax && isWithinMin;
   const isVisible = Boolean(isInMonth || showExtraDays);
   const today = isInMonth && isToday(dateString);
   const isSelected = markedDates.includes(dateString);
