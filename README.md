@@ -9,6 +9,7 @@ A **simple** and **customizable** React Native component for displaying and inte
 - 🎨 Fully customizable
 - 🈲 Supports localization
 - 🚀 DX, UX and Performance in one lightweight bundle
+- 🗓️ Multiview calendars (`Week`✅, `Month`✅, Yearly(coming soon)⚙️)
 - 👨🏽‍💻 Works in every RN project including react native web
 
 # Examples
@@ -21,9 +22,13 @@ A **simple** and **customizable** React Native component for displaying and inte
 |-----------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------|
 | <img width="380" src="https://github.com/f0wu5u/calendar-kit/blob/master/static/priceline-calendar.gif" /> | <img width="380" src="https://github.com/f0wu5u/calendar-kit/blob/master/static/booking-calendar.gif"/> |
 
-| Localized                                                                                                 | Performance                                                                                                | Schedule                                                                                                |
-|-----------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------|
-| <img width="380" src="https://github.com/f0wu5u/calendar-kit/blob/master/static/localize-calendar.gif" /> | <img width="380" src="https://github.com/f0wu5u/calendar-kit/blob/master/static/performance-calendar.gif"/> | <img width="380" src="https://github.com/f0wu5u/calendar-kit/blob/master/static/schedule-calendar.gif"/> |
+| Localized                                                                                                 | Performance                                                                                         |
+|-----------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------|
+| <img width="380" src="https://github.com/f0wu5u/calendar-kit/blob/master/static/localize-calendar.gif" /> | <img width="380" src="https://github.com/f0wu5u/calendar-kit/blob/master/static/performance-calendar.gif"/> |
+
+| Multiview (Week & Year)                                                                                    | Schedule                                                                                                    |
+|------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------|
+| <img width="380" src="https://github.com/f0wu5u/calendar-kit/blob/master/static/multiview-calendar.gif" /> | <img width="380" src="https://github.com/f0wu5u/calendar-kit/blob/master/static/schedule-calendar.gif"/> |
 
 
 # Installation
