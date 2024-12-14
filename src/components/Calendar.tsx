@@ -29,7 +29,6 @@ export interface CalendarProps
     scrollSnapAlign?: "center" | "start";
     width?: DimensionValue | string;
   };
-  weeksContainerStyle?: ViewStyle;
 }
 
 export const Calendar: React.FC<CalendarProps> = React.memo(
@@ -40,7 +39,6 @@ export const Calendar: React.FC<CalendarProps> = React.memo(
     MonthNameComponent,
     showDayNames = true,
     contentContainerStyle,
-    weeksContainerStyle,
     WeekDayNameComponent,
     locale,
     showMonthName = true,

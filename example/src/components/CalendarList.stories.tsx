@@ -98,7 +98,10 @@ const CalendarListComponent = ({
         firstDayOfWeek={firstDayOfWeek as DayIndex}
         customStateCreator={createDayState}
         calendarContentContainerStyle={{
-          paddingHorizontal: 8,
+          paddingHorizontal: 2,
+        }}
+        calendarListContentContainerStyle={{
+          paddingVertical: 8,
         }}
         horizontal={horizontal}
         locale={locale}

@@ -57,9 +57,7 @@ const VioCalendarListComponent = ({ locale }) => {
         gap: 8,
       }}
       customStateCreator={createDayState}
-      calendarContentContainerStyle={{
-        paddingHorizontal: 8,
-      }}
+
       calendarListContentContainerStyle={{
         paddingVertical: 16,
       }}
