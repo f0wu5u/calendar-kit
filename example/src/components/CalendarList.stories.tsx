@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import {
   CalendarList,
   DayIndex,
@@ -10,8 +10,6 @@ import {
 import { addDays } from "date-fns";
 
 import { useMultiSelectCalendar } from "../hooks/useMultiSelectCalendar";
-
-import { useViewAsToggle } from "./useViewAsToggle";
 
 const today = new Date();
 
@@ -32,8 +30,6 @@ const CalendarListComponent = ({
   horizontal,
   locale,
 }) => {
-  const { viewAs, onPress } = useViewAsToggle();
-
   const { markedDates, maxDate, onDayPress } = useMultiSelectCalendar(
     maxDaysInRange,
     dateRangeStart,
@@ -61,53 +57,35 @@ const CalendarListComponent = ({
   );
 
   return (
-    <>
-      <Pressable
-        style={{
-          marginHorizontal: "auto",
-          marginVertical: 8,
-          width: 110,
-          justifyContent: "center",
-          alignItems: "center",
-          padding: 4,
-          borderRadius: 4,
-          backgroundColor: "#cfcaff",
-        }}
-        onPress={onPress}
-      >
-        <Text>Toggle {viewAs === "week" ? "Full" : "Weekly"}</Text>
-      </Pressable>
-      <CalendarList
-        viewAs={viewAs}
-        DayComponent={renderDayComponent}
-        maxDate={maxDate}
-        minDate={minDate}
-        currentDate={todayDateString}
-        estimatedCalendarSize={{
-          fiveWeekCalendarSize: debugMode ? 419 : 359,
-          weekDayNamesSize: 40,
-          monthTitleSize: 22,
-        }}
-        showExtraDays={showExtraDays}
-        markedDates={markedDates}
-        futureMonthsCount={futureMonthsCount}
-        pastMonthsCount={pastMonthsCount}
-        showDayNames={showDayNames}
-        showDayNamesOnTop={showDayNamesOnTop}
-        onDayPress={onDayPress}
-        firstDayOfWeek={firstDayOfWeek as DayIndex}
-        customStateCreator={createDayState}
-        calendarContentContainerStyle={{
-          paddingHorizontal: 2,
-        }}
-        calendarListContentContainerStyle={{
-          paddingVertical: 8,
-        }}
-        horizontal={horizontal}
-        locale={locale}
-        showMonthName={showMonthName}
-      />
-    </>
+    <CalendarList
+      DayComponent={renderDayComponent}
+      maxDate={maxDate}
+      minDate={minDate}
+      currentDate={todayDateString}
+      estimatedCalendarSize={{
+        fiveWeekCalendarSize: debugMode ? 419 : 359,
+        weekDayNamesSize: 40,
+        monthTitleSize: 22,
+      }}
+      showExtraDays={showExtraDays}
+      markedDates={markedDates}
+      futureMonthsCount={futureMonthsCount}
+      pastMonthsCount={pastMonthsCount}
+      showDayNames={showDayNames}
+      showDayNamesOnTop={showDayNamesOnTop}
+      onDayPress={onDayPress}
+      firstDayOfWeek={firstDayOfWeek as DayIndex}
+      customStateCreator={createDayState}
+      calendarContentContainerStyle={{
+        paddingHorizontal: 2,
+      }}
+      calendarListContentContainerStyle={{
+        paddingVertical: 8,
+      }}
+      horizontal={horizontal}
+      locale={locale}
+      showMonthName={showMonthName}
+    />
   );
 };
 

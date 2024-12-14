@@ -1,5 +1,6 @@
 import React, { useCallback, useMemo, useRef, useState } from "react";
 import { I18nManager, Text, TouchableOpacity, View } from "react-native";
+import Feather from "@expo/vector-icons/Feather";
 import {
   CalendarList,
   CalendarListRef,
@@ -87,46 +88,37 @@ const PricelineCalendarListComponent = ({ locale }) => {
           paddingVertical: 16,
           justifyContent: "space-between",
           alignItems: "center",
+          gap: 8,
         }}
       >
+        <TouchableOpacity onPress={goToPreviousMonth}>
+          <Feather
+            style={rtlStyle}
+            name="arrow-left"
+            size={16}
+            color="#555555"
+          />
+        </TouchableOpacity>
         <Text
           style={{
             textTransform: "uppercase",
             fontSize: 14,
             color: "#555555",
             fontWeight: "500",
+            textAlign: "center",
+            flexGrow: 1,
           }}
         >
           {monthString}
         </Text>
-        <View style={{ flexDirection: "row", gap: 32 }}>
-          <TouchableOpacity onPress={goToPreviousMonth}>
-            <Text
-              style={{
-                fontSize: 16,
-                fontWeight: 500,
-                color: "#555555",
-                padding: 6,
-                ...rtlStyle,
-              }}
-            >
-              {"<"}
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={goToNextMonth}>
-            <Text
-              style={{
-                fontSize: 16,
-                fontWeight: 500,
-                color: "#555555",
-                padding: 6,
-                ...rtlStyle,
-              }}
-            >
-              {">"}
-            </Text>
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity onPress={goToNextMonth}>
+          <Feather
+            style={rtlStyle}
+            name="arrow-right"
+            size={16}
+            color="#555555"
+          />
+        </TouchableOpacity>
       </View>
       <CalendarList
         ref={calendarListRef}

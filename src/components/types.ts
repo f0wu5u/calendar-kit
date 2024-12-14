@@ -52,5 +52,7 @@ export interface FullCalendarViewProps
   weeksContainerStyle?: ViewStyle;
   showMonthName?: boolean;
   MonthNameComponent?: React.ComponentType<{ month: Date; locale?: string }>;
+  WeekAnimatedTransitionComponent?: React.ComponentType<React.PropsWithChildren>;
+  MonthAnimatedTransitionComponent?: React.ComponentType<React.PropsWithChildren>;
   date: string;
 }

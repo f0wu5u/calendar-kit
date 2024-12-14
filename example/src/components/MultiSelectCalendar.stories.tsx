@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import {
   Calendar,
   DayIndex,
@@ -10,8 +10,6 @@ import {
 import { addDays } from "date-fns";
 
 import { useMultiSelectCalendar } from "../hooks/useMultiSelectCalendar";
-
-import { useViewAsToggle } from "./useViewAsToggle";
 
 const today = new Date();
 
@@ -52,39 +50,20 @@ const CalendarComponent = ({
     (props) => <CustomDay {...props} debugMode={debugMode} />,
     [debugMode],
   );
-  const { viewAs, onPress } = useViewAsToggle();
 
   return (
-    <>
-      <Pressable
-        style={{
-          marginHorizontal: "auto",
-          marginVertical: 8,
-          width: 110,
-          justifyContent: "center",
-          alignItems: "center",
-          padding: 4,
-          borderRadius: 4,
-          backgroundColor: "#cfcaff",
-        }}
-        onPress={onPress}
-      >
-        <Text>Toggle {viewAs === "week" ? "Full" : "Weekly"}</Text>
-      </Pressable>
-      <Calendar
-        viewAs={viewAs}
-        DayComponent={renderDayComponent}
-        maxDate={maxDate}
-        date={todayDateString}
-        showExtraDays={showExtraDays}
-        markedDates={markedDates}
-        onDayPress={onDayPress}
-        firstDayOfWeek={firstDayOfWeek as DayIndex}
-        customStateCreator={createDayState}
-        contentContainerStyle={{ paddingHorizontal: 2 }}
-        locale={locale}
-      />
-    </>
+    <Calendar
+      DayComponent={renderDayComponent}
+      maxDate={maxDate}
+      date={todayDateString}
+      showExtraDays={showExtraDays}
+      markedDates={markedDates}
+      onDayPress={onDayPress}
+      firstDayOfWeek={firstDayOfWeek as DayIndex}
+      customStateCreator={createDayState}
+      contentContainerStyle={{ paddingHorizontal: 2 }}
+      locale={locale}
+    />
   );
 };
 

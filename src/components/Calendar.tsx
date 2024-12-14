@@ -44,6 +44,8 @@ export const Calendar: React.FC<CalendarProps> = React.memo(
     showMonthName = true,
     weekdaysFormat,
     viewAs = "month",
+    MonthAnimatedTransitionComponent = React.Fragment,
+    WeekAnimatedTransitionComponent = React.Fragment,
     ...weekProps
   }) => {
     const monthDate = useMemo(
@@ -77,21 +79,25 @@ export const Calendar: React.FC<CalendarProps> = React.memo(
           />
         ) : null}
         {viewAs === "week" ? (
-          <ListWeeklyScrollContainer
-            {...weekProps}
-            firstDayOfWeek={firstDayOfWeek}
-            locale={locale}
-            currentDate={weekProps.markedDates?.at(0) ?? date}
-            months={[startOfMonthForDateString(date)]}
-          />
+          <WeekAnimatedTransitionComponent>
+            <ListWeeklyScrollContainer
+              {...weekProps}
+              firstDayOfWeek={firstDayOfWeek}
+              locale={locale}
+              currentDate={weekProps.markedDates?.at(0) ?? date}
+              months={[startOfMonthForDateString(date)]}
+            />
+          </WeekAnimatedTransitionComponent>
         ) : (
-          <FullCalendarView
-            {...weekProps}
-            firstDayOfWeek={firstDayOfWeek}
-            locale={locale}
-            date={date}
-            month={monthDate}
-          />
+          <MonthAnimatedTransitionComponent>
+            <FullCalendarView
+              {...weekProps}
+              firstDayOfWeek={firstDayOfWeek}
+              locale={locale}
+              date={date}
+              month={monthDate}
+            />
+          </MonthAnimatedTransitionComponent>
         )}
       </View>
     );

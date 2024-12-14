@@ -6,7 +6,7 @@ A **simple** and **customizable** React Native component for displaying and inte
 - 💡 100% Typescript
 - ⚡️ Build with `@shopify/flashlist` for faster list rendering
 - 🕑 Works in all timezones
-- 🎨 Fully customizable
+- 🎨 Fully customizable with example use cases
 - 🈲 Supports localization
 - 🚀 DX, UX and Performance in one lightweight bundle
 - 🗓️ Multiview calendars (`Week`✅, `Month`✅, Yearly(coming soon)⚙️)

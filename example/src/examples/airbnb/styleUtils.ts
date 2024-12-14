@@ -29,8 +29,6 @@ export const getDayStyle = ({
 export const getContainerStyle = ({
   isStartDay,
   isEndDay,
-  isEndOfWeek,
-  isStartOfWeek,
   isSelected,
 }: DayProps) => {
   if (!isSelected) {
@@ -42,7 +40,6 @@ export const getContainerStyle = ({
       overflow: {
         ...containerStyles.overflow,
         ...containerStyles.overflowStart,
-        ...(isEndOfWeek ? containerStyles.endOfWeek : undefined),
       },
     };
   }
@@ -52,23 +49,6 @@ export const getContainerStyle = ({
       overflow: {
         ...containerStyles.overflow,
         ...containerStyles.overflowEnd,
-        ...(isStartOfWeek ? containerStyles.startOfWeek : undefined),
-      },
-    };
-  }
-  if (isStartOfWeek) {
-    return {
-      wrapper: {
-        ...containerStyles.selected,
-        ...containerStyles.startOfWeek,
-      },
-    };
-  }
-  if (isEndOfWeek) {
-    return {
-      wrapper: {
-        ...containerStyles.selected,
-        ...containerStyles.endOfWeek,
       },
     };
   }

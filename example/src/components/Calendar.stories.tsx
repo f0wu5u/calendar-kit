@@ -1,9 +1,6 @@
 import React, { useCallback, useState } from "react";
-import { Pressable, Text } from "react-native";
 import { Calendar, DayIndex, toLocaleDateString } from "@fowusu/calendar-kit";
 import { addDays } from "date-fns";
-
-import { useViewAsToggle } from "./useViewAsToggle";
 
 const today = new Date();
 
@@ -18,41 +15,22 @@ const CalendarComponent = ({
   locale,
 }) => {
   const [selectedDay, setSelectedDay] = useState<string>();
-  const { onPress, viewAs } = useViewAsToggle();
 
   const onDayPress = useCallback((dateString) => {
     setSelectedDay(dateString);
   }, []);
 
   return (
-    <>
-      <Pressable
-        style={{
-          marginHorizontal: "auto",
-          marginVertical: 8,
-          width: 110,
-          justifyContent: "center",
-          alignItems: "center",
-          padding: 4,
-          borderRadius: 4,
-          backgroundColor: "#cfcaff",
-        }}
-        onPress={onPress}
-      >
-        <Text>Toggle {viewAs === "week" ? "Full" : "Weekly"}</Text>
-      </Pressable>
-      <Calendar
-        viewAs={viewAs}
-        minDate={!basic ? minDate : undefined}
-        maxDate={!basic ? maxDate : undefined}
-        date={todayDateString}
-        showExtraDays={showExtraDays}
-        markedDates={[selectedDay]}
-        onDayPress={onDayPress}
-        firstDayOfWeek={firstDayOfWeek as DayIndex}
-        locale={locale}
-      />
-    </>
+    <Calendar
+      minDate={!basic ? minDate : undefined}
+      maxDate={!basic ? maxDate : undefined}
+      date={todayDateString}
+      showExtraDays={showExtraDays}
+      markedDates={[selectedDay]}
+      onDayPress={onDayPress}
+      firstDayOfWeek={firstDayOfWeek as DayIndex}
+      locale={locale}
+    />
   );
 };
 

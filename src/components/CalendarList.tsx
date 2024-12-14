@@ -36,6 +36,8 @@ export const CalendarList = React.memo(
         MonthNameComponent,
         onScroll,
         markedDates,
+        WeekAnimatedTransitionComponent = React.Fragment,
+        MonthAnimatedTransitionComponent = React.Fragment,
         ...calendarProps
       }: CalendarListProps &
         FullCalendarListViewProps &
@@ -128,30 +130,34 @@ export const CalendarList = React.memo(
           {renderMonthName()}
           {renderDayNames()}
           {isWeeklyView ? (
-            <ListWeeklyScrollContainer
-              {...calendarProps}
-              showDayNames={showDayNames}
-              markedDates={markedDates}
-              ref={listRef}
-              showExtraDays
-              months={months}
-              minDate={minDate}
-              currentDate={activeMonth}
-              onScroll={handleOnScroll}
-            />
+            <WeekAnimatedTransitionComponent>
+              <ListWeeklyScrollContainer
+                {...calendarProps}
+                showDayNames={showDayNames}
+                markedDates={markedDates}
+                ref={listRef}
+                showExtraDays
+                months={months}
+                minDate={minDate}
+                currentDate={activeMonth}
+                onScroll={handleOnScroll}
+              />
+            </WeekAnimatedTransitionComponent>
           ) : (
-            <FullCalendarListView
-              {...calendarProps}
-              showDayNames={showDayNames}
-              markedDates={markedDates}
-              showMonthName={showMonthName}
-              MonthNameComponent={MonthNameComponent}
-              ref={listRef}
-              months={months}
-              minDate={minDate}
-              currentDate={activeMonth}
-              onScroll={handleOnScroll}
-            />
+            <MonthAnimatedTransitionComponent>
+              <FullCalendarListView
+                {...calendarProps}
+                showDayNames={showDayNames}
+                markedDates={markedDates}
+                showMonthName={showMonthName}
+                MonthNameComponent={MonthNameComponent}
+                ref={listRef}
+                months={months}
+                minDate={minDate}
+                currentDate={activeMonth}
+                onScroll={handleOnScroll}
+              />
+            </MonthAnimatedTransitionComponent>
           )}
         </>
       );
