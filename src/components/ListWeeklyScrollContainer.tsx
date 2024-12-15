@@ -49,7 +49,7 @@ export const ListWeeklyScrollContainer = forwardRef(
       currentDate,
       onScroll,
       showScrollIndicator = false,
-      decelerationRate,
+      decelerationRate = "fast",
       onListEndReached,
       onEndReachedThreshold,
       showDayNames,

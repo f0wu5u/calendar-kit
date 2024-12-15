@@ -26,7 +26,7 @@ const ExpandableCalendarView = ({ locale }) => {
     >
       <Animated.View
         style={{
-          height: viewAs === "month" ? 350 : undefined,
+          height: viewAs === "month" ? 420 : undefined,
           backgroundColor: "#fff",
         }}
         layout={LinearTransition}
@@ -52,6 +52,7 @@ const ExpandableCalendarView = ({ locale }) => {
             }
           >
             <Feather
+              style={{ padding: 10 }}
               name={viewAs === "month" ? "minimize-2" : "maximize-2"}
               size={16}
               color="#555555"
@@ -64,6 +65,7 @@ const ExpandableCalendarView = ({ locale }) => {
           WeekAnimatedTransitionComponent={WeekTransitionComponent}
           viewAs={viewAs}
           firstDayOfWeek={1}
+          minDate={todayDateString}
           date={todayDateString}
           markedDates={[selectedDate]}
           onDayPress={setSelectedDate}

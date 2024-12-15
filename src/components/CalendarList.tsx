@@ -11,12 +11,7 @@ import React, {
 import { StyleSheet, Text, View } from "react-native";
 
 import { CalendarListRef } from "../types";
-import {
-  createRange,
-  dateStringToDate,
-  formatMonthName,
-  startOfMonthForDateString,
-} from "../utils/date";
+import { createRange, dateStringToDate, formatMonthName } from "../utils/date";
 
 import { FullCalendarListView } from "./FullCalendarListView";
 import { ListWeeklyScrollContainer } from "./ListWeeklyScrollContainer";
@@ -99,25 +94,18 @@ export const CalendarList = React.memo(
         (visibleDates: any) => {
           onScroll?.(visibleDates);
 
-          let month: string | undefined = undefined;
+          let month: string | undefined;
           if (isWeeklyView) {
             const { week } = visibleDates[0];
             month = week[week.length - 1];
           } else {
-            const nextActiveMonth = visibleDates[0];
-            const firstDayInMarkDays = markedDates?.at(0);
-            if (
-              !firstDayInMarkDays ||
-              nextActiveMonth !== startOfMonthForDateString(firstDayInMarkDays)
-            ) {
-              month = nextActiveMonth;
-            }
+            month = visibleDates[0];
           }
           if (month) {
             setActiveMonth(month);
           }
         },
-        [onScroll, isWeeklyView, markedDates],
+        [onScroll, isWeeklyView],
       );
 
       useEffect(() => {

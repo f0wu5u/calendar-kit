@@ -1,4 +1,5 @@
 export const VIEWABILITY_CONFIG = {
   waitForInteraction: true,
-  viewAreaCoveragePercentThreshold: 1,
+  minimumViewTime: 100,
+  viewAreaCoveragePercentThreshold: 75,
 };

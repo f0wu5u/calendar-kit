@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Platform, Text, TouchableOpacity, View } from "react-native";
 import Animated, {
   FadeInDown,
   FadeInUp,
@@ -27,7 +27,7 @@ const ExpandableCalendarView = ({ locale, horizontal }) => {
     >
       <Animated.View
         style={{
-          height: viewAs === "month" ? 350 : undefined,
+          height: viewAs === "month" ? 420 : undefined,
           backgroundColor: "#fff",
         }}
         layout={LinearTransition}
@@ -53,6 +53,7 @@ const ExpandableCalendarView = ({ locale, horizontal }) => {
             }
           >
             <Feather
+              style={{ padding: 10 }}
               name={viewAs === "month" ? "minimize-2" : "maximize-2"}
               size={16}
               color="#555555"
@@ -65,7 +66,10 @@ const ExpandableCalendarView = ({ locale, horizontal }) => {
           WeekAnimatedTransitionComponent={WeekTransitionComponent}
           viewAs={viewAs}
           estimatedCalendarSize={{
-            fiveWeekCalendarSize: 248.7,
+            fiveWeekCalendarSize: Platform.select({
+              android: 251.4,
+              default: 248.7,
+            }),
           }}
           horizontal={horizontal}
           firstDayOfWeek={1}
@@ -77,6 +81,7 @@ const ExpandableCalendarView = ({ locale, horizontal }) => {
           weekdaysFormat="narrow"
           showMonthName={false}
           onActiveMonthChange={setActiveMonth}
+          calendarListContentContainerStyle={{ paddingBottom: 24 }}
         />
       </Animated.View>
     </View>

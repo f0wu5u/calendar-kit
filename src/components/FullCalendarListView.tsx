@@ -196,7 +196,6 @@ export const FullCalendarListView = forwardRef(
             pagingEnabled={horizontal}
             showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={showScrollIndicator}
-            snapToAlignment="start"
             onViewableItemsChanged={onViewableItemsChanged}
             initialScrollIndex={initialMonthIndex}
             overrideItemLayout={overrideLayout}
