@@ -23,6 +23,7 @@ import {
 } from "../utils/date";
 import { width } from "../utils/screen";
 
+import { VIEWABILITY_CONFIG } from "./constants";
 import { CalendarListViewProps } from "./types";
 import { Week, WeekProps } from "./Week";
 
@@ -47,7 +48,6 @@ export const ListWeeklyScrollContainer = forwardRef(
       weekContainerStyle,
       currentDate,
       onScroll,
-      calendarSize,
       showScrollIndicator = false,
       decelerationRate,
       onListEndReached,
@@ -60,7 +60,6 @@ export const ListWeeklyScrollContainer = forwardRef(
   ) => {
     const [scrollLayoutWidth, setScrollLayoutWidth] = useState(width);
     const listRef = useRef<any>(null);
-    const calendarWidth = calendarSize?.width ?? width;
 
     const data = useMemo(() => {
       const lastMonth = endOfMonth(dateStringToDate(months[months.length - 1]));
@@ -75,14 +74,14 @@ export const ListWeeklyScrollContainer = forwardRef(
 
     const initialDateRef = useRef(currentDate);
     const initialMonthIndex = useMemo(() => {
-      if (initialDateRef.current && currentDate) {
+      if (initialDateRef.current) {
         const indexOfInitialMonth = data.findIndex(({ week }) =>
-          week.includes(currentDate),
+          week.includes(initialDateRef.current as string),
         );
         return indexOfInitialMonth >= 0 ? indexOfInitialMonth : 0;
       }
       return 0;
-    }, [currentDate, data]);
+    }, [data]);
 
     const webFallbackWeekContainerStyle: any = {
       scrollSnapAlign: "center",
@@ -146,15 +145,17 @@ export const ListWeeklyScrollContainer = forwardRef(
         onViewableItemsChanged={onViewableItemsChanged}
         initialScrollIndex={initialMonthIndex}
         getItemLayout={(_, index) => ({
-          length: calendarWidth,
-          offset: calendarWidth * index,
+          length: scrollLayoutWidth,
+          offset: scrollLayoutWidth * index,
           index,
         })}
+        onLayout={onScrollLayout}
         initialNumToRender={1}
         maxToRenderPerBatch={1}
         contentContainerStyle={calendarListContentContainerStyle}
         decelerationRate={decelerationRate}
         extraData={weekProps}
+        viewabilityConfig={VIEWABILITY_CONFIG}
       />
     ) : (
       <FlashList
@@ -167,10 +168,6 @@ export const ListWeeklyScrollContainer = forwardRef(
         pagingEnabled
         snapToInterval={scrollLayoutWidth}
         estimatedItemSize={scrollLayoutWidth}
-        estimatedListSize={{
-          width: calendarWidth,
-          height: calendarSize?.height ?? 150,
-        }}
         initialScrollIndex={initialMonthIndex}
         onEndReachedThreshold={onEndReachedThreshold}
         onEndReached={onListEndReached}
@@ -178,6 +175,7 @@ export const ListWeeklyScrollContainer = forwardRef(
         decelerationRate={decelerationRate}
         extraData={weekProps}
         contentContainerStyle={calendarListContentContainerStyle}
+        viewabilityConfig={VIEWABILITY_CONFIG}
       />
     );
   },

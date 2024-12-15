@@ -6,6 +6,7 @@ import { getWeeksInMonth, startOfMonthForDateString } from "../utils/date";
 import { height, width } from "../utils/screen";
 
 import { Calendar } from "./Calendar";
+import { VIEWABILITY_CONFIG } from "./constants";
 import {
   CalendarListProps,
   CalendarListViewProps,
@@ -46,7 +47,9 @@ export const FullCalendarListView = forwardRef(
       ...calendarProps
     }: CalendarListViewProps &
       CalendarListProps &
-      FullCalendarListViewProps & { months: string[] },
+      FullCalendarListViewProps & {
+        months: string[];
+      },
     ref: any,
   ) => {
     const calendarWidth = calendarSize?.width ?? width;
@@ -91,20 +94,6 @@ export const FullCalendarListView = forwardRef(
       [onScroll],
     );
 
-    const calendarItemSize = useMemo(() => {
-      const _monthTitleSize = showMonthName ? monthTitleSize : 0;
-      const _weekDayNamesSize =
-        showDayNames && !showDayNamesOnTop ? weekDayNamesSize : 0;
-      return fiveWeekCalendarSize - _weekDayNamesSize - _monthTitleSize;
-    }, [
-      showMonthName,
-      fiveWeekCalendarSize,
-      monthTitleSize,
-      weekDayNamesSize,
-      showDayNamesOnTop,
-      showDayNames,
-    ]);
-
     const overrideLayout = useCallback(
       (layout: any, item: string) => {
         if (horizontal) {
@@ -114,7 +103,11 @@ export const FullCalendarListView = forwardRef(
         const weeksInMonth = getWeeksInMonth(item, firstDayOfWeek);
         const size = fiveWeekCalendarSize + calendarVerticalGap;
         if (weeksInMonth > 5) {
-          const heightPerWeek = calendarItemSize / 5;
+          const _monthTitleSize = showMonthName ? monthTitleSize : 0;
+          const _weekDayNamesSize =
+            showDayNames && !showDayNamesOnTop ? weekDayNamesSize : 0;
+          const heightPerWeek =
+            (fiveWeekCalendarSize - _weekDayNamesSize - _monthTitleSize) / 5;
           layout.size = size + heightPerWeek;
         } else {
           layout.size = size;
@@ -124,8 +117,12 @@ export const FullCalendarListView = forwardRef(
         horizontal,
         calendarWidth,
         firstDayOfWeek,
-        calendarItemSize,
+        showMonthName,
+        showDayNames,
+        monthTitleSize,
+        showDayNamesOnTop,
         calendarVerticalGap,
+        weekDayNamesSize,
         fiveWeekCalendarSize,
       ],
     );
@@ -178,6 +175,7 @@ export const FullCalendarListView = forwardRef(
             maxToRenderPerBatch={1}
             contentContainerStyle={calendarListContentContainerStyle}
             decelerationRate={decelerationRate}
+            viewabilityConfig={VIEWABILITY_CONFIG}
           />
         ) : (
           <FlashList
@@ -187,7 +185,9 @@ export const FullCalendarListView = forwardRef(
             renderItem={renderCalendar}
             keyExtractor={keyExtractor}
             data={months}
-            estimatedItemSize={horizontal ? calendarWidth : calendarItemSize}
+            estimatedItemSize={
+              horizontal ? calendarWidth : fiveWeekCalendarSize
+            }
             estimatedListSize={{
               width: calendarWidth,
               height: calendarHeight,
@@ -196,6 +196,7 @@ export const FullCalendarListView = forwardRef(
             pagingEnabled={horizontal}
             showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={showScrollIndicator}
+            snapToAlignment="start"
             onViewableItemsChanged={onViewableItemsChanged}
             initialScrollIndex={initialMonthIndex}
             overrideItemLayout={overrideLayout}
@@ -203,6 +204,7 @@ export const FullCalendarListView = forwardRef(
             decelerationRate={decelerationRate}
             onEndReached={onListEndReached}
             onEndReachedThreshold={onEndReachedThreshold}
+            viewabilityConfig={VIEWABILITY_CONFIG}
           />
         )}
       </>

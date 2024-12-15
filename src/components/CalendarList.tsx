@@ -11,7 +11,12 @@ import React, {
 import { StyleSheet, Text, View } from "react-native";
 
 import { CalendarListRef } from "../types";
-import { createRange, dateStringToDate, formatMonthName } from "../utils/date";
+import {
+  createRange,
+  dateStringToDate,
+  formatMonthName,
+  startOfMonthForDateString,
+} from "../utils/date";
 
 import { FullCalendarListView } from "./FullCalendarListView";
 import { ListWeeklyScrollContainer } from "./ListWeeklyScrollContainer";
@@ -38,11 +43,13 @@ export const CalendarList = React.memo(
         markedDates,
         WeekAnimatedTransitionComponent = React.Fragment,
         MonthAnimatedTransitionComponent = React.Fragment,
+        onActiveMonthChange,
         ...calendarProps
       }: CalendarListProps &
         FullCalendarListViewProps &
         CalendarListViewProps & {
           viewAs?: "week" | "month";
+          onActiveMonthChange?: (activeMonth: string) => void;
         },
       ref: ForwardedRef<CalendarListRef>,
     ) => {
@@ -90,24 +97,27 @@ export const CalendarList = React.memo(
 
       const handleOnScroll = useCallback(
         (visibleDates: any) => {
-          let month: string;
           onScroll?.(visibleDates);
+
+          let month: string | undefined = undefined;
           if (isWeeklyView) {
             const { week } = visibleDates[0];
             month = week[week.length - 1];
           } else {
-            const visibleDateCount = visibleDates.length;
-            if (visibleDateCount > 2) {
-              month = visibleDates[visibleDateCount - 2];
-            } else {
-              month = visibleDates[0];
+            const nextActiveMonth = visibleDates[0];
+            const firstDayInMarkDays = markedDates?.at(0);
+            if (
+              !firstDayInMarkDays ||
+              nextActiveMonth !== startOfMonthForDateString(firstDayInMarkDays)
+            ) {
+              month = nextActiveMonth;
             }
           }
-          if (showMonthName && month) {
+          if (month) {
             setActiveMonth(month);
           }
         },
-        [onScroll, isWeeklyView, showMonthName],
+        [onScroll, isWeeklyView, markedDates],
       );
 
       useEffect(() => {
@@ -115,6 +125,12 @@ export const CalendarList = React.memo(
           setActiveMonth(markedDates.at(0));
         }
       }, [markedDates]);
+
+      useEffect(() => {
+        if (activeMonth && onActiveMonthChange) {
+          onActiveMonthChange(activeMonth);
+        }
+      }, [activeMonth, onActiveMonthChange]);
 
       useImperativeHandle(ref, () => ({
         scrollToDate(dateString: string, animated: boolean = true) {
