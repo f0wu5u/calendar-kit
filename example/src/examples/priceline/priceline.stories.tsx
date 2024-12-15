@@ -53,10 +53,6 @@ const PricelineCalendarListComponent = ({ locale }) => {
 
   const renderDayComponent = useCallback((props) => <Day {...props} />, []);
 
-  const onScroll = useCallback((months: string[]) => {
-    setCurrentMonth(months[months.length - 1]);
-  }, []);
-
   const monthString = useMemo(
     () => formatMonthName(dateStringToDate(currentMonth), locale),
     [currentMonth, locale],
@@ -130,8 +126,9 @@ const PricelineCalendarListComponent = ({ locale }) => {
         weekdaysFormat="narrow"
         locale={locale}
         estimatedCalendarSize={{
-          fiveWeekCalendarSize: 300,
+          fiveWeekCalendarSize: 236,
         }}
+        calendarSize={{ height: 284 }}
         showExtraDays={false}
         markedDates={markedDates}
         futureMonthsCount={11}
@@ -147,7 +144,7 @@ const PricelineCalendarListComponent = ({ locale }) => {
           paddingHorizontal: 2,
         }}
         showScrollIndicator={false}
-        onScroll={onScroll}
+        onActiveMonthChange={setCurrentMonth}
       />
     </>
   );
