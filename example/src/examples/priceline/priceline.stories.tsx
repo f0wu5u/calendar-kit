@@ -1,5 +1,6 @@
 import React, { useCallback, useMemo, useRef, useState } from "react";
-import {I18nManager, Text, TouchableOpacity, View} from "react-native";
+import { I18nManager, Text, TouchableOpacity, View } from "react-native";
+import Feather from "@expo/vector-icons/Feather";
 import {
   CalendarList,
   CalendarListRef,
@@ -20,8 +21,8 @@ const maxSelectableDate = addDays(today, 330);
 
 const weekStartsOn = 1;
 
-const isRTLMode = I18nManager.isRTL
-const rtlStyle = isRTLMode ? {transform:[{rotate: '180deg'}]} : undefined
+const isRTLMode = I18nManager.isRTL;
+const rtlStyle = isRTLMode ? { transform: [{ rotate: "180deg" }] } : undefined;
 
 const PricelineCalendarListComponent = ({ locale }) => {
   const { markedDates, onDayPress, maxDate } = useMultiSelectCalendar(28);
@@ -51,10 +52,6 @@ const PricelineCalendarListComponent = ({ locale }) => {
   );
 
   const renderDayComponent = useCallback((props) => <Day {...props} />, []);
-
-  const onScroll = useCallback((months: string[]) => {
-    setCurrentMonth(months[months.length - 1]);
-  }, []);
 
   const monthString = useMemo(
     () => formatMonthName(dateStringToDate(currentMonth), locale),
@@ -87,46 +84,37 @@ const PricelineCalendarListComponent = ({ locale }) => {
           paddingVertical: 16,
           justifyContent: "space-between",
           alignItems: "center",
+          gap: 8,
         }}
       >
+        <TouchableOpacity onPress={goToPreviousMonth}>
+          <Feather
+            style={rtlStyle}
+            name="arrow-left"
+            size={16}
+            color="#555555"
+          />
+        </TouchableOpacity>
         <Text
           style={{
             textTransform: "uppercase",
             fontSize: 14,
             color: "#555555",
             fontWeight: "500",
+            textAlign: "center",
+            flexGrow: 1,
           }}
         >
           {monthString}
         </Text>
-        <View style={{ flexDirection: "row", gap: 32 }}>
-          <TouchableOpacity onPress={goToPreviousMonth}>
-            <Text
-              style={{
-                fontSize: 16,
-                fontWeight: 500,
-                color: "#555555",
-                padding: 6,
-                  ...rtlStyle,
-              }}
-            >
-              {"<"}
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={goToNextMonth}>
-            <Text
-              style={{
-                fontSize: 16,
-                fontWeight: 500,
-                color: "#555555",
-                padding: 6,
-                  ...rtlStyle
-              }}
-            >
-              {">"}
-            </Text>
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity onPress={goToNextMonth}>
+          <Feather
+            style={rtlStyle}
+            name="arrow-right"
+            size={16}
+            color="#555555"
+          />
+        </TouchableOpacity>
       </View>
       <CalendarList
         ref={calendarListRef}
@@ -138,8 +126,9 @@ const PricelineCalendarListComponent = ({ locale }) => {
         weekdaysFormat="narrow"
         locale={locale}
         estimatedCalendarSize={{
-            fiveWeekCalendarSize: 300
+          fiveWeekCalendarSize: 236,
         }}
+        calendarSize={{ height: 284 }}
         showExtraDays={false}
         markedDates={markedDates}
         futureMonthsCount={11}
@@ -155,7 +144,7 @@ const PricelineCalendarListComponent = ({ locale }) => {
           paddingHorizontal: 2,
         }}
         showScrollIndicator={false}
-        onScroll={onScroll}
+        onActiveMonthChange={setCurrentMonth}
       />
     </>
   );

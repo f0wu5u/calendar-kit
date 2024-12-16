@@ -8,26 +8,27 @@ import {
 } from "react-native";
 
 import {
-  createWeeksOfMonth,
   dateStringToDate,
   formatMonthName,
+  startOfMonth,
+  startOfMonthForDateString,
 } from "../utils/date";
 
-import { Week, WeekProps } from "./Week";
+import { FullCalendarView } from "./FullCalendarView";
+import { ListWeeklyScrollContainer } from "./ListWeeklyScrollContainer";
+import { FullCalendarViewProps } from "./types";
 import { WeekDay, WeekDayProps } from "./WeekDay";
 
 export interface CalendarProps
-  extends Omit<WeekProps, "month" | "weekDays">,
+  extends Omit<FullCalendarViewProps, "month">,
     WeekDayProps {
   date: string;
   showDayNames?: boolean;
-  showMonthName?: boolean;
-  MonthNameComponent?: React.ComponentType<{ month: Date; locale?: string }>;
+  viewAs?: "week" | "month";
   contentContainerStyle?: ViewStyle & {
     scrollSnapAlign?: "center" | "start";
     width?: DimensionValue | string;
   };
-  weeksContainerStyle?: ViewStyle;
 }
 
 export const Calendar: React.FC<CalendarProps> = React.memo(
@@ -38,18 +39,20 @@ export const Calendar: React.FC<CalendarProps> = React.memo(
     MonthNameComponent,
     showDayNames = true,
     contentContainerStyle,
-    weeksContainerStyle,
     WeekDayNameComponent,
     locale,
     showMonthName = true,
     weekdaysFormat,
+    viewAs = "month",
+    MonthAnimatedTransitionComponent = React.Fragment,
+    WeekAnimatedTransitionComponent = React.Fragment,
     ...weekProps
   }) => {
-    const monthDate = useMemo(() => dateStringToDate(date), [date]);
-    const weeksOfMonth = useMemo(
-      () => createWeeksOfMonth(monthDate, firstDayOfWeek),
-      [monthDate, firstDayOfWeek],
+    const monthDate = useMemo(
+      () => startOfMonth(dateStringToDate(date)),
+      [date],
     );
+
     const renderMonthName = () => {
       if (!showMonthName) return null;
       return MonthNameComponent ? (
@@ -63,20 +66,6 @@ export const Calendar: React.FC<CalendarProps> = React.memo(
       );
     };
 
-    const weeks = useMemo(
-      () =>
-        weeksOfMonth.map((week, index) => (
-          <Week
-            {...weekProps}
-            locale={locale}
-            key={`${date}-week-${index}`}
-            weekDays={week}
-            month={monthDate}
-          />
-        )),
-      [weeksOfMonth, weekProps, locale, monthDate, date],
-    );
-
     return (
       <View style={[styles.calenderContainer, contentContainerStyle]}>
         {renderMonthName()}
@@ -89,9 +78,27 @@ export const Calendar: React.FC<CalendarProps> = React.memo(
             weekdaysFormat={weekdaysFormat}
           />
         ) : null}
-        <View style={[styles.weeksContainer, weeksContainerStyle]}>
-          {weeks}
-        </View>
+        {viewAs === "week" ? (
+          <WeekAnimatedTransitionComponent>
+            <ListWeeklyScrollContainer
+              {...weekProps}
+              firstDayOfWeek={firstDayOfWeek}
+              locale={locale}
+              currentDate={weekProps.markedDates?.at(0) ?? date}
+              months={[startOfMonthForDateString(date)]}
+            />
+          </WeekAnimatedTransitionComponent>
+        ) : (
+          <MonthAnimatedTransitionComponent>
+            <FullCalendarView
+              {...weekProps}
+              firstDayOfWeek={firstDayOfWeek}
+              locale={locale}
+              date={date}
+              month={monthDate}
+            />
+          </MonthAnimatedTransitionComponent>
+        )}
       </View>
     );
   },

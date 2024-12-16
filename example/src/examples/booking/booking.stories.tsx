@@ -42,8 +42,8 @@ const BookingCalendarListComponent = ({ locale }) => {
       minDate={todayDateString}
       currentDate={dateRangeStart}
       estimatedCalendarSize={{
-          fiveWeekCalendarSize: 302,
-          monthTitleSize: 30,
+        fiveWeekCalendarSize: 302,
+        monthTitleSize: 30,
       }}
       showExtraDays={false}
       markedDates={markedDates}
@@ -61,7 +61,7 @@ const BookingCalendarListComponent = ({ locale }) => {
         paddingHorizontal: 32,
       }}
       calendarListContentContainerStyle={{
-          paddingVertical: 12,
+        paddingVertical: 12,
       }}
       showScrollIndicator={false}
     />

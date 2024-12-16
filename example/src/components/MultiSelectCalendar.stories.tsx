@@ -50,6 +50,7 @@ const CalendarComponent = ({
     (props) => <CustomDay {...props} debugMode={debugMode} />,
     [debugMode],
   );
+
   return (
     <Calendar
       DayComponent={renderDayComponent}

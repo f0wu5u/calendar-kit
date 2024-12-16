@@ -8,3 +8,7 @@ export const startOfMonth = (date: Date) => {
   const month = date.getMonth();
   return new Date(year, month, 1, 0, 0, 0);
 };
+
+export const startOfMonthForDateString = (dateString: string) => {
+  return dateString.replace(/.{2}$/, "01");
+};

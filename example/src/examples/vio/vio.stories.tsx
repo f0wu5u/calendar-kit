@@ -44,7 +44,7 @@ const VioCalendarListComponent = ({ locale }) => {
       maxDate={maxDate}
       currentDate={dateRangeStart}
       estimatedCalendarSize={{
-          fiveWeekCalendarSize: 282
+        fiveWeekCalendarSize: 282,
       }}
       showExtraDays={false}
       markedDates={markedDates}
@@ -57,11 +57,8 @@ const VioCalendarListComponent = ({ locale }) => {
         gap: 8,
       }}
       customStateCreator={createDayState}
-      calendarContentContainerStyle={{
-        paddingHorizontal: 8,
-      }}
       calendarListContentContainerStyle={{
-          paddingVertical: 16,
+        paddingVertical: 16,
       }}
       showScrollIndicator={false}
     />

@@ -24,6 +24,7 @@ const CalendarListComponent = ({
   futureMonthsCount,
   pastMonthsCount,
   showDayNames,
+  showMonthName,
   showDayNamesOnTop,
   minDate,
   horizontal,
@@ -47,7 +48,6 @@ const CalendarListComponent = ({
     return {
       isStartDay: indexOfDay === 0,
       isEndDay: markedDates.length - 1 === indexOfDay,
-      isSelected: markedDates.includes(dateString),
     };
   }, []);
 
@@ -63,7 +63,9 @@ const CalendarListComponent = ({
       minDate={minDate}
       currentDate={todayDateString}
       estimatedCalendarSize={{
-        fiveWeekCalendarSize: debugMode ? 349 : 289
+        fiveWeekCalendarSize: debugMode ? 419 : 359,
+        weekDayNamesSize: 40,
+        monthTitleSize: 22,
       }}
       showExtraDays={showExtraDays}
       markedDates={markedDates}
@@ -75,10 +77,14 @@ const CalendarListComponent = ({
       firstDayOfWeek={firstDayOfWeek as DayIndex}
       customStateCreator={createDayState}
       calendarContentContainerStyle={{
-        paddingHorizontal: 8,
+        paddingHorizontal: 2,
+      }}
+      calendarListContentContainerStyle={{
+        paddingVertical: 8,
       }}
       horizontal={horizontal}
       locale={locale}
+      showMonthName={showMonthName}
     />
   );
 };
@@ -110,6 +116,7 @@ const meta = {
     debugMode: false,
     showDayNames: true,
     showDayNamesOnTop: false,
+    showMonthName: true,
     currentDate: todayDateString,
     minDate: todayDateString,
     large: false,

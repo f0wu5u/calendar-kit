@@ -20,6 +20,7 @@ export type StateInputParams = {
   maxDate?: string;
   month: Date;
   showExtraDays?: boolean;
+  isLastWeekOfList?: boolean;
 };
 
 export interface CalendarListRef {

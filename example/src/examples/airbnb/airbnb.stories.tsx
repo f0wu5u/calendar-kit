@@ -1,6 +1,5 @@
 import React, { useCallback } from "react";
 import { CalendarList, StateInputParams } from "@fowusu/calendar-kit";
-import { endOfWeek, isSameDay, startOfWeek } from "date-fns";
 
 import { dateRangeStart, todayDateString } from "../../constants";
 import { useMultiSelectCalendar } from "../../hooks/useMultiSelectCalendar";
@@ -22,14 +21,10 @@ const AirbnbCalendarListComponent = ({ locale }) => {
         return {};
       }
       const indexOfDay = markedDates.indexOf(dateString);
-      const firstDayOfWeek = startOfWeek(dateString, { weekStartsOn });
-      const lastDayOfWeek = endOfWeek(dateString, { weekStartsOn });
 
       return {
         isStartDay: indexOfDay === 0,
         isEndDay: markedDates.length - 1 === indexOfDay && indexOfDay !== 0,
-        isStartOfWeek: isSameDay(dateString, firstDayOfWeek),
-        isEndOfWeek: isSameDay(dateString, lastDayOfWeek),
         isMultiSelect: markedDates.length > 1,
       };
     },
@@ -45,7 +40,8 @@ const AirbnbCalendarListComponent = ({ locale }) => {
       currentDate={dateRangeStart}
       weekdaysFormat="narrow"
       estimatedCalendarSize={{
-          fiveWeekCalendarSize: 267
+        fiveWeekCalendarSize: 267.3,
+        monthTitleSize: 31.7,
       }}
       showExtraDays={false}
       markedDates={markedDates}
@@ -63,7 +59,7 @@ const AirbnbCalendarListComponent = ({ locale }) => {
         paddingHorizontal: 8,
       }}
       calendarListContentContainerStyle={{
-          paddingVertical: 16
+        paddingVertical: 16,
       }}
       showScrollIndicator={false}
     />

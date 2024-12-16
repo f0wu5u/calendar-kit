@@ -32,10 +32,9 @@ jobs:
   update-version:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout master branch
+      - name: Checkout branch
         uses: actions/checkout@v3
         with:
-          ref: master
           token: ${{ secrets.GIT_USER_TOKEN }}
 
       - name: Git Setup
