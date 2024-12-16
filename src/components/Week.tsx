@@ -18,8 +18,8 @@ export interface WeekProps
   isLastWeekOfList?: boolean;
   customStateCreator?: (
     stateInputParams: StateInputParams,
-    defaultState?: DayState,
-  ) => object;
+    defaultState: DayState,
+  ) => Record<string,unknown>;
   weekContainerStyle?: ViewStyle & {
     scrollSnapAlign?: "center" | "start";
     width?: DimensionValue | string;
