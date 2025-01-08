@@ -37,8 +37,7 @@
     "react-native": ">=0.73.8"
   },
   "files": [
-    "src/",
-    "dist"
+    "dist/"
   ],
   "keywords": [
     "react",
