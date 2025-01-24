@@ -43,12 +43,19 @@ or
 yarn add @fowusu/calendar-kit
 ```
 
-> ⚠️ If you plan using `CalendarList` then you need to install `@shopify/flash-list`
+or
+
+```bash
+yarn expo add @fowusu/calendar-kit
+```
+
+> ⚠️ You need to install `@shopify/flash-list`
 ```bash
 yarn add @shopify/flash-list
+```
 
-# pod installation for iOS before building app
-cd ios; pod install
+```bash
+yarn expo add @shopify/flash-list
 ```
 
 # Usage
