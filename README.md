@@ -1,6 +1,6 @@
 # Introduction
 A **simple** and **customizable** React Native component for displaying and interacting with **Gregorian calendar** dates.
-![@fowusu/calendar-kit](https://github.com/f0wu5u/calendar-kit/blob/master/static/calendar-kit.png?raw=true)
+![@fowusu/calendar-kit](https://github.com/f0wu5u/calendar-kit/blob/main/static/calendar-kit.png?raw=true)
 
 # Features
 - 💡 100% Typescript
@@ -16,19 +16,19 @@ A **simple** and **customizable** React Native component for displaying and inte
 
 | Vio.com                                                                                             | Airbnb                                                                                                |
 |-----------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------|
-| <img width="380" src="https://github.com/f0wu5u/calendar-kit/blob/master/static/vio-calendar.gif" /> | <img width="380" src="https://github.com/f0wu5u/calendar-kit/blob/master/static/airbnb-calendar.gif"/> |
+| <img width="380" src="https://github.com/f0wu5u/calendar-kit/blob/main/static/vio-calendar.gif" /> | <img width="380" src="https://github.com/f0wu5u/calendar-kit/blob/main/static/airbnb-calendar.gif"/> |
 
 | Priceline                                                                                                 | Booking.com                                                                                            |
 |-----------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------|
-| <img width="380" src="https://github.com/f0wu5u/calendar-kit/blob/master/static/priceline-calendar.gif" /> | <img width="380" src="https://github.com/f0wu5u/calendar-kit/blob/master/static/booking-calendar.gif"/> |
+| <img width="380" src="https://github.com/f0wu5u/calendar-kit/blob/main/static/priceline-calendar.gif" /> | <img width="380" src="https://github.com/f0wu5u/calendar-kit/blob/main/static/booking-calendar.gif"/> |
 
 | Localized                                                                                                 | Performance                                                                                         |
 |-----------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------|
-| <img width="380" src="https://github.com/f0wu5u/calendar-kit/blob/master/static/localize-calendar.gif" /> | <img width="380" src="https://github.com/f0wu5u/calendar-kit/blob/master/static/performance-calendar.gif"/> |
+| <img width="380" src="https://github.com/f0wu5u/calendar-kit/blob/main/static/localize-calendar.gif" /> | <img width="380" src="https://github.com/f0wu5u/calendar-kit/blob/main/static/performance-calendar.gif"/> |
 
 | Multiview (Week & Year)                                                                                    | Schedule                                                                                                    |
 |------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------|
-| <img width="380" src="https://github.com/f0wu5u/calendar-kit/blob/master/static/multiview-calendar.gif" /> | <img width="380" src="https://github.com/f0wu5u/calendar-kit/blob/master/static/schedule-calendar.gif"/> |
+| <img width="380" src="https://github.com/f0wu5u/calendar-kit/blob/main/static/multiview-calendar.gif" /> | <img width="380" src="https://github.com/f0wu5u/calendar-kit/blob/main/static/schedule-calendar.gif"/> |
 
 
 # Installation
