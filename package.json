@@ -1,6 +1,6 @@
 {
   "name": "@fowusu/calendar-kit",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "A simple JS only calendar UI for react native",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
