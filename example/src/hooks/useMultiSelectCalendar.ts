@@ -57,5 +57,6 @@ export const useMultiSelectCalendar = (
     onDayPress,
     markedDates,
     maxDate,
+    selectedDay
   };
 };
